@@ -1,0 +1,538 @@
+/* ==========================================================================
+   data_bulletin/styles.css
+   ==========================================================================
+   All the styling for the 2026 Data Bulletin dashboard, in these parts:
+     A.  WCA's brand: colors and font (the youth_justice template, unchanged).
+         Defined once here; charts.js reads the same values.
+     A2. The Data Bulletin layer: the PDF Bulletin's own colors (the design
+         kit's tokens, unchanged), added below the brand block.
+     B.  Page basics and the pieces every section uses (template, with the
+         additions this page needs).
+     C.  The Bulletin page: banner, chapter tabs, chapter covers, part
+         headings, chart cards with their side panel, quote cards.
+     D.  Layer 2 (story cards) and E. Layer 3 (community map): added later,
+         in their own parts, so each layer's styling has one home.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A. BRAND  ·  from WCA's 2024 Quick Reference Style Guide  (template part A)
+   --------------------------------------------------------------------------
+   Use these names in CSS as var(--wca-blue) and so on. charts.js reads the
+   same values, so there is one source of truth. */
+
+:root {
+  /* Primary */
+  --wca-blue:        #314F9E;   /* titles, section heads, the main data series */
+  --wca-green:       #098342;   /* stat numbers, links, and Westchester in every chart */
+
+  /* Blue steps for maps and stacked bars (light to dark; checked for color-blind readers) */
+  --wca-blue-100:    #A3B3DC;
+  --wca-blue-200:    #7A91C8;
+  --wca-blue-300:    #5673B5;
+  --wca-blue-500:    #314F9E;   /* same as --wca-blue */
+  --wca-blue-700:    #22366E;
+
+  /* Tertiary: the brand allows ONE per piece, used sparingly.
+     Orange is used only for "fewer than before" on diverging map scales. */
+  --wca-orange:      #D14905;
+  --wca-orange-100:  #E8A07A;
+
+  /* Tints for card fills (never flat gray: gray reads as "sources") */
+  --wca-blue-tint:   #EAEEF7;
+  --wca-green-tint:  #E7F2EC;
+
+  /* Neutrals */
+  --ink:             #111111;   /* headings */
+  --body:            #333333;   /* body text */
+  --fine:            #555555;   /* fine print */
+  --muted:           #767676;   /* captions, sources */
+  --rule:            #DCDCDC;   /* hairlines */
+  --panel:           #EFEFEF;   /* panels */
+  --white:           #FFFFFF;
+
+  /* Map helpers */
+  --map-no-data:     #E6E6E6;   /* places with nothing to show */
+  --map-stroke:      #FFFFFF;   /* lines between places */
+
+  /* Font */
+  --font: "Lexend", "Segoe UI", Arial, sans-serif;
+
+  /* Layout */
+  --page-width: 1100px;
+  --gutter: 16px;
+  --radius: 8px;
+}
+
+/* Lexend, served from the project so the page never calls out to another site. */
+@font-face { font-family: "Lexend"; font-weight: 400; font-style: normal; font-display: swap;
+             src: url("resources/fonts/lexend-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Lexend"; font-weight: 600; font-style: normal; font-display: swap;
+             src: url("resources/fonts/lexend-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Lexend"; font-weight: 700; font-style: normal; font-display: swap;
+             src: url("resources/fonts/lexend-latin-700-normal.woff2") format("woff2"); }
+
+
+/* --------------------------------------------------------------------------
+   A2. DATA BULLETIN LAYER  ·  the design kit's tokens (tokens/bulletin-tokens.css)
+   --------------------------------------------------------------------------
+   The brand block above stays exactly as it is. These extra names carry the
+   2026 Data Bulletin's look (PDF designed with the graphic designer, Sept 2026).
+   Every value was taken from the Bulletin's own files, then nudged only where
+   the dataviz validator required it (design_kit/tokens/palette.json says where
+   each value came from; validation_report.txt has the checks).
+
+   Rules that go with these colors (details in design_kit/03_chart_patterns.md):
+     - Family types are ALWAYS ordered married -> single father -> single
+       mother (or the reverse), so green sits between blue and purple.
+     - Earlier years use the lighter steps (-light, -mid); the latest year is
+       the full color. Labels on light steps are dark text, never white.
+     - Rust (--db-callout) is for callouts and benchmark lines only. Charts
+       that show the Multiracial bar draw their benchmark line in --db-all.
+     - No black fills anywhere. "All / total" bars use --db-all (gray).
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* ---- Page chrome (banner, titles, side panel) ---- */
+  --db-banner-from:      #2E5499;   /* header banner gradient, left */
+  --db-banner-to:        #0C7D4F;   /* header banner gradient, right */
+  --db-banner-title:     #DEEAF6;   /* "Children By the Numbers" in the banner */
+  --db-banner-title-em:  #FFFFFF;   /* "2026 Data Bulletin" in the banner */
+  --db-title:            #215F9A;   /* chart and card titles (PDF chart-title blue) */
+  --db-title-rule:       #2E5499;   /* 2px rule under every chart title */
+  --db-panel:            #DEEBF9;   /* "What We See / Takeaway" side panel */
+  --db-highlight:        #FFF4BF;   /* highlighted table column ("Most current") */
+  --db-highlight-strong: #FFEDAC;   /* year label panels (1.10) */
+  --db-remainder:        #C8DCF0;   /* the "what's left" part of a donut or bar */
+  --db-gap-band:         #E6EDF3;   /* shaded gap between two lines (3.16) */
+
+  /* ---- Family types (silhouette colors from the designer's art) ---- */
+  --db-married:          #314F9E;   /* = --wca-blue */
+  --db-married-mid:      #6E83BB;
+  --db-married-light:    #ABB7D7;
+  --db-married-bg:       #E0E5F0;   /* row tint behind a label + silhouette */
+  --db-father:           #098342;   /* = --wca-green */
+  --db-father-mid:       #49A373;
+  --db-father-light:     #89C3A4;
+  --db-father-bg:        #DAECE3;
+  --db-mother:           #6F3479;   /* designer's #6A3175, lightened one step to pass the validator */
+  --db-mother-mid:       #9A71A1;
+  --db-mother-light:     #C5AEC9;
+  --db-mother-bg:        #E9E1EB;
+
+  /* ---- Race / ethnicity (fixed everywhere; order Asian, Black, Hispanic, Multiracial, White) ---- */
+  --db-asian:            #77469A;
+  --db-asian-light:      #C5AFD4;
+  --db-black:            #7A9A36;   /* PDF olive #85A540, darkened for 3:1 contrast */
+  --db-black-light:      #ABBF80;
+  --db-hispanic:         #B6377B;
+  --db-hispanic-light:   #DFA7C5;
+  --db-multiracial:      #D45F2A;   /* PDF rust #CF4C27, shifted away from magenta */
+  --db-multiracial-light:#E8A98C;
+  --db-white:            #314F9E;   /* = --wca-blue */
+  --db-white-light:      #ABB7D7;
+  --db-all:              #5B5E63;   /* "All races / All students": replaces the PDF's black */
+  --db-all-light:        #B5B7B9;
+
+  /* ---- Annotation ---- */
+  --db-callout:          #D14905;   /* = --wca-orange; callout boxes (white bold text) and benchmark lines */
+  --db-callout-text:     #B23E04;   /* rust as TEXT on white (5.9:1): negative amounts, benchmark labels */
+
+  /* ---- Economic status and teal accents ---- */
+  --db-teal:             #008A9E;   /* economically disadvantaged; rent */
+  --db-teal-mid:         #3DA6B5;
+  --db-teal-light:       #7AC2CD;
+  --db-teal-text:        #007E91;   /* teal as TEXT on white (4.8:1): labels beside teal marks */
+  --db-econ-secure:      #77469A;   /* economically secure (paired with teal) */
+
+  /* ---- Maps ---- */
+  --db-map-base:         #E8E8E8;   /* every other place */
+  --db-map-highlight:    #007494;   /* places the story is about (3.3, 3.7) */
+  --db-map-state:        #22609A;   /* US / NY outline art (2.5) */
+
+  /* ---- Solid headline tiles (4.5) ---- */
+  --db-tile-steel:       #2E5F7F;
+  --db-tile-plum:        #6B2B6E;
+  --db-tile-brown:       #77391A;
+
+  /* ---- Crowd illustration layers (1.3), if it ever needs recoloring ---- */
+  --db-crowd-sky:        #C4E8F8;
+  --db-crowd-back:       #90B8D8;
+  --db-crowd-middle:     #008040;
+  --db-crowd-ground:     #30509C;
+  --db-crowd-front-1:    #8868AC;
+  --db-crowd-front-2:    #B09CCC;
+
+  /* ---- Added 2026-11-10 for this dashboard (not in the kit): the chapter cover band.
+          Sampled from the PDF's chapter pages (1.1, 2.1, 3.1, 4.1), the band behind
+          "CHAPTER 1 ..."; white text on it is 7.1:1. ---- */
+  --db-chapter-band:     #156082;
+}
+
+/* Brand motifs built from the layer above */
+.db-banner {
+  background: linear-gradient(90deg, var(--db-banner-from), var(--db-banner-to));
+  color: var(--db-banner-title);
+}
+.db-title {
+  color: var(--db-title); font-weight: 600;
+  border-bottom: 2px solid var(--db-title-rule); padding-bottom: 6px; margin-bottom: 14px;
+}
+.db-panel { background: var(--db-panel); border-radius: var(--radius); padding: 18px 20px; }
+.db-callout {
+  background: var(--db-callout); color: var(--white); font-weight: 600;
+  padding: 10px 14px; border-radius: 4px; position: relative;
+}
+.db-silhouette { color: var(--db-married); }   /* SVGs use fill="currentColor": set color, they follow */
+
+
+/* --------------------------------------------------------------------------
+   B. PAGE BASICS  (template part B, plus the sizes this page shares)
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Sizes that more than one part of the page depends on. Layer 2's sticky charts
+     sit below the chapter tabs, so both read --nav-h; change it here only. */
+  --banner-h: 76px;        /* the gradient banner, desktop */
+  --nav-h: 56px;           /* the chapter tabs when they stick to the top of the window */
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body);
+  background: var(--white);
+  overflow-wrap: break-word;   /* a long word (a file or column name) can't push the page wider than the screen */
+}
+
+.page {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 48px;
+}
+
+h1, h2, h3 { color: var(--ink); line-height: 1.25; margin: 0 0 8px; }
+h1 { font-size: 32px; font-weight: 700; color: var(--wca-blue); }
+h2 { font-size: 22px; font-weight: 600; color: var(--wca-blue); }
+h3 { font-size: 17px; font-weight: 600; }
+
+p  { margin: 0 0 12px; }
+a  { color: var(--wca-green); }
+small, .muted { color: var(--muted); font-size: 14px; }
+.fine { color: var(--fine); font-size: 14px; }
+
+/* Brand motif: a thin blue-to-green rule under the page title */
+.rule-gradient {
+  height: 4px; border: 0; margin: 12px 0 24px;
+  background: linear-gradient(90deg, var(--wca-blue), var(--wca-green));
+}
+
+/* Page header */
+.page-header { padding-top: 28px; }
+.page-header .kicker {
+  color: var(--wca-green); font-weight: 600; font-size: 14px;
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px;
+}
+.page-header .subtitle { font-size: 18px; color: var(--fine); max-width: 60ch; }
+
+/* Section spacing */
+section { margin: 36px 0; }
+section > h2 { margin-bottom: 4px; }
+.section-intro { color: var(--fine); max-width: 70ch; }
+
+/* A number the page could not fill in yet (its path is not in data.json).
+   charts.js writes a dash and adds this class, so a missing number is visible, never "undefined". */
+[data-fill].missing { color: var(--db-callout-text); border-bottom: 1px dotted var(--db-callout-text); }
+
+/* Text marked [PLACEHOLDER] in the page: a first draft to be rewritten. The class only
+   tints it so it is easy to spot while the dashboard is being built. */
+.placeholder { color: var(--muted); }
+
+
+/* --------------------------------------------------------------------------
+   B (continued). PIECES EVERY SECTION USES  (template)
+   -------------------------------------------------------------------------- */
+
+/* Headline tiles: a row of big numbers at the top of the page */
+.tiles {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+}
+.tile {
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 16px 18px; background: var(--white);
+}
+.tile .value {
+  font-size: 40px; font-weight: 700; line-height: 1.1;
+  color: var(--wca-green);              /* brand rule: stat numbers are green */
+}
+.tile .label { color: var(--body); font-size: 15px; margin-top: 6px; }
+.tile .compare { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+/* Chart cards: one per Bulletin page. Head row (kicker + page tag), the Bulletin's
+   blue title, the body (side panel + chart), then the source line. */
+.card { border-top: 1px solid var(--rule); padding: 28px 0 12px; }
+.card .kicker {
+  color: var(--wca-green); font-weight: 600; font-size: 14px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.card h2 { margin-top: 2px; }
+.card .commentary { max-width: 70ch; }
+.card .source { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+
+/* The box a chart draws into. Chart.js fills it; the height is set here. */
+.chart-box { position: relative; height: 300px; }
+.chart-box.short { height: 220px; }
+.chart-box.tall  { height: 380px; }
+
+/* Two charts side by side. Stacks on phones. */
+.chart-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.chart-pair h3 { font-size: 15px; color: var(--fine); font-weight: 600; margin-bottom: 4px; }
+
+/* Chart legend written in HTML (clearer than a drawn one) */
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 4px; font-size: 14px; color: var(--fine); }
+.legend .swatch {
+  display: inline-block; width: 14px; height: 14px; border-radius: 3px;
+  vertical-align: -2px; margin-right: 6px;
+}
+
+/* Hover tooltip (one per page, moved to where the mouse is by charts.js) */
+.tooltip {
+  position: fixed; z-index: 30; pointer-events: none;
+  max-width: 260px; padding: 8px 10px; border-radius: 6px;
+  background: var(--ink); color: var(--white);
+  font-size: 13px; line-height: 1.4;
+  opacity: 0; transition: opacity 0.1s;
+}
+.tooltip.show { opacity: 1; }
+.tooltip strong { color: var(--white); }
+
+/* "About the data" */
+.about { border-top: 1px solid var(--rule); padding-top: 24px; }
+.about p { max-width: 75ch; font-size: 15px; }
+
+/* Footer */
+.page-footer { border-top: 1px solid var(--rule); margin-top: 36px; padding-top: 20px; color: var(--muted); font-size: 14px; }
+
+/* Hidden-but-readable text for screen readers; also the skip link until it is focused */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.skip-link:focus {
+  position: fixed; top: 8px; left: 8px; z-index: 40; width: auto; height: auto; clip: auto;
+  padding: 8px 12px; background: var(--white); color: var(--wca-blue); border: 2px solid var(--wca-blue); border-radius: 6px;
+}
+
+
+/* --------------------------------------------------------------------------
+   C. THE BULLETIN PAGE
+   -------------------------------------------------------------------------- */
+
+/* C1. Banner: the PDF's blue-to-green header, full width, with the white logo */
+.banner { height: var(--banner-h); }
+.banner-inner {
+  max-width: var(--page-width); height: 100%; margin: 0 auto; padding: 0 var(--gutter);
+  display: flex; align-items: center; gap: 20px;
+}
+.banner-logo { height: 46px; width: auto; display: block; flex: 0 0 auto; }
+.banner-title { font-size: 22px; font-weight: 600; line-height: 1.2; color: var(--db-banner-title); margin: 0; }
+.banner-title em { font-style: normal; font-weight: 700; color: var(--db-banner-title-em); }
+.banner-link {
+  margin-left: auto; flex: 0 0 auto;
+  color: var(--white); text-decoration: none; font-size: 14px; font-weight: 600;
+  padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 999px;
+}
+.banner-link:hover, .banner-link:focus { background: var(--white); color: var(--wca-blue); }
+
+/* C2. Chapter tabs. One row of five; sticks to the top of the window while you read.
+   Each tab is a <button role="tab">; charts.js shows the chosen chapter and keeps the
+   web address (#chapter-2, #map) in step, so a chapter can be linked to directly. */
+.chapter-nav {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--white); border-bottom: 1px solid var(--rule);
+  margin: 32px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter);   /* full width of the page column */
+}
+.chapter-nav .tabs {
+  display: flex; gap: 4px; height: var(--nav-h); margin: 0; padding: 0; list-style: none;
+  overflow-x: auto; scrollbar-width: none;                              /* phones: swipe sideways */
+}
+.chapter-nav .tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px;
+  height: 100%; padding: 0 12px; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--fine); white-space: nowrap;
+  border-bottom: 3px solid transparent; margin-bottom: -1px;             /* the underline sits on the nav's rule */
+}
+.tab:hover { color: var(--wca-blue); }
+.tab:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: -4px; border-radius: 4px; }
+.tab .num {
+  display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--wca-blue-tint); color: var(--wca-blue); font-size: 12px; font-weight: 700;
+}
+.tab .num svg { width: 13px; height: 13px; fill: currentColor; }
+.tab[aria-selected="true"] { color: var(--wca-blue); border-bottom-color: var(--wca-green); }
+.tab[aria-selected="true"] .num { background: var(--wca-blue); color: var(--white); }
+.tab .short { display: none; }                                           /* the short label, narrow windows only */
+
+/* A chapter panel that is not the chosen one is hidden */
+.chapter[hidden] { display: none; }
+.chapter { margin: 0; }
+
+/* C3. Chapter cover: the PDF's chapter page as a band (title) over a pale intro (text),
+   with silhouette art where the PDF has a photo. */
+.chapter-cover { margin-top: 28px; border-radius: var(--radius); overflow: hidden; }
+.cover-band {
+  background: var(--db-chapter-band); color: var(--white);
+  padding: 28px 32px; display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 28px; align-items: center;
+}
+.cover-band .kicker { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 6px; }
+.cover-band h2 { color: var(--white); font-size: 30px; font-weight: 700; margin: 0; }
+.cover-art {
+  width: 170px; height: 170px; border-radius: 50%; justify-self: end;
+  background: rgba(255, 255, 255, 0.14); display: grid; place-items: center; overflow: hidden;
+}
+.cover-art img { width: 100%; height: 100%; display: block; }                /* the crowd circle, full color */
+/* Single-color silhouettes come as SVG files that take the text color. A CSS mask paints
+   the file's shape in the element's color, so the same file can be white here and blue elsewhere. */
+.figure {
+  display: block; background-color: currentColor;
+  -webkit-mask: var(--figure) no-repeat center / contain; mask: var(--figure) no-repeat center / contain;
+}
+.cover-art .figure { width: 62%; height: 62%; color: var(--white); }
+.cover-intro { background: var(--db-panel); padding: 22px 32px 20px; }
+.cover-intro p { font-size: 17px; color: var(--body); max-width: 72ch; margin-bottom: 14px; }
+.part-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-block; padding: 6px 12px; border-radius: 999px;
+  background: var(--white); color: var(--db-title); text-decoration: none; font-size: 14px; font-weight: 600;
+  border: 1px solid var(--wca-blue-100);
+}
+.chip:hover, .chip:focus { background: var(--wca-blue); color: var(--white); border-color: var(--wca-blue); }
+
+/* C4. Part heading: "PART 1 · Population & Demographics" and the PDF's part text */
+.part { margin-top: 44px; scroll-margin-top: calc(var(--nav-h) + 16px); }   /* a jump to #part-1-2 lands below the tabs */
+.part-heading { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.part-heading .kicker { color: var(--wca-green); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.part-heading h3 { font-size: 22px; font-weight: 600; color: var(--db-title); margin: 0; }
+.part-text { color: var(--fine); max-width: 75ch; margin: 6px 0 0; }
+
+/* C5. Chart cards, the Bulletin way: head row, blue title with a rule, side panel + chart */
+.card { scroll-margin-top: calc(var(--nav-h) + 16px); }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.page-tag {
+  color: var(--muted); font-size: 13px; text-decoration: none;
+  padding: 2px 8px; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap;
+}
+a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(--wca-blue); }
+.card h2.db-title { font-size: 20px; margin-top: 8px; }
+.card-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px; align-items: stretch; }
+.card-body.full { grid-template-columns: minmax(0, 1fr); }                   /* pages with no side panel (1.11, 2.6, 2.17, 3.3) */
+.card-body .db-panel h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 10px; }
+.card-body .db-panel p { font-size: 16px; margin-bottom: 10px; }
+.card-body .db-panel p:last-child { margin-bottom: 0; }
+.card-body .db-panel strong { font-weight: 700; color: var(--ink); }
+.chart-area { min-width: 0; }
+.chart-area .chart-subtitle { font-size: 15px; color: var(--fine); margin: -6px 0 10px; }
+.chart-area h3 { font-size: 16px; font-weight: 600; color: var(--db-title); margin: 0 0 6px; }
+
+/* Where a chart will go but has not been built yet (the build goes chart by chart) */
+.chart-placeholder {
+  height: 100%; min-height: 220px; display: grid; place-items: center; text-align: center; padding: 16px;
+  border: 1px dashed var(--wca-blue-100); border-radius: var(--radius); background: var(--wca-blue-tint);
+  color: var(--muted); font-size: 14px; line-height: 1.4;
+}
+.chart-placeholder strong { color: var(--fine); display: block; margin-bottom: 2px; }
+
+/* C6. Quote cards (Bulletin pages 1.15 and 2.9): a figure and a speech bubble on pale blue */
+.quote-card {
+  margin-top: 28px; padding: 28px; border-radius: var(--radius); background: var(--db-panel);
+  display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 28px; align-items: center;
+}
+.quote-card .figure { width: 120px; height: 220px; color: var(--wca-blue); justify-self: center; }
+.bubble { position: relative; background: var(--white); border-radius: 28px; padding: 24px 30px; }
+.bubble::before {                                   /* the tail, pointing at the figure */
+  content: ""; position: absolute; left: -18px; top: 44px;
+  border: 12px solid transparent; border-right: 18px solid var(--white); border-left: 0;
+}
+.bubble h3 { color: var(--db-title); font-size: 18px; font-weight: 700; margin: 0 0 10px; }
+.bubble blockquote { margin: 0 0 12px; font-size: 20px; line-height: 1.45; color: var(--ink); }
+.bubble .who { font-size: 15px; color: var(--body); margin: 0; }
+.bubble .who strong { color: var(--ink); }
+.bubble .who em { color: var(--fine); }
+.quote-card .source { grid-column: 1 / -1; margin: 0; }
+
+/* C7. "Continue to the next chapter" */
+.continue { display: flex; justify-content: flex-end; margin: 36px 0 8px; }
+.btn-continue {
+  display: inline-block; padding: 10px 18px; border-radius: 6px; text-decoration: none;
+  background: var(--wca-blue); color: var(--white); font-size: 15px; font-weight: 600;
+}
+.btn-continue:hover, .btn-continue:focus { background: var(--wca-blue-700); color: var(--white); }
+
+/* C8. Footer, two columns: WCA and the Bulletin's credits */
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; color: var(--fine); }
+.footer-grid h3 { font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+.footer-grid p { margin-bottom: 6px; font-size: 14px; }
+.footer-line { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule); font-size: 13px; }
+
+
+/* --------------------------------------------------------------------------
+   D. STORY CARDS  (Layer 2)  ·  added when the sticky-scroll stories are built
+   E. COMMUNITY MAP (Layer 3)  ·  the template's map part C comes in here
+   -------------------------------------------------------------------------- */
+
+/* Until Layer 3: the map tab holds a short note in a panel */
+.map-placeholder {
+  margin-top: 20px; padding: 40px 24px; min-height: 320px; display: grid; place-items: center; text-align: center;
+  border: 1px dashed var(--wca-blue-100); border-radius: var(--radius); background: var(--wca-blue-tint); color: var(--muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   PHONES AND NARROW WINDOWS
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .tab .long { display: none; }        /* narrow windows show the short labels */
+  .tab .short { display: inline; }
+}
+
+@media (max-width: 900px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .cover-band { grid-template-columns: minmax(0, 1fr) 140px; }
+  .cover-art { width: 130px; height: 130px; }
+}
+
+@media (max-width: 700px) {
+  :root { --banner-h: 56px; --nav-h: 48px; }
+  .banner-inner { gap: 12px; }
+  .banner-logo { height: 34px; }
+  .banner-title { font-size: 15px; }
+  .banner-link { font-size: 12px; padding: 4px 10px; }
+  .tab { padding: 0 10px; }
+  .banner-link .long { display: none; }                   /* phones: the link reads "PDF" */
+  .card-body { grid-template-columns: minmax(0, 1fr); }   /* panel above the chart */
+  .cover-band { grid-template-columns: minmax(0, 1fr); padding: 22px 20px; }
+  .cover-art { display: none; }                            /* the art goes; the words stay */
+  .cover-band h2 { font-size: 24px; }
+  .cover-intro { padding: 18px 20px; }
+  .quote-card { grid-template-columns: 1fr; padding: 20px; }
+  .quote-card .figure { height: 140px; }
+  .bubble::before { display: none; }
+  .bubble blockquote { font-size: 18px; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 26px; }
+  .tiles { grid-template-columns: 1fr; }
+  .tile .value { font-size: 34px; }
+  .chart-pair { grid-template-columns: 1fr; }
+  .chart-box { height: 260px; }
+}

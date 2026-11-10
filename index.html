@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Children By the Numbers 2026 · Westchester Children's Association</title>
+<meta name="description" content="The interactive companion to Westchester Children's Association's 2026 Data Bulletin: population and family economics, child care and early education, child well-being, and youth ages 18 to 24 in Westchester County, with a community map.">
+
+<!-- Styles: everything is in styles.css (WCA colors, the Bulletin's colors and the font included). -->
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<!--
+  HOW THIS PAGE IS BUILT
+  ======================
+  Every number on this page comes from data/data.json; nothing is typed in by hand.
+    * The headline tiles and the charts are drawn by charts.js.
+    * Numbers inside sentences use <span data-fill="..."> and are filled in by charts.js,
+      so the words can never disagree with the data. The path inside data-fill points
+      into data.json, e.g. "headlines.0.value". A path that is not in data.json yet shows
+      as a red dotted dash, never as a wrong number.
+  The words themselves (titles, commentary, captions) live here and are edited here.
+  Text marked [PLACEHOLDER] is a first draft for Brandon to rewrite.
+
+  WHERE THE BUILD STANDS (2026-11-10, Layer 1 of 3)
+    Layer 1, this file: the page's frame. Banner, header, headline tiles, chapter tabs, chapter
+      covers and parts, one card per Bulletin page with its title, and the quote cards. The charts
+      themselves are placeholders and the side panels hold only their headings; both are filled in
+      chart by chart, when each chart's data block is added to data.json.
+    Layer 2 (to come): sticky-scroll stories for the selected charts.
+    Layer 3 (to come): the community map (the "Map" tab).
+
+  FIXED FACTS TYPED ON PURPOSE (not from the tables, so they are allowed in the text):
+    * The Bulletin's structure: four chapters, their parts, and each page's number (1.3, 2.11 ...)
+    * The chapter and part titles and introductions, copied from the Bulletin's chapter and part pages
+    * The two quotations (pages 1.15 and 2.9) and who said them
+    * WCA's address, phone and website; the Bulletin's team and funders (the Bulletin's last page)
+    * The link to the PDF report (PDF_URL in charts.js Settings; empty until the report is online)
+  Everything else that is a number comes from data.json.
+
+  CLAIMS TO RE-CHECK AFTER EVERY DATA UPDATE. The numbers refill themselves; these words don't.
+    * None yet: the commentary is added with each chart, and each claim is listed here when it is.
+
+  PAGE SECTIONS, top to bottom
+    1. Banner (the PDF's blue-to-green header)
+    2. Header and headline numbers (four tiles, one per chapter)
+    3. Chapter tabs
+    4. Chapter 1 · Population, Demographics & Family Economic Insecurity (pages 1.3 to 1.16)
+    5. Chapter 2 · Child Care & Early Education (pages 2.3 to 2.17)
+    6. Chapter 3 · Child Well-Being & Opportunity (pages 3.3 to 3.18)
+    7. Chapter 4 · Youth, Ages 18 to 24 (pages 4.3 to 4.10)
+    8. Community map (Layer 3)
+    9. About the data
+   10. Footer
+-->
+
+<a class="skip-link visually-hidden" href="#main">Skip to the content</a>
+
+<!-- ===================================================================
+     1. BANNER
+     =================================================================== -->
+<header class="banner db-banner">
+  <div class="banner-inner">
+    <img class="banner-logo" src="resources/brand/wca-logo-white.svg" alt="Westchester Children's Association">
+    <p class="banner-title">Children By the Numbers <em>2026 Data Bulletin</em></p>
+    <a class="banner-link" href="#about" title="[PLACEHOLDER] This will open the PDF report once it is online"><span class="long">The </span>PDF<span class="long"> report</span></a>
+  </div>
+</header>
+
+<div class="page" id="main">
+
+  <!-- ===================================================================
+       2. HEADER AND HEADLINE NUMBERS
+       charts.js fills the tiles from data.json "headlines". One tile per entry.
+       =================================================================== -->
+  <header class="page-header">
+    <div class="kicker">Westchester Children's Association · Data dashboard</div>
+    <h1>Children By the Numbers 2026</h1>
+    <p class="subtitle placeholder">
+      [PLACEHOLDER] The interactive companion to WCA's 2026 Data Bulletin: the report's four chapters,
+      with charts you can hover over for the numbers, and a map to look up your own community.
+    </p>
+    <hr class="rule-gradient">
+  </header>
+
+  <section id="headlines" aria-label="Headline numbers">
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+
+  <!-- ===================================================================
+       3. CHAPTER TABS
+       Five tabs: the four chapters and the map. charts.js shows one at a time
+       and keeps the web address in step (#chapter-2, #map).
+       =================================================================== -->
+  <nav class="chapter-nav" aria-label="Chapters">
+    <ul class="tabs" role="tablist">
+      <li role="presentation"><button class="tab" role="tab" id="tab-chapter-1" aria-controls="chapter-1" aria-selected="true">
+        <span class="num">1</span><span class="long">Population &amp; Families</span><span class="short">Population</span></button></li>
+      <li role="presentation"><button class="tab" role="tab" id="tab-chapter-2" aria-controls="chapter-2" aria-selected="false" tabindex="-1">
+        <span class="num">2</span><span class="long">Child Care &amp; Early Education</span><span class="short">Child care</span></button></li>
+      <li role="presentation"><button class="tab" role="tab" id="tab-chapter-3" aria-controls="chapter-3" aria-selected="false" tabindex="-1">
+        <span class="num">3</span><span class="long">Well-Being &amp; Opportunity</span><span class="short">Well-being</span></button></li>
+      <li role="presentation"><button class="tab" role="tab" id="tab-chapter-4" aria-controls="chapter-4" aria-selected="false" tabindex="-1">
+        <span class="num">4</span><span class="long">Youth 18 to 24</span><span class="short">Youth</span></button></li>
+      <li role="presentation"><button class="tab" role="tab" id="tab-map" aria-controls="map" aria-selected="false" tabindex="-1">
+        <span class="num" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span><span class="long">Community Map</span><span class="short">Map</span></button></li>
+    </ul>
+  </nav>
+
+
+  <!-- ===================================================================
+       4. CHAPTER 1 · Population, Demographics & Family Economic Insecurity
+       =================================================================== -->
+  <section class="chapter" id="chapter-1" role="tabpanel" aria-labelledby="tab-chapter-1">
+
+    <div class="chapter-cover">
+      <div class="cover-band">
+        <div>
+          <div class="kicker">Chapter 1</div>
+          <h2>Population, Demographics &amp; Family Economic Insecurity</h2>
+        </div>
+        <div class="cover-art"><img src="resources/silhouettes/crowd-circle.svg" alt=""></div>
+      </div>
+      <div class="cover-intro">
+        <p>This chapter explores demographic and economic trends, highlighting the growing financial pressures
+           facing families, including rising housing, child care, food, and healthcare costs.</p>
+        <div class="part-chips">
+          <a class="chip" href="#part-1-1">Part 1 · Population &amp; Demographics</a>
+          <a class="chip" href="#part-1-2">Part 2 · Family Economic Insecurity</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 1 -->
+    <div class="part" id="part-1-1">
+      <div class="part-heading"><span class="kicker">Part 1</span><h3>Population &amp; Demographics</h3></div>
+      <p class="part-text">Westchester's child and youth population is large but shrinking and becoming more diverse.
+         This part looks at the changing population demographics of the County's children.</p>
+    </div>
+
+    <article class="card" id="card-1-3">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
+        <span class="page-tag" data-page="1.3">Bulletin page 1.3</span>
+      </div>
+      <h2 class="db-title">Westchester County population, 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Westchester Population Breakdown</h3>
+          <p class="placeholder">[PLACEHOLDER] The page's "What We See" and "What We Do" text goes here when the chart is built, with every number filled from data.json.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.3</strong>Hero sentence, crowd illustration and donut (pattern P15), built in the next step</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-4">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
+        <span class="page-tag" data-page="1.4">Bulletin page 1.4</span>
+      </div>
+      <h2 class="db-title">Race and ethnicity of Westchester children and youth ages 0 to 24, 2014 vs 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>A Change in Demographics</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.4</strong>Paired bars by race group, 2014 lighter and 2024 full (pattern P2)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-5">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
+        <span class="page-tag" data-page="1.5">Bulletin page 1.5</span>
+      </div>
+      <h2 class="db-title">Births and young children in Westchester County</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Westchester's Youngest Population Is Shrinking</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 1.5</strong>Babies born: a pictogram row and a stat circle (P16 + P11); children under 5: a line with end labels (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Part 2 -->
+    <div class="part" id="part-1-2">
+      <div class="part-heading"><span class="kicker">Part 2</span><h3>Family Economic Insecurity</h3></div>
+      <p class="part-text">Part 2 tells the story of the affordability crisis our families are experiencing, highlighting
+         income gaps by family type, poverty concentrated in single-mother households, the rising cost of rent, child care,
+         and living expenses, and the stress from debt, food insecurity, and housing costs.</p>
+    </div>
+
+    <article class="card" id="card-1-7">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.7">Bulletin page 1.7</span>
+      </div>
+      <h2 class="db-title">Median income by family type, 2014 vs 2019 vs 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>The Relationship Between Family Type and Income</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.7</strong>Silhouette-labeled bars with year steps and the ALICE budget callouts (P1 + P2 + P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-8">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.8">Bulletin page 1.8</span>
+      </div>
+      <h2 class="db-title">Family composition of all children and of children below poverty, by race, 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Family Composition of All Children vs. Children Below Poverty</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 1.8</strong>Two panels of 100% stacked bars in family colors, "All races" in gray</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-9">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.9">Bulletin page 1.9</span>
+      </div>
+      <h2 class="db-title">Westchester poverty rates by race and ethnicity, 2022 vs 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Poverty Rates by Race &amp; Ethnicity</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 1.9</strong>Six small panels (one per group), 2022 lighter and 2024 full (P2)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-10">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.10">Bulletin page 1.10</span>
+      </div>
+      <h2 class="db-title">After rent and child care, what's left of monthly income? 2014 vs 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Rent and Child Care Consumes Paychecks for Some Parents</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.10</strong>Three donuts per year, with a 2014 / 2024 switch (P5)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-11">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.11">Bulletin page 1.11</span>
+      </div>
+      <h2 class="db-title">Families struggle with increased costs of living</h2>
+      <div class="card-body full">
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Table 1.11</strong>Icon table: 2014, 2024, the change, the most current figure in a highlighted column (P6)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-12">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.12">Bulletin page 1.12</span>
+      </div>
+      <h2 class="db-title">Inflation: the Consumer Price Index in New York-Newark-Jersey City</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Inflation is Creeping Back Up</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.12</strong>One blue line with notes at the peaks and a callout for the latest value (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-13">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.13">Bulletin page 1.13</span>
+      </div>
+      <h2 class="db-title">Other signs of distress: food insecurity, SNAP and health insurance premiums</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Other Signs of Distress</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 1.13</strong>Three charts: food insecurity and poverty by community (bars), SNAP recipients by year (area), ACA premiums New York vs US (lines)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-1-14">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.14">Bulletin page 1.14</span>
+      </div>
+      <h2 class="db-title">Homeless children in Westchester, two counts: NYSED and HUD, 2014 to 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Two Definitions, Two Very Different Counts</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.14</strong>Two lines with end labels and a callout explaining the two definitions (P7 + P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Page 1.15: a quotation (a fixed fact; see the comment at the top) -->
+    <aside class="quote-card" id="card-1-15" aria-label="Quotation, Bulletin page 1.15">
+      <div class="figure" style="--figure: url(resources/silhouettes/young-adult-standing.svg)" role="img" aria-label="Young adult standing (silhouette)"></div>
+      <div class="bubble">
+        <blockquote>“Couch hopping or couch surfing, which is frequently deployed by young people who are unstably housed,
+          is not considered homeless under all definitions equally.”</blockquote>
+        <p class="who"><strong>Marc Dones</strong>, <em>Social Justice Advocate and 2019 WCA Advocacy Breakfast Keynote Speaker</em></p>
+      </div>
+      <p class="source">Quoted on page 1.15 of the Bulletin.</p>
+    </aside>
+
+    <article class="card" id="card-1-16">
+      <div class="card-head">
+        <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
+        <span class="page-tag" data-page="1.16">Bulletin page 1.16</span>
+      </div>
+      <h2 class="db-title">Average annual credit card debt held by New York State individuals, 2010 to 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Credit Card Debt: Short-Term Survival vs. Long-Term Stability</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 1.16</strong>Blue bars by year with a rust callout for the increase (P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <div class="continue"><a class="btn-continue" href="#chapter-2">Continue to Chapter 2 →</a></div>
+  </section>
+
+
+  <!-- ===================================================================
+       5. CHAPTER 2 · Child Care & Early Education
+       =================================================================== -->
+  <section class="chapter" id="chapter-2" role="tabpanel" aria-labelledby="tab-chapter-2" hidden>
+
+    <div class="chapter-cover">
+      <div class="cover-band">
+        <div>
+          <div class="kicker">Chapter 2</div>
+          <h2>Child Care &amp; Early Education</h2>
+        </div>
+        <div class="cover-art"><div class="figure" style="--figure: url(resources/silhouettes/children-stroller.svg)" role="img" aria-label="Child pushing a stroller beside another child (silhouette)"></div></div>
+      </div>
+      <div class="cover-intro">
+        <p>A child's earliest years set the foundation for everything that follows, from academic readiness to long-term
+           health and economic mobility. This chapter examines how early childhood systems across Westchester County shape
+           outcomes, and where disparities in opportunity take root.</p>
+        <div class="part-chips">
+          <a class="chip" href="#part-2-1">Part 1 · Child Care</a>
+          <a class="chip" href="#part-2-2">Part 2 · Early Education</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 1 -->
+    <div class="part" id="part-2-1">
+      <div class="part-heading"><span class="kicker">Part 1</span><h3>Child Care</h3></div>
+      <p class="part-text">For families with young children, child care is an essential infrastructure and one of the largest
+         costs they face. Quality care is also more than coverage while parents work: it is where early learning begins.
+         This section starts with child care costs and who carries the heaviest burden, then looks at the programs meant to
+         lighten the load, before following children into early education.</p>
+    </div>
+
+    <article class="card" id="card-2-3">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.3">Bulletin page 2.3</span>
+      </div>
+      <h2 class="db-title">Average monthly cost of center-based infant care in Westchester, 2010 to 2026</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Infant Care Now Costs More Than $25K a Year</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.3</strong>Line with value labels and a rust callout for the increase (P7 + P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-4">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.4">Bulletin page 2.4</span>
+      </div>
+      <h2 class="db-title">Percentage of income spent on infant care by family type, 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Cost relative to family income</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.4</strong>Silhouette-labeled 100% bars with the 7% benchmark callout (P1 + P4 + P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-5">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.5">Bulletin page 2.5</span>
+      </div>
+      <h2 class="db-title">Tax credits for families with children</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Tax credits for families</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Table 2.5</strong>Federal and New York State credits, with the US and NY outline maps as row labels (P10b)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-6">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.6">Bulletin page 2.6</span>
+      </div>
+      <h2 class="db-title">Comparing child care supportive programs, 2025</h2>
+      <div class="card-body full">
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Table 2.6</strong>CCAP and the Westchester Works Scholarship: what each is, who qualifies, what it's worth, where it stands</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-7">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.7">Bulletin page 2.7</span>
+      </div>
+      <h2 class="db-title">Two families, two child care programs: what each pays, 2026</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>One family, two programs</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Cards 2.7</strong>Two family comparison cards with walking-family silhouettes (P13)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-8">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Child Care</div>
+        <span class="page-tag" data-page="2.8">Bulletin page 2.8</span>
+      </div>
+      <h2 class="db-title">Income eligibility limits for child care programs in Westchester, 2026</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Westchester Works Scholarship</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.8</strong>Income bands by household size: the CCAP limit and the Westchester Works range</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Page 2.9: a quotation (a fixed fact; see the comment at the top) -->
+    <aside class="quote-card" id="card-2-9" aria-label="Quotation, Bulletin page 2.9">
+      <div class="figure" style="--figure: url(resources/silhouettes/parent-holding-child.svg)" role="img" aria-label="Parent holding a young child (silhouette)"></div>
+      <div class="bubble">
+        <h3>A Parent's Perspective</h3>
+        <blockquote>“This scholarship isn't just a helping hand. It's a bridge that allows us to maintain our careers,
+          provide for our children, and continue to contribute to the local economy.”</blockquote>
+        <p class="who"><strong>Ivelisse Aquino</strong>, <em>Westchester Works Scholarship Parent</em></p>
+      </div>
+      <p class="source">Source: Westchester County Board of Legislators, Public Input Session on the Fiscal Year 2026 County Budget, public testimony transcript (2025).</p>
+    </aside>
+
+    <!-- Part 2 -->
+    <div class="part" id="part-2-2">
+      <div class="part-heading"><span class="kicker">Part 2</span><h3>Early Education</h3></div>
+      <p class="part-text">Quality early care and quality early education go hand in hand. This section starts at Grade 3, where
+         opportunity gaps are first measured, then looks back at the programs children pass through on the way there — Head Start,
+         Early Intervention and Universal Pre-K — to consider where these earlier investments will bring the most benefit.</p>
+    </div>
+
+    <article class="card" id="card-2-11">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.11">Bulletin page 2.11</span>
+      </div>
+      <h2 class="db-title">Comparing third grade proficiency in two school districts, 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Language Arts &amp; Math Proficiency: A Tale of Two Districts</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.11</strong>Yonkers vs Scarsdale bars with student figures and the district income notes</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-12">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.12">Bulletin page 2.12</span>
+      </div>
+      <h2 class="db-title">Early childhood programs before kindergarten</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Closing the gap starts before third grade</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Table 2.12</strong>Head Start, Early Intervention and Universal Pre-K: ages, what each is, who it's for, who runs it (P6)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-13">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.13">Bulletin page 2.13</span>
+      </div>
+      <h2 class="db-title">Head Start enrollment in New York State, 2014 to 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Head Start reaches fewer children each year</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.13</strong>Two lines (Head Start, Early Head Start) with end labels and the 2020 gap marked (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-14">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.14">Bulletin page 2.14</span>
+      </div>
+      <h2 class="db-title">Early Intervention exits at age-typical levels in Westchester County, 2015 to 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>About half of Westchester's Early Intervention children exit at age-typical levels</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.14</strong>Three outcome lines with first and last values (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-15">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.15">Bulletin page 2.15</span>
+      </div>
+      <h2 class="db-title">Early Intervention therapists in New York State, 2018 to 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Low pay is shrinking the Early Intervention workforce, and families wait longer for care</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.15</strong>Blue bars by year with value labels</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-16">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.16">Bulletin page 2.16</span>
+      </div>
+      <h2 class="db-title">Decline in age-typical levels for special education preschoolers in New York State, 2015 to 2023</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Fewer Preschoolers Exit Special Education at Age Typical Levels</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 2.16</strong>Three outcome lines with first and last values (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-2-17">
+      <div class="card-head">
+        <div class="kicker">Chapter 2 · Early Education</div>
+        <span class="page-tag" data-page="2.17">Bulletin page 2.17</span>
+      </div>
+      <h2 class="db-title">Universal Pre-K in Westchester County, 2020 through 2025</h2>
+      <div class="card-body full">
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 2.17</strong>Hero sentence, enrolled / not enrolled split bar (P4), the "25 of 40 districts" stat circle (P11) and the enrollment trend</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <div class="continue"><a class="btn-continue" href="#chapter-3">Continue to Chapter 3 →</a></div>
+  </section>
+
+
+  <!-- ===================================================================
+       6. CHAPTER 3 · Child Well-Being & Opportunity
+       =================================================================== -->
+  <section class="chapter" id="chapter-3" role="tabpanel" aria-labelledby="tab-chapter-3" hidden>
+
+    <div class="chapter-cover">
+      <div class="cover-band">
+        <div>
+          <div class="kicker">Chapter 3</div>
+          <h2>Child Well-Being &amp; Opportunity</h2>
+        </div>
+        <div class="cover-art"><div class="figure" style="--figure: url(resources/silhouettes/students-group-a.svg)" role="img" aria-label="Students reading, writing and talking (silhouettes)"></div></div>
+      </div>
+      <div class="cover-intro">
+        <p>This chapter examines how poverty and housing, child health and welfare, education, and youth justice shape
+           children's well-being and access to opportunity across Westchester County.</p>
+        <div class="part-chips">
+          <a class="chip" href="#part-3-1">Part 1 · Poverty &amp; Housing</a>
+          <a class="chip" href="#part-3-2">Part 2 · Child Health &amp; Welfare</a>
+          <a class="chip" href="#part-3-3">Part 3 · Education &amp; Opportunity</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 1 -->
+    <div class="part" id="part-3-1">
+      <div class="part-heading"><span class="kicker">Part 1</span><h3>Poverty &amp; Housing</h3></div>
+      <p class="part-text">Westchester is one of New York's wealthiest counties. Even so, about one in nine school-age children
+         lives below the federal poverty line, and nearly two thirds of them live in just four communities.</p>
+    </div>
+
+    <article class="card" id="card-3-3">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
+        <span class="page-tag" data-page="3.3">Bulletin page 3.3</span>
+      </div>
+      <h2 class="db-title">Four communities are home to nearly two-thirds of the school-aged children in poverty, 2024</h2>
+      <div class="card-body full">
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Map and table 3.3</strong>Westchester outline with the four communities highlighted and a stat circle (P10 + P11), beside the table</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-4">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
+        <span class="page-tag" data-page="3.4">Bulletin page 3.4</span>
+      </div>
+      <h2 class="db-title">Homeless students per 1,000 enrolled in Westchester schools, 2016 to 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Progress Erased: Homelessness Above Pre-Pandemic Levels</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.4</strong>Line with the pandemic period shaded and the moratorium callout (P7 + P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-5">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
+        <span class="page-tag" data-page="3.5">Bulletin page 3.5</span>
+      </div>
+      <h2 class="db-title">Homeless Westchester students by type of living situation, 2020 to 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>The Largest Group Isn't Counted as Homeless</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Table 3.5</strong>Living situations with counts and change, the rising rows highlighted (P6)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-6">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
+        <span class="page-tag" data-page="3.6">Bulletin page 3.6</span>
+      </div>
+      <h2 class="db-title">Homeless students per 1,000 enrolled by race and ethnicity, 2020 vs 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Black Students are 54x More Likely to Be Homeless than White Students</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.6</strong>Paired bars by race group with the change above each pair (P2)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-7">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
+        <span class="page-tag" data-page="3.7">Bulletin page 3.7</span>
+      </div>
+      <h2 class="db-title">Graduation for students experiencing homelessness, and where those students live, 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Homelessness Follows the Same Four Communities</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 3.7</strong>Two bars (all students vs experiencing homelessness) and the four-communities map with values (P10)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Part 2 -->
+    <div class="part" id="part-3-2">
+      <div class="part-heading"><span class="kicker">Part 2</span><h3>Child Health &amp; Welfare</h3></div>
+      <p class="part-text">Data trends do not show what children experienced. Often, when a legal standard changes, the data will
+         change — but that does not account for how children are impacted. For example, Child Protective Services findings fell
+         after the evidentiary standard changed in 2022, while there was a rise in domestic violence records after 2022 — but
+         neither data set provides a measure of how many children were harmed and in what way. Thus, in this part you'll find
+         that we present each trend twice, first to show the change and then to show the impact.</p>
+    </div>
+
+    <article class="card" id="card-3-9">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
+        <span class="page-tag" data-page="3.9">Bulletin page 3.9</span>
+      </div>
+      <h2 class="db-title">Percentage of child abuse reports substantiated, Westchester, 2005 to 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>After a Decade of Decline, Abuse Findings Are Rising</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.9</strong>Line with the 2022 standard change marked and a stat circle for the rise (P7 + P11)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-10">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
+        <span class="page-tag" data-page="3.10">Bulletin page 3.10</span>
+      </div>
+      <h2 class="db-title">Domestic violence reports by relationship, Westchester County, 2012 to 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Domestic Violence Reports Are Up 53% Since 2022</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.10</strong>Two lines (intimate partner, other family) with end labels and a stat circle (P7 + P11)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-11">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
+        <span class="page-tag" data-page="3.11">Bulletin page 3.11</span>
+      </div>
+      <h2 class="db-title">Share of foster care days by placement setting, Westchester County, 2018, 2021 and 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Relatives Are Now the Largest Source of Foster Care</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.11</strong>100% stacked bars for three years with two rust callouts (P3)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-12">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
+        <span class="page-tag" data-page="3.12">Bulletin page 3.12</span>
+      </div>
+      <h2 class="db-title">Emergency department visits for self-harm by age, Westchester County, 2022</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Ages 10 to 19 Account for 42% of Self-Harm Visits</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart. The source table is not in the warehouse yet (MISSING_DATA item 9).</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.12</strong>Horizontal bars by age group, ages 10-19 in rust, with the 988 support line (P9)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-13">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
+        <span class="page-tag" data-page="3.13">Bulletin page 3.13</span>
+      </div>
+      <h2 class="db-title">Students classified as overweight or obese, by school district, Westchester County, 2024-2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Where Hardship Rises, So Does Childhood Weight</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.13</strong>Scatter of districts against economic disadvantage, with a trend line</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Part 3 -->
+    <div class="part" id="part-3-3">
+      <div class="part-heading"><span class="kicker">Part 3</span><h3>Education &amp; Opportunity</h3></div>
+      <p class="part-text">This section follows one question through a child's school years: does the gap that opens in the early
+         grades close, narrow, or simply change shape? The answer turns out to depend entirely on which measure you look at, and
+         the diploma is the most forgiving of them.</p>
+    </div>
+
+    <article class="card" id="card-3-15">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
+        <span class="page-tag" data-page="3.15">Bulletin page 3.15</span>
+      </div>
+      <h2 class="db-title">English and AP scores against economic status in Westchester school districts</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Achievement Tracks Economic Status Across Westchester</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.15</strong>Five districts, two bars each (English proficiency, AP scores), ordered by economic disadvantage</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-16">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
+        <span class="page-tag" data-page="3.16">Bulletin page 3.16</span>
+      </div>
+      <h2 class="db-title">Grades 3-8 math, Regents and AP exams, Westchester school districts, 2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>The Tests Show a Gap the Diploma Hides</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 3.16</strong>Two lines with the gap shaded and a rust "difference" box at each point (P8)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-17">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
+        <span class="page-tag" data-page="3.17">Bulletin page 3.17</span>
+      </div>
+      <h2 class="db-title">Chronic absenteeism by student group and by race and ethnicity, Westchester County, 2024-2025</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Chronic Absence Tracks Barriers, Not Rule-Breaking</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 3.17</strong>Two sets of horizontal bars with the "All students" reference line (P9)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-3-18">
+      <div class="card-head">
+        <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
+        <span class="page-tag" data-page="3.18">Bulletin page 3.18</span>
+      </div>
+      <h2 class="db-title">Student suspensions by race and ethnicity, and the districts with the highest rates</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Students of Color are Suspended More Often Than Their Classmates</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 3.18</strong>Race bars with the countywide reference line; district bars (P9)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <div class="continue"><a class="btn-continue" href="#chapter-4">Continue to Chapter 4 →</a></div>
+  </section>
+
+
+  <!-- ===================================================================
+       7. CHAPTER 4 · Youth, Ages 18 to 24
+       =================================================================== -->
+  <section class="chapter" id="chapter-4" role="tabpanel" aria-labelledby="tab-chapter-4" hidden>
+
+    <div class="chapter-cover">
+      <div class="cover-band">
+        <div>
+          <div class="kicker">Chapter 4</div>
+          <h2>Youth, Ages 18 to 24</h2>
+        </div>
+        <div class="cover-art"><div class="figure" style="--figure: url(resources/silhouettes/young-adult-standing.svg)" role="img" aria-label="Young adult standing (silhouette)"></div></div>
+      </div>
+      <div class="cover-intro">
+        <p>Westchester Children's Association not only focuses on our youngest children but also on the emerging adults in our
+           community ages 18 to 24. This age group faces unique challenges as they have aged out of many of the resources for
+           which they were eligible when they were younger.</p>
+        <div class="part-chips">
+          <a class="chip" href="#part-4-1">Part 1 · Employment &amp; Earnings</a>
+          <a class="chip" href="#part-4-2">Part 2 · Education &amp; Disconnected Youth</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 1 -->
+    <div class="part" id="part-4-1">
+      <div class="part-heading"><span class="kicker">Part 1</span><h3>Employment &amp; Earnings</h3></div>
+      <p class="part-text">Westchester's unemployment rate is <span data-fill="charts.youth_unemployment.westchester_25_plus_pct" data-format="pct"></span>
+         for residents 25 and older. For young adults ages 20 to 24, it is <span data-fill="charts.youth_unemployment.westchester_20_24_pct" data-format="pct"></span>,
+         and most of the recent rise came from young men. This section asks who is working, what they earn, and whether a
+         full-time paycheck covers the cost of living here.</p>
+    </div>
+
+    <article class="card" id="card-4-3">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
+        <span class="page-tag" data-page="4.3">Bulletin page 4.3</span>
+      </div>
+      <h2 class="db-title">Westchester County youth unemployment rate, ages 20 to 24, 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>This Age Group is 3x More Likely to be Unemployed</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 4.3</strong>Three nested tiles: Westchester 20-24, New York State 20-24, Westchester 25 and over (P12)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-4-4">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
+        <span class="page-tag" data-page="4.4">Bulletin page 4.4</span>
+      </div>
+      <h2 class="db-title">Youth unemployment by gender, ages 20 to 24, 2015-2019 vs 2020-2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Young Men Fall Furthest Behind</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 4.4</strong>Paired bars (men, women, all), earlier period lighter, "All" in gray (P2)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-4-5">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
+        <span class="page-tag" data-page="4.5">Bulletin page 4.5</span>
+      </div>
+      <h2 class="db-title">Can a minimum wage worker afford rent in Westchester County?</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Priced Out on a Full-Time Paycheck</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "WCA Advocates for" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 4.5</strong>Three solid tiles (studio rent, one-bedroom rent, what minimum wage affords) and earnings-by-age bars with the rent line (P12 + P9)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <!-- Part 2 -->
+    <div class="part" id="part-4-2">
+      <div class="part-heading"><span class="kicker">Part 2</span><h3>Education &amp; Disconnected Youth</h3></div>
+      <p class="part-text">Post-high school educational attainment is not consistently tracked; however, in this section we
+         attempt to follow young adults into their early 20s. We noticed community college enrollment has fallen, and there's
+         a persistent number of disconnected youth who are neither working nor enrolled in higher education. Also noteworthy:
+         18- to 24-year-olds make up nearly one in seven adult arrests.</p>
+    </div>
+
+    <article class="card" id="card-4-7">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
+        <span class="page-tag" data-page="4.7">Bulletin page 4.7</span>
+      </div>
+      <h2 class="db-title">Educational achievement of Westchester County youth, 2020-2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>The Credential Gap</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 4.7</strong>High school diplomas (ages 18-22) and degrees (ages 22-24) as split bars or figure rows (P4 or P16)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-4-8">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
+        <span class="page-tag" data-page="4.8">Bulletin page 4.8</span>
+      </div>
+      <h2 class="db-title">Fall enrollment, Westchester Community College, 2015 to 2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>A Narrowing On-Ramp</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 4.8</strong>Line with every value written on it (P7)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-4-9">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
+        <span class="page-tag" data-page="4.9">Bulletin page 4.9</span>
+      </div>
+      <h2 class="db-title">Young adults ages 18 to 24: share of adults, of adult arrests, and of young people in state custody</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>Overrepresented at Every Stage</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Charts 4.9</strong>Two pairs of bars: population share (light step) against arrest share and custody share (full step)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <article class="card" id="card-4-10">
+      <div class="card-head">
+        <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
+        <span class="page-tag" data-page="4.10">Bulletin page 4.10</span>
+      </div>
+      <h2 class="db-title">Westchester youth ages 16 to 24 who are disconnected, by race and ethnicity, 2015-2019 vs 2020-2024</h2>
+      <div class="card-body">
+        <aside class="db-panel">
+          <h3>One in Eight, Left on the Sidelines</h3>
+          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+        </aside>
+        <div class="chart-area">
+          <div class="chart-placeholder"><div><strong>Chart 4.10</strong>Paired bars by race group, earlier period lighter, "All" in gray (P2)</div></div>
+        </div>
+      </div>
+      <p class="source">Source: added with the chart.</p>
+    </article>
+
+    <div class="continue"><a class="btn-continue" href="#map">Explore the community map →</a></div>
+  </section>
+
+
+  <!-- ===================================================================
+       8. COMMUNITY MAP  (Layer 3)
+       Westchester's towns and villages, school districts and ZIP codes, with the
+       Bulletin's measures to pick from. The template's map section comes in here.
+       =================================================================== -->
+  <section class="chapter" id="map" role="tabpanel" aria-labelledby="tab-map" hidden>
+    <div class="chapter-cover">
+      <div class="cover-band">
+        <div>
+          <div class="kicker">Community map</div>
+          <h2>Westchester, community by community</h2>
+        </div>
+      </div>
+      <div class="cover-intro">
+        <p class="placeholder">[PLACEHOLDER] Pick a measure, then hover over or click a community: towns and villages, school districts or
+           ZIP codes, with Westchester as the comparison. Built for policymakers, partner organizations, grant writers and coalitions
+           to pull specific figures and see them in the county's geography.</p>
+      </div>
+    </div>
+    <div class="map-placeholder"><div><strong>Layer 3</strong><br>The interactive map is built after the chapters' charts.</div></div>
+  </section>
+
+
+  <!-- ===================================================================
+       9. ABOUT THE DATA
+       =================================================================== -->
+  <section class="about" id="about">
+    <h2>About the data</h2>
+    <p class="placeholder">
+      <strong>Source.</strong> [PLACEHOLDER] Every number on this page comes from the publishers named under each chart
+      (the U.S. Census Bureau's American Community Survey, the New York State Education Department, the Child Care
+      Council of Westchester and the others), rebuilt by WCA from the publishers' own files and checked against the
+      2026 Data Bulletin.
+    </p>
+    <p class="placeholder">
+      <strong>Estimates.</strong> [PLACEHOLDER] Census figures are survey estimates with a margin of error; small
+      places and small groups have wide margins, and a one-year change inside the margin is not a real change.
+    </p>
+    <p class="placeholder">
+      <strong>Rounding and definitions.</strong> [PLACEHOLDER] Rates round half up. Where "Westchester" means the school
+      districts added together rather than the county as a whole, the chart's source line says so.
+    </p>
+    <p class="muted">
+      Data file built <span data-fill="meta.generated" data-format="raw"></span>.
+    </p>
+  </section>
+
+
+  <!-- ===================================================================
+       10. FOOTER
+       =================================================================== -->
+  <footer class="page-footer">
+    <div class="footer-grid">
+      <div>
+        <h3>Westchester Children's Association</h3>
+        <p>470 Mamaroneck Avenue, Suite 304, White Plains, NY 10605 · (914) 946-7676 · <a href="https://wca4kids.org">wca4kids.org</a></p>
+        <p>Questions about the data, or an error to report: <a href="mailto:bwashington@wca4kids.org">bwashington@wca4kids.org</a></p>
+      </div>
+      <div>
+        <h3>The 2026 Data Bulletin team</h3>
+        <p>Project leads: Limarie Cabrera and Brandon Washington · Editing and design: Tara Framer, Tara Framer Design ·
+           Editorial input and review: Adrianna Jones, Angel Gray, Gabriella Nanna, Nora Nicholson, Adam Rabinovitch ·
+           Data collection: Brandon Washington and Gabriella Fideleo</p>
+        <p>Made possible by The Elias Foundation, The Frog Rock Foundation, Jandon Foundation, Robin Hood Foundation,
+           and United Way of Westchester and Putnam.</p>
+      </div>
+    </div>
+    <p class="footer-line">© Westchester Children's Association · [PLACEHOLDER: licence for reuse, with attribution to WCA and the original data sources]</p>
+  </footer>
+
+</div>
+
+<!-- Scripts: the chart library first, then this page's code. -->
+<script src="resources/vendor/chart.umd.js"></script>
+<script src="charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "dashboard": "2026 Data Bulletin dashboard",
+    "generated": "2026-11-10 12:34 (local time)",
+    "built_by": "build_data.py",
+    "sources": {
+      "CUR-0014": {
+        "file": "CUR-0014_poverty-rate-by-age-and-race_westchester-places.csv",
+        "rows": 258795,
+        "md5": "31e66d473c01236e934ac872c66bc826"
+      },
+      "CUR-0016": {
+        "file": "CUR-0016_population-by-age-and-race_westchester.csv",
+        "rows": 244,
+        "md5": "7be2caff2f8c7ee9d249723b09b9977f"
+      },
+      "CUR-0023": {
+        "file": "CUR-0023_infant-care-cost-and-share-of-income_westchester.csv",
+        "rows": 194,
+        "md5": "dfdb25d8fc5f2a21293597ce0c2717e8"
+      },
+      "CUR-0043": {
+        "file": "CUR-0043_attainment-race-and-disconnected-youth-by-puma_westchester.csv",
+        "rows": 238,
+        "md5": "c9b44a6d7c5cec982c033a8b3e72071e"
+      }
+    }
+  },
+  "headlines": [
+    {
+      "id": "children_and_youth",
+      "chapter": 1,
+      "label": "children and youth ages 0 to 24 live in Westchester",
+      "value": 295488,
+      "unit": "count",
+      "compare": {
+        "label": "of all residents, 2024",
+        "value": 29.4,
+        "unit": "%"
+      },
+      "year": 2024,
+      "source": "U.S. Census Bureau, American Community Survey 1-year estimates, table B01001 (CUR-0016, people and share_pct)"
+    },
+    {
+      "id": "infant_care_share",
+      "chapter": 2,
+      "label": "of a single mother's income goes to a year of infant care",
+      "value": 39.2,
+      "unit": "%",
+      "compare": {
+        "label": "federal affordability benchmark",
+        "value": 7,
+        "unit": "%",
+        "decimals": 0
+      },
+      "year": 2024,
+      "source": "Child Care Council of Westchester (cost of care); ACS 1-year table B19126 (CUR-0023, infant_care_share_of_income_pct)"
+    },
+    {
+      "id": "poverty_four_communities",
+      "chapter": 3,
+      "label": "of school-aged children in poverty live in four communities",
+      "value": 65.7,
+      "unit": "%",
+      "compare": {
+        "text": "Yonkers, Mount Vernon, New Rochelle and White Plains, 2020-2024",
+        "value": 11066,
+        "of": 16836,
+        "unit": "count"
+      },
+      "period": "2020-2024",
+      "source": "U.S. Census Bureau, ACS 5-year estimates, table B17001, ages 5-17 (CUR-0014, below_poverty)"
+    },
+    {
+      "id": "disconnected_youth",
+      "chapter": 4,
+      "label": "youth ages 16 to 24 are neither working nor in school",
+      "value": 11.9,
+      "unit": "%",
+      "display": "1 in 8",
+      "compare": {
+        "text": "11.9% · 13,239 young people, 2020-2024",
+        "value": 11.9,
+        "unit": "%",
+        "count": 13239,
+        "of": 111318
+      },
+      "period": "2020-2024",
+      "source": "U.S. Census Bureau, ACS 5-year Public Use Microdata Sample (CUR-0043, people_with_outcome / people_in_group)"
+    }
+  ],
+  "charts": {}
+}
