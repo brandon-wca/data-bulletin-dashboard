@@ -23,11 +23,12 @@
   The words themselves (titles, commentary, captions) live here and are edited here.
   Text marked [PLACEHOLDER] is a first draft for Brandon to rewrite.
 
-  WHERE THE BUILD STANDS (2026-11-18)
+  WHERE THE BUILD STANDS (2026-11-19)
     Layer 1, the page's frame: done. Banner, header, headline tiles, chapter tabs, chapter covers and
       parts, one card per Bulletin page, the quote cards.
     Charts, chapter by chapter: chapter 1 (pages 1.3 to 1.16) is in, with the Bulletin's own text in
-      every side panel. Chapters 2 to 4 still show a placeholder where each chart will go.
+      every side panel, and is in design review (each card is being brought closer to the PDF).
+      Chapters 2 to 4 still show a placeholder where each chart will go.
     Layer 2 (to come): sticky-scroll stories for the selected charts.
     Layer 3 (to come): the community map (the "Map" tab).
 
@@ -39,11 +40,17 @@
     * The two quotations (pages 1.15 and 2.9) and who said them
     * WCA's address, phone and website; the Bulletin's team and funders (the Bulletin's last page)
     * The link to the PDF report (PDF_URL in charts.js Settings; empty until the report is online)
+    * Page 1.5: the line of children under 5 shows the first year, the latest year and one year in
+      between, as the Bulletin does. The year in between (2016) and the words under the first number
+      ("Children Under 5") are in charts.js Settings.
     * Page 1.7: the two callouts say which households the ALICE budgets are for ("two adults and two
       children", "one adult and one child"). They must match ALICE_BUDGETS in build_data.py Settings.
     * Page 1.12: "through 2023 and much of 2024" and "early 2026". The month whose value fills that
       sentence is INFLATION_QUOTED_MONTH in build_data.py Settings.
-    * Page 1.14: "Policies implemented in 2020 ... lifted at the start of 2022".
+    * Page 1.13: the names written in the bars and on the lines ("Food Insecure Population", "Poverty
+      Population", "New York", "USA") are the Bulletin's, in charts.js Settings.
+    * Page 1.14: "Policies implemented in 2020 ... lifted at the start of 2022"; and the two agencies'
+      full names, written on the chart.
     * What the measures mean, in the notes under the charts and in "About the data": low income (below
       twice the federal poverty level), the two definitions of homelessness, the ALICE budget, the
       benchmark premium, what each price is.
@@ -52,7 +59,8 @@
   CLAIMS TO RE-CHECK AFTER EVERY DATA UPDATE. The numbers refill themselves; these words don't.
     * 1.3: "Nearly 3 in 10"; "more than one in five"
     * 1.4: "more diverse over the past decade"; "still the largest group but declining"; "a growing share"
-    * 1.5: "decline" in both circles; "has Gone Down"; "Fewer Young Children"; "state and national trends"
+    * 1.5: "decline" in both circles, and the arrows in them, which point DOWN; "has Gone Down"; "Fewer
+      Young Children"; "state and national trends"
       (build_data.py prints a CHECK line if either count stops falling)
     * 1.7: "roughly three to four times" (2.7 and 3.8 times in 2024); "all groups experienced increased
       income"; "married couples captured the largest absolute gains"
@@ -64,8 +72,8 @@
     * 1.12: "peaking"; "before declining"; "increasing again"; "early 2026"
     * 1.13: "more than doubled"; "tops 13–16% in Yonkers, Mount Vernon, and New Rochelle"; "jumped"
     * 1.14: "a rise back to the usual levels"; "thousands of children"
-    * 1.16: "increased" and "increase" (the callout), "Increasing" (the text). build_data.py prints a
-      CHECK line if the balance stops rising.
+    * 1.16: "increased" and "increase" (the box and its arrow, which points UP), "Increasing" (the text).
+      build_data.py prints a CHECK line if the balance stops rising.
     * About the data: "no estimates for 2020"; "October 2025 was never published"; "January 2015 stands
       in for 2014" (build_data.py prints a CHECK line while that is so).
     * Headline tiles are numbers only; nothing to re-check.
@@ -168,7 +176,7 @@
          This part looks at the changing population demographics of the County's children.</p>
     </div>
 
-    <!-- Page 1.3. The donut is drawn by charts.js (drawPopulation) from data.json "s1_3_population". -->
+    <!-- Page 1.3. The pie is drawn by charts.js (drawPopulation) from data.json "s1_3_population". -->
     <article class="card" id="card-1-3">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
@@ -180,7 +188,7 @@
           <h3>Westchester Population Breakdown</h3>
           <p><strong>What We See:</strong> Nearly 3 in 10 Westchester residents
              (<span data-fill="charts.s1_3_population.children_and_youth.share_pct" data-format="pct"></span>) are children
-             and youth ages 0–24, and more than one in five of them
+             and youth ages <span class="keep-together">0–24</span>, and more than one in five of them
              (<span data-fill="charts.s1_3_population.low_income.share_pct" data-format="pct"></span>) are considered
              low-income.</p>
           <p><strong>What We Do:</strong> WCA continues to advocate for expanded tax credits, affordable child care,
@@ -192,20 +200,24 @@
                children and youth ages 0 to 24 in Westchester County, New York</p>
             <img class="hero-art" src="resources/silhouettes/crowd-circle.svg" alt="">
           </div>
-          <div class="donut-row">
-            <div class="chart-box donut"><canvas id="chart-population"></canvas></div>
-            <div class="donut-notes">
+          <div class="pie-row" id="pie-population">
+            <!-- charts.js draws the slices into "pie" and puts these two labels on them -->
+            <div class="pie">
+              <span class="pie-label" data-slice="older">Westchester's<br>Population<br>over 24</span>
+              <span class="pie-label" data-slice="young">Children<br>&amp; Youth<br>ages 0–24</span>
+            </div>
+            <div class="pie-notes">
               <h3>Westchester County Population</h3>
               <p class="chart-subtitle">Per <span data-fill="charts.s1_3_population.year" data-format="raw"></span> American Community Survey</p>
-              <p class="note-box"><span class="swatch" style="background: var(--wca-blue)"></span>
+              <p class="note-box" data-slice="young"><span class="swatch young"></span>
                 <span><span data-fill="charts.s1_3_population.children_and_youth.share_pct" data-format="pct"></span> of
                 Westchester's population are children and youth ages 0 to 24</span></p>
-              <p class="note-box"><span class="swatch hatched"></span>
+              <p class="note-box" data-slice="low"><span class="swatch hatched"></span>
                 <span><span data-fill="charts.s1_3_population.low_income.share_pct" data-format="pct"></span> of those
                 children and youth are considered Low Income</span></p>
-              <p class="legend"><span class="legend-item"><span class="swatch" style="background: var(--db-remainder)"></span>Westchester's
-                population over 24 (<span data-fill="charts.s1_3_population.older_residents.share_pct" data-format="pct"></span>)</span></p>
             </div>
+            <!-- a line from each boxed statement to its piece of the pie, drawn by charts.js -->
+            <svg class="pie-lines" aria-hidden="true"></svg>
           </div>
         </div>
       </div>
@@ -232,7 +244,6 @@
              responsive systems.</p>
         </aside>
         <div class="chart-area">
-          <div class="legend" id="legend-race"></div>
           <div class="chart-box"><canvas id="chart-race"></canvas></div>
           <p class="note placeholder">[PLACEHOLDER] Each bar is the group's share of all residents ages 0 to 24. Hispanic or
             Latino residents can be of any race, so the groups overlap and the shares pass 100% together.</p>
@@ -241,8 +252,10 @@
       <p class="source">Source: <span data-fill="charts.s1_4_race_ethnicity.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.5. The row of baby figures and the line are drawn by charts.js (drawBirthsAndYoungChildren)
-         from "s1_5_births_and_young_children"; the two circles are plain text filled from the same block. -->
+    <!-- Page 1.5. The rows of baby figures and the line are drawn by charts.js (drawBirthsAndYoungChildren)
+         from "s1_5_births_and_young_children"; the two circles are plain text filled from the same block.
+         A circle with the class "arrow-down" gets the Bulletin's white arrow pointing down, with its
+         words written on the arrow (styles.css, "Stat circle"). -->
     <article class="card" id="card-1-5">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
@@ -265,7 +278,7 @@
               <div class="pictogram" id="pictogram-births"></div>
               <p class="note">Each figure stands for <span data-fill="charts.s1_5_births_and_young_children.births.per_figure"></span> babies.</p>
             </div>
-            <p class="stat-circle">
+            <p class="stat-circle arrow-down births">
               <span>There was a</span>
               <strong data-fill="charts.s1_5_births_and_young_children.births.decline_pct" data-format="pct"></strong>
               <span>decline in babies born</span>
@@ -275,8 +288,8 @@
           </div>
 
           <h3>Fewer Young Children Live in Westchester</h3>
-          <div class="with-circle circle-first">
-            <p class="stat-circle">
+          <div class="with-circle circle-first fills">
+            <p class="stat-circle arrow-down under-5">
               <strong data-fill="charts.s1_5_births_and_young_children.under_5.decline_pct" data-format="pct"></strong>
               <span>decline in children under 5</span>
               <small>(<span data-fill="charts.s1_5_births_and_young_children.under_5.first.year" data-format="raw"></span> to
@@ -298,8 +311,9 @@
     </div>
 
     <!-- Page 1.7. The words (family names, the two callouts) are here; charts.js (drawIncomeByFamilyType)
-         draws the bars into each "fb-plot" and puts the callouts and dashed lines at the budgets' place on
-         the scale, from "s1_7_income_by_family_type". -->
+         draws the bars into each "fb-plot", the gray lines into "fb-grid" and the scale into "fb-axis", and
+         puts the callouts and dashed lines at the budgets' place on the scale, from
+         "s1_7_income_by_family_type". -->
     <article class="card" id="card-1-7">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -321,6 +335,7 @@
         </aside>
         <div class="chart-area">
           <div class="family-bars" id="chart-income">
+            <div class="fb-grid" aria-hidden="true"></div>
             <div class="fb-callout" data-budget="0">
               <p class="db-callout"><strong data-fill="charts.s1_7_income_by_family_type.budgets.0.amount" data-format="dollars"></strong>
                 That's the ALICE Survival Budget (<span data-fill="charts.s1_7_income_by_family_type.budgets.0.data_year" data-format="raw"></span>)
@@ -350,7 +365,12 @@
       <p class="source">Source: <span data-fill="charts.s1_7_income_by_family_type.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.8. Two sets of bars drawn by charts.js (drawFamilyComposition) from "s1_8_family_composition". -->
+    <!-- Page 1.8. Two sets of bars drawn by charts.js (drawFamilyComposition) from "s1_8_family_composition".
+         The key above them is a row of buttons (the words on the buttons are here). "All races" folds
+         each chart into one tall bar; a family type keeps only that type's part of every bar, lined up on
+         the left, with the groups ordered from the smallest share to the largest. Pressing the same
+         button again brings the whole chart back. -->
+
     <article class="card" id="card-1-8">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -374,17 +394,20 @@
              households, reinforcing that family structure and income gaps lead to child economic insecurity.</p>
         </aside>
         <div class="chart-area">
-          <div class="legend family-legend">
-            <span class="legend-item married"><span class="figure" style="--figure: url(resources/silhouettes/family-married-couple.svg)" aria-hidden="true"></span><span class="swatch"></span>Married Couples</span>
-            <span class="legend-item father"><span class="figure" style="--figure: url(resources/silhouettes/family-single-father.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Father</span>
-            <span class="legend-item mother"><span class="figure" style="--figure: url(resources/silhouettes/family-single-mother.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Mother</span>
+          <div class="view-switch" id="composition-views" role="group" aria-label="Choose what the two charts show">
+            <button type="button" class="view-button" data-view="all" aria-pressed="false">All races</button>
+            <button type="button" class="view-button married" data-view="married" aria-pressed="false"><span class="figure" style="--figure: url(resources/silhouettes/family-married-couple.svg)" aria-hidden="true"></span><span class="swatch"></span>Married Couples</button>
+            <button type="button" class="view-button father" data-view="father" aria-pressed="false"><span class="figure" style="--figure: url(resources/silhouettes/family-single-father.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Father</button>
+            <button type="button" class="view-button mother" data-view="mother" aria-pressed="false"><span class="figure" style="--figure: url(resources/silhouettes/family-single-mother.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Mother</button>
           </div>
+          <p class="view-hint placeholder">[PLACEHOLDER] Click a button to focus both charts on it. Click it again to bring everything back.</p>
           <h3>Westchester Families With Children At or Above Poverty Level by Race,
             <span data-fill="charts.s1_8_family_composition.year" data-format="raw"></span></h3>
           <div class="stack-chart" id="chart-composition-above"></div>
           <h3>Westchester Family Composition Below Poverty Level, by Race,
             <span data-fill="charts.s1_8_family_composition.year" data-format="raw"></span></h3>
           <div class="stack-chart" id="chart-composition-below"></div>
+          <p class="visually-hidden" id="composition-status" aria-live="polite"></p>
           <p class="note" id="note-composition-five-year" hidden>*Five-Year Estimates used when One-Year Estimates were not available.</p>
           <p class="note placeholder">[PLACEHOLDER] These are shares of families with children, not of children. Below the
             poverty level the samples are small: hover over a bar for its margin of error.</p>
@@ -393,19 +416,21 @@
       <p class="source">Source: <span data-fill="charts.s1_8_family_composition.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.9. Six small charts drawn by charts.js (drawPovertyByRace) from "s1_9_poverty_by_race". -->
+    <!-- Page 1.9. Six small charts drawn by charts.js (drawPovertyByRace) from "s1_9_poverty_by_race".
+         The key is two buttons, one per year (charts.js writes them, as the years come from the data):
+         pressing one, or clicking any bar of that year, shows that year alone in all six charts. -->
     <article class="card" id="card-1-9">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.9">Bulletin page 1.9</span>
       </div>
-      <h2 class="db-title">Westchester poverty rates by race and ethnicity,
+      <h2 class="db-title">Westchester poverty rates by race, ethnicity and age group,
         <span data-fill="charts.s1_9_poverty_by_race.years.0" data-format="raw"></span> vs
         <span data-fill="charts.s1_9_poverty_by_race.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Poverty Rates by Race &amp; Ethnicity</h3>
-          <p><strong>What We See:</strong> Black, Hispanic, and Multiracial children face poverty rates of roughly 10-26%
+          <p><strong>What We See:</strong> Black, Hispanic, and Multiracial children face poverty rates of roughly <span class="keep-together">10-26%</span>
              across age groups, while White, Non-Hispanic children stay below 10% — and some groups' rates have actually
              shifted downward from <span data-fill="charts.s1_9_poverty_by_race.years.0" data-format="raw"></span> to
              <span data-fill="charts.s1_9_poverty_by_race.years.1" data-format="raw"></span>.</p>
@@ -414,8 +439,9 @@
              economic disparities.</p>
         </aside>
         <div class="chart-area">
-          <div class="legend" id="legend-poverty"></div>
-          <div class="small-multiples" id="chart-poverty-panels"></div>
+          <div class="view-switch" id="poverty-years" role="group" aria-label="Choose the year to show"></div>
+          <p class="view-hint placeholder">[PLACEHOLDER] Click a year, or any of its bars, to see that year alone. Click it again to see both.</p>
+          <div class="small-multiples fills" id="chart-poverty-panels"></div>
           <p class="note placeholder" id="note-poverty-unreliable" hidden>[PLACEHOLDER] † An unreliable estimate: its margin of
             error is large next to the number itself, so treat it with care. Hover over any bar for the margin.</p>
           <p class="note" id="note-poverty-five-year" hidden>*Five-Year Estimates used when One-Year Estimates were not available.</p>
@@ -425,7 +451,10 @@
     </article>
 
     <!-- Page 1.10. Three rings drawn by charts.js (drawRentAndChildCare) from "s1_10_rent_and_child_care".
-         The year buttons, and every number in and around the rings, change with the year chosen. -->
+         On the left, as in the Bulletin, a yellow panel holds the year buttons and that year's rent and
+         infant child care. The buttons, the two amounts, and every number in, under and above the rings
+         change with the year chosen; nothing else on the card moves. Under each ring, charts.js writes
+         the share that goes to rent and to child care, each joined by a line to its part of the ring. -->
     <article class="card" id="card-1-10">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -444,31 +473,30 @@
              married couples.</p>
         </aside>
         <div class="chart-area">
-          <div class="year-bar">
-            <div class="year-switch" id="rent-years" role="group" aria-label="Choose the year to show"></div>
-            <p class="year-costs" id="rent-costs" aria-live="polite"></p>
+          <div class="rings-row fills" id="chart-rent">
+            <div class="costs-panel">
+              <div class="year-switch" id="rent-years" role="group" aria-label="Choose the year to show"></div>
+              <p class="cost" aria-live="polite">Rent: <strong class="js-rent"></strong><small class="js-rent-month"></small></p>
+              <p class="cost" aria-live="polite">Infant Child Care: <strong class="js-care"></strong></p>
+            </div>
+            <div class="donut-trio">
+              <div class="donut-cell" data-family="married">
+                <h3>Married Couple</h3>
+                <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+                <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              </div>
+              <div class="donut-cell" data-family="father">
+                <h3>Single Father</h3>
+                <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+                <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              </div>
+              <div class="donut-cell" data-family="mother">
+                <h3>Single Mother</h3>
+                <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+                <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              </div>
+            </div>
           </div>
-          <div class="donut-trio" id="chart-rent">
-            <div class="donut-cell" data-family="married">
-              <h3>Married Couple</h3>
-              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
-              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
-              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
-            </div>
-            <div class="donut-cell" data-family="father">
-              <h3>Single Father</h3>
-              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
-              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
-              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
-            </div>
-            <div class="donut-cell" data-family="mother">
-              <h3>Single Mother</h3>
-              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
-              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
-              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
-            </div>
-          </div>
-          <div class="legend" id="legend-rent"></div>
         </div>
       </div>
       <p class="source">Source: <span data-fill="charts.s1_10_rent_and_child_care.source" data-format="raw"></span></p>
@@ -599,7 +627,10 @@
       <p class="source">Source: <span data-fill="charts.s1_12_inflation.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.13. Three charts drawn by charts.js (drawSignsOfDistress) from "s1_13_signs_of_distress". -->
+    <!-- Page 1.13. Three charts drawn by charts.js (drawSignsOfDistress) from "s1_13_signs_of_distress".
+         Neither two-color chart has a key above it: the bars' names are written in the last pair of bars
+         and the lines' names on the lines, as in the Bulletin. (The food chart's key, "legend-food", shows
+         only on a screen too narrow for the names to fit in the bars.) -->
     <article class="card" id="card-1-13">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -613,7 +644,7 @@
              <span data-fill="charts.s1_13_signs_of_distress.snap.first.year" data-format="raw"></span>
              (<span data-fill="charts.s1_13_signs_of_distress.snap.first.in_thousands" data-format="raw"></span> →
              <span data-fill="charts.s1_13_signs_of_distress.snap.last.in_thousands" data-format="raw"></span>), food
-             insecurity tops 13–16% in Yonkers, Mount Vernon, and New Rochelle, and NY ACA benchmark premiums have jumped
+             insecurity tops <span class="keep-together">13–16%</span> in Yonkers, Mount Vernon, and New Rochelle, and NY ACA benchmark premiums have jumped
              from <span data-fill="charts.s1_13_signs_of_distress.premiums.first.value" data-format="dollars"></span> in
              <span data-fill="charts.s1_13_signs_of_distress.premiums.first.year" data-format="raw"></span> to
              <span data-fill="charts.s1_13_signs_of_distress.premiums.last.value" data-format="dollars"></span> in
@@ -623,11 +654,11 @@
              facing Westchester families today.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-trio">
+          <div class="chart-trio fills">
             <div>
               <h3>Percentage Experiencing Food Insecurity &amp; Poverty in Westchester Communities,
                 <span data-fill="charts.s1_13_signs_of_distress.food.year" data-format="raw"></span></h3>
-              <div class="legend" id="legend-food"></div>
+              <div class="legend" id="legend-food" hidden></div>
               <div class="chart-box food"><canvas id="chart-food"></canvas></div>
             </div>
             <div>
@@ -638,7 +669,6 @@
               <h3>Average Monthly Premiums under the Affordable Care Act, New York State vs USA,
                 <span data-fill="charts.s1_13_signs_of_distress.premiums.first.year" data-format="raw"></span> to
                 <span data-fill="charts.s1_13_signs_of_distress.premiums.last.year" data-format="raw"></span></h3>
-              <div class="legend" id="legend-premiums"></div>
               <div class="chart-box short"><canvas id="chart-premiums"></canvas></div>
             </div>
           </div>
@@ -647,7 +677,10 @@
       <p class="source">Source: <span data-fill="charts.s1_13_signs_of_distress.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.14. Two lines drawn by charts.js (drawHomelessChildren) from "s1_14_homeless_children". -->
+    <!-- Page 1.14. Two lines drawn by charts.js (drawHomelessChildren) from "s1_14_homeless_children".
+         The words that sit on the chart are here: each line's name in full (as the Bulletin prints them)
+         and the small orange box. charts.js puts each name just above its line and the box in the empty
+         space between the two lines. On a screen too small for that, the box goes above the chart. -->
     <article class="card" id="card-1-14">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -668,13 +701,14 @@
              thousands of children are not receiving the services they need at an especially vulnerable time.</p>
         </aside>
         <div class="chart-area">
-          <div class="callout-line">
-            <p class="db-callout">In <span data-fill="charts.s1_14_homeless_children.latest.year" data-format="raw"></span>,
+          <div class="chart-box tall">
+            <canvas id="chart-homeless"></canvas>
+            <span class="line-name" data-series="nysed"><span>New York State Education Department (NYSED)</span></span>
+            <span class="line-name" data-series="hud"><span>U.S. Department of Housing and Urban Development (HUD)</span></span>
+            <p class="db-callout chart-note" id="note-homeless">In <span data-fill="charts.s1_14_homeless_children.latest.year" data-format="raw"></span>,
               schools identified <strong data-fill="charts.s1_14_homeless_children.latest.nysed"></strong> homeless students.
               HUD's one-night count found <strong data-fill="charts.s1_14_homeless_children.latest.hud"></strong> children.</p>
           </div>
-          <div class="legend" id="legend-homeless"></div>
-          <div class="chart-box"><canvas id="chart-homeless"></canvas></div>
           <p class="note placeholder">[PLACEHOLDER] The school count covers a whole school year (the year shown is the one it
             ends in) and includes families doubled up with others. HUD's count is one night in January, in shelters
             or unsheltered.</p>
@@ -683,9 +717,11 @@
       <p class="source">Source: <span data-fill="charts.s1_14_homeless_children.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 1.15: a quotation (a fixed fact; see the comment at the top) -->
-    <aside class="quote-card" id="card-1-15" aria-label="Quotation, Bulletin page 1.15">
-      <div class="figure" style="--figure: url(resources/silhouettes/young-adult-standing.svg)" role="img" aria-label="Young adult standing (silhouette)"></div>
+    <!-- Page 1.15: a quotation (a fixed fact; see the comment at the top). The figure is the Bulletin's own,
+         shown large and cut off at the legs as the Bulletin shows it. "headline" prints the quote large,
+         bold and blue, as on this page of the Bulletin (page 2.9's quote is plain, under a heading). -->
+    <aside class="quote-card headline" id="card-1-15" aria-label="Quotation, Bulletin page 1.15">
+      <div class="figure" style="--figure: url(resources/silhouettes/young-adult-standing.svg)" role="img" aria-label="An adult standing, speaking (silhouette)"></div>
       <div class="bubble">
         <blockquote>“Couch hopping or couch surfing, which is frequently deployed by young people who are unstably housed,
           is not considered homeless under all definitions equally.”</blockquote>
@@ -694,7 +730,10 @@
       <p class="source">Quoted on page 1.15 of the Bulletin.</p>
     </aside>
 
-    <!-- Page 1.16. Bars drawn by charts.js (drawCreditCardDebt) from "s1_16_credit_card_debt". -->
+    <!-- Page 1.16. Bars drawn by charts.js (drawCreditCardDebt) from "s1_16_credit_card_debt".
+         The Bulletin's graphic sits on the bars: a box with the sentence, and a white arrow pointing up
+         that carries the increase. Its words are here; charts.js places it in the lower half of the
+         chart, under the top of the shortest bar. On a screen too small for that it goes above the chart. -->
     <article class="card" id="card-1-16">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -705,7 +744,7 @@
         <span data-fill="charts.s1_16_credit_card_debt.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Credit Card Debt: Short-Term Survival vs. Long-Term Stability</h3>
+          <h3>Credit Card Debt: <span class="keep-together">Short-Term</span> Survival vs. <span class="keep-together">Long-Term</span> Stability</h3>
           <p><strong>What We See:</strong> Increasing Credit Card Debt per Household is one warning that families are going
              beyond paycheck to paycheck. Expenses are exceeding income.</p>
           <p><strong>Takeaway:</strong> WCA will continue to pay attention to this indicator. Although credit cards can
@@ -713,14 +752,18 @@
              long-term goals such as college education and investments in generational wealth.</p>
         </aside>
         <div class="chart-area">
-          <div class="callout-line">
-            <p class="db-callout">From <span data-fill="charts.s1_16_credit_card_debt.first.year" data-format="raw"></span> to
-              <span data-fill="charts.s1_16_credit_card_debt.last.year" data-format="raw"></span>, NYS Individual Annual Credit
-              Card Debt increased from <span data-fill="charts.s1_16_credit_card_debt.first.value" data-format="dollars"></span>
-              to <span data-fill="charts.s1_16_credit_card_debt.last.value" data-format="dollars"></span>.
-              <strong>That's a <span data-fill="charts.s1_16_credit_card_debt.change_pct" data-format="pct"></span> increase</strong></p>
+          <div class="chart-box">
+            <canvas id="chart-credit-card"></canvas>
+            <div class="rise-note chart-note" id="note-credit-card">
+              <p class="db-callout">From <span data-fill="charts.s1_16_credit_card_debt.first.year" data-format="raw"></span> to
+                <span data-fill="charts.s1_16_credit_card_debt.last.year" data-format="raw"></span>, NYS Individual Annual Credit
+                Card Debt increased from <span class="keep-together"><span data-fill="charts.s1_16_credit_card_debt.first.value" data-format="dollars"></span>
+                to <span data-fill="charts.s1_16_credit_card_debt.last.value" data-format="dollars"></span>.</span></p>
+              <p class="rise-arrow"><span>That's a</span>
+                <strong data-fill="charts.s1_16_credit_card_debt.change_pct" data-format="pct"></strong>
+                <span>increase</span></p>
+            </div>
           </div>
-          <div class="chart-box"><canvas id="chart-credit-card"></canvas></div>
         </div>
       </div>
       <p class="source">Source: <span data-fill="charts.s1_16_credit_card_debt.source" data-format="raw"></span></p>

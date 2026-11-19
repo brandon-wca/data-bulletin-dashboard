@@ -33,8 +33,8 @@
      2. Headline tiles
      3. Chapter tabs
      4. Chapter charts: one function per Bulletin page (chapter 1 is in; 2 to 4 to come)
-     5. Small helpers: tools the charts share, and three more Chart.js add-ons
-        (barNotes, seriesNamesInBars, hoverLine)
+     5. Small helpers: tools the charts share, and more Chart.js add-ons (barNotes, pointWords,
+        valuesInBars, lineNames, ringPointers, seriesNamesInBars, hoverLine)
    ========================================================================== */
 
 
@@ -577,18 +577,38 @@ var CHAPTER_CHARTS = {
   "map": [],
 };
 
+/* Page 1.5: the Bulletin's line of children under 5 has three points and no more: the first year, the
+   latest year and one year in between. The first and the latest come from data.json (so the latest moves
+   on by itself when new data arrives); the year in between is named here, with the words written under
+   the first point's number. */
+var UNDER_5_MIDDLE_YEAR = 2016;
+var UNDER_5_WORDS = "Children Under 5";
+
+/* Page 1.8: the two charts open showing everything ("full"). To open them on one of the buttons instead,
+   put that button's name here: "all" (All races), "married", "father" or "mother". */
+var COMPOSITION_FIRST_VIEW = "full";
+/* What a screen reader is told when a button changes the two charts ({type} is the words on the button) */
+var COMPOSITION_STATUS = {
+  full: "Both charts show every family type for every group.",
+  all: "Both charts show all races together, as one tall bar each.",
+  type: "Both charts show {type} only, with the groups ordered from the smallest share to the largest.",
+};
+
 /* Page 1.10: the words in and around each ring. They change with the year a reader picks, so they are
    written by the code and kept here, not in index.html. */
 var RING_WORDS = {
   left: "Amount left to live on:",
   short: "Over budget each month:",                /* when rent and child care cost more than the income */
-  rent: "Rent",                                    /* under each ring: "Rent 13.7%" */
-  care: "Child care",
-  /* the line beside the year buttons; {rent}, {month} and {care} are filled in from data.json */
-  costs: "Rent: {rent} a month ({month}) · Infant child care: {care} a month",
-  standIn: "the earliest month in Zillow's file",  /* added after {month} when the year has no January of its own */
-  parts: ["Infant child care", "Rent", "Left to live on"],   /* the three parts of a ring, in drawing order */
+  rent: "Rent",                                    /* under each ring, joined to its part by a line: "Rent 13.7%" */
+  care: "Child Care",
+  standIn: "earliest available",                   /* added after the rent's month when the year has no January of its own ("January 2015, earliest available") */
+  parts: ["Infant child care", "Rent", "Left to live on"],   /* the three parts of a ring, in drawing order (the hover box names them) */
 };
+
+/* Page 1.13: the names written in the food chart's last pair of bars and on the two premium lines (the
+   Bulletin's own words; they stand in for a key). */
+var FOOD_BAR_NAMES = { food: "Food Insecure Population", poverty: "Poverty Population" };
+var PREMIUM_LINE_NAMES = { ny: "New York", us: "USA" };
 
 
 /* --------------------------------------------------------------------------
@@ -603,6 +623,7 @@ fetch(DATA_FILE)
     page.data = data;
     WCA.applyChartDefaults();
     useHoverBox();
+    useChartLines();
     WCA.fillNumbers(data);
     drawHeadlines(data);
     linkPdfPages();
@@ -749,46 +770,102 @@ function linkPdfPages() {
    and is listed in CHAPTER_CHARTS (Settings) under its chapter. Most charts
    are Chart.js. Bars that carry a silhouette or a printed share are plain
    HTML, sized from the same numbers. The small tools they share are in part 5.
+
+   Three cards answer to buttons (1.8 the family types, 1.9 the two years,
+   1.10 the year): the buttons change what is shown, never the numbers. Words
+   that sit ON a chart (a line's name, a small callout) are HTML laid over
+   the chart and put in place by the chart's function (1.14, 1.16).
    -------------------------------------------------------------------------- */
 
 
 /* ---- CHAPTER 1 ---------------------------------------------------------- */
 
-/* Page 1.3: a ring of all residents. Children and youth are the blue part, the hatched piece of it is
-   the share of them who are low income, and everyone older is pale blue. */
+/* Page 1.3: a pie of all residents, drawn as plain SVG. Children and youth are the magenta slice, turned
+   to the right so it faces the two boxed statements; the striped end of it is the share of them who are
+   low income; everyone older is the blue slice. The words on the slices are in index.html and are put in
+   place here. A thin line joins each boxed statement to the piece of the pie it is about. */
 function drawPopulation(data) {
   var chart = data.charts.s1_3_population;
   var young = chart.children_and_youth, low = chart.low_income, older = chart.older_residents;
-  var canvas = document.getElementById("chart-population");
+  var row = document.getElementById("pie-population");
+  var pie = row.querySelector(".pie");
 
-  /* "Low income" is a share OF children and youth, so it is drawn as a piece of their slice */
-  var lowPiece = young.share_pct * low.share_pct / 100;
+  /* Angles are in degrees, clockwise from 12 o'clock. The children and youth slice is centered a little
+     above 3 o'clock, as in the Bulletin. "Low income" is a share OF children and youth, so it is the
+     last part of their slice and not a slice of its own. */
+  var sweep = young.share_pct / 100 * 360;
+  var from = 80 - sweep / 2, to = from + sweep;
+  var lowFrom = to - sweep * low.share_pct / 100;
+  var HOLE = 31;                                                     /* the hole's radius; the pie's is 100 */
 
-  new Chart(canvas, {
-    type: "doughnut",
-    data: {
-      labels: [young.label, low.label, older.label],
-      datasets: [{
-        data: [young.share_pct - lowPiece, lowPiece, older.share_pct],
-        backgroundColor: [WCA.colors.blue, hatch(WCA.colors.blue, SURFACE), WCA.db.remainder],
-        borderColor: SURFACE, borderWidth: 2, hoverBorderColor: SURFACE, hoverOffset: 0,
-      }],
-    },
-    options: {
-      cutout: "46%",
-      plugins: { tooltip: { callbacks: {
-        label: function (item) {
-          if (item.dataIndex === 0) return [WCA.fmt.pct(young.share_pct) + " of all residents", WCA.fmt.count(young.people) + " people"];
-          if (item.dataIndex === 1) return [WCA.fmt.pct(low.share_pct) + " of children and youth",
-                                            WCA.fmt.count(low.people) + " of the " + WCA.fmt.count(low.of) + " whose income was measured",
-                                            capitalize(low.means)];
-          return [WCA.fmt.pct(older.share_pct) + " of all residents", WCA.fmt.count(older.people) + " people"];
-        },
-      } } },
-    },
-  });
+  /* A point `r` from the pie's center at `angle`, and the outline of the piece of pie between two angles */
+  function point(angle, r) {
+    var a = angle * Math.PI / 180;
+    return (r * Math.sin(a)).toFixed(2) + " " + (-r * Math.cos(a)).toFixed(2);
+  }
+  function piece(a0, a1) {
+    var large = a1 - a0 > 180 ? 1 : 0;
+    return "M" + point(a0, 100) + "A100 100 0 " + large + " 1 " + point(a1, 100) +
+           "L" + point(a1, HOLE) + "A" + HOLE + " " + HOLE + " 0 " + large + " 0 " + point(a0, HOLE) + "Z";
+  }
 
-  describe(canvas, chart.title + ". " + young.label + ": " + WCA.fmt.count(young.people) + ", " + WCA.fmt.pct(young.share_pct) +
+  pie.insertAdjacentHTML("afterbegin",
+    '<svg viewBox="-100 -100 200 200" aria-hidden="true" focusable="false">' +
+    '<defs><pattern id="pie-stripes" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)">' +
+    '<rect width="1.1" height="4.6" fill="' + SURFACE + '"/></pattern></defs>' +
+    '<path class="pie-slice older" d="' + piece(to, from + 360) + '"/>' +
+    '<path class="pie-slice young" d="' + piece(from, to) + '"/>' +
+    '<path class="pie-slice low" d="' + piece(lowFrom, to) + '" fill="url(#pie-stripes)"/></svg>');
+
+  /* What the hover box says for each piece */
+  pie.querySelector(".young").tip = "<strong>" + plainText(young.label) + "</strong><br>" +
+    WCA.fmt.pct(young.share_pct) + " of all residents<br>" + WCA.fmt.count(young.people) + " people";
+  pie.querySelector(".low").tip = "<strong>" + plainText(low.label) + "</strong><br>" +
+    WCA.fmt.pct(low.share_pct) + " of children and youth<br>" +
+    WCA.fmt.count(low.people) + " of the " + WCA.fmt.count(low.of) + " whose income was measured<br>" + plainText(capitalize(low.means));
+  pie.querySelector(".older").tip = "<strong>" + plainText(older.label) + "</strong><br>" +
+    WCA.fmt.pct(older.share_pct) + " of all residents<br>" + WCA.fmt.count(older.people) + " people";
+  hoverTips(pie);
+
+  /* The words on the slices, both at one height above the hole: on the plain (not striped) part of the
+     children and youth slice, and across from it on the older residents' slice */
+  function label(name, angle, r) {
+    var a = angle * Math.PI / 180, words = pie.querySelector('.pie-label[data-slice="' + name + '"]');
+    words.style.left = (50 + r * Math.sin(a) / 2) + "%";
+    words.style.top = (50 - r * Math.cos(a) / 2) + "%";
+  }
+  label("young", Math.min(Math.max(55, from + 24), lowFrom - 24), 68);
+  label("older", 312, 59);
+
+  /* A line from each boxed statement to its piece of the pie. It leaves the pie's edge as near the middle
+     of the box as that piece reaches, and runs level whenever the box reaches that height too. When the
+     boxes have dropped under the pie (a narrow screen) there are no lines: "stacked" shows color keys. */
+  var pieces = { young: [from, lowFrom], low: [lowFrom, to] };
+  var lines = row.querySelector(".pie-lines");
+  function joinBoxes() {
+    var frame = row.getBoundingClientRect(), disc = pie.getBoundingClientRect();
+    var beside = disc.width > 0 && row.querySelector(".pie-notes").getBoundingClientRect().left >= disc.right;
+    row.classList.toggle("stacked", !beside);
+    var html = "";
+    if (beside) {
+      var cx = disc.left - frame.left + disc.width / 2, cy = disc.top - frame.top + disc.height / 2, R = disc.width / 2;
+      row.querySelectorAll(".note-box[data-slice]").forEach(function (box) {
+        var span = pieces[box.getAttribute("data-slice")], b = box.getBoundingClientRect();
+        var top = b.top - frame.top, bottom = b.bottom - frame.top;
+        var inset = Math.min(4, (span[1] - span[0]) / 4);                /* stay a little inside the piece */
+        function edgeHeight(angle) { return cy - R * Math.cos(angle * Math.PI / 180); }
+        var y1 = Math.min(Math.max((top + bottom) / 2, edgeHeight(span[0] + inset)), edgeHeight(span[1] - inset));
+        var x1 = cx + Math.sqrt(Math.max(R * R - (y1 - cy) * (y1 - cy), 0)) - 1;
+        var y2 = Math.min(Math.max(y1, top + 10), bottom - 10);
+        html += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + (b.left - frame.left).toFixed(1) + '" y2="' + y2.toFixed(1) + '"/>';
+      });
+    }
+    lines.innerHTML = html;
+  }
+  joinBoxes();
+  whenLayoutChanges(joinBoxes, row);
+
+  describe(pie, chart.title + ". " + young.label + ": " + WCA.fmt.count(young.people) + ", " + WCA.fmt.pct(young.share_pct) +
     " of " + WCA.fmt.count(chart.residents) + " residents. Of them, " + WCA.fmt.pct(low.share_pct) + " are low income.");
 }
 
@@ -801,11 +878,7 @@ function drawRaceEthnicity(data) {
   var last = chart.years.length - 1;
   var highest = Math.max.apply(null, chart.groups.map(function (g) { return Math.max.apply(null, g.shares); }));
 
-  /* The legend explains the two steps, in gray so it stands for every group */
-  WCA.legend("#legend-race", chart.years.map(function (year, y) {
-    return { label: year + (y === last ? " (full color)" : " (lighter)"), color: race.all.steps[y] };
-  }));
-
+  /* No key on this chart: each bar has its year printed in its foot (seriesNamesInBars, below) */
   function share(datasetIndex, index) { return WCA.fmt.pct(chart.groups[index].shares[datasetIndex]); }
 
   new Chart(canvas, {
@@ -821,7 +894,7 @@ function drawRaceEthnicity(data) {
       }),
     },
     options: {
-      datasets: { bar: { barPercentage: 0.94, categoryPercentage: 0.74, maxBarThickness: 46 } },
+      datasets: { bar: { barPercentage: 0.94, categoryPercentage: 0.74, maxBarThickness: 50 } },
       layout: { padding: { top: 20 } },
       scales: {
         /* every group's name stays under its bars, level: broken into shorter lines, in smaller type, on a narrow screen */
@@ -853,57 +926,85 @@ function drawRaceEthnicity(data) {
 }
 
 
-/* Page 1.5: a row of baby figures for the first and the latest year of births, and a line of children
-   under 5 by year. (The two circles are text in index.html.) */
+/* Page 1.5: rows of baby figures for the first and the latest year of births, and the Bulletin's line of
+   children under 5. (The two circles with their arrows are text in index.html.) */
 function drawBirthsAndYoungChildren(data) {
   var chart = data.charts.s1_5_births_and_young_children;
   var births = chart.births, children = chart.under_5;
 
-  /* The picture rows: one figure for every `per_figure` births, the last one filled part of the way.
-     Both rows have as many figures as the larger year needs, so the smaller year shows what is gone. */
-  var figures = Math.ceil(Math.max.apply(null, births.values) / births.per_figure);
+  /* The picture rows: one figure for every `per_figure` births, the last one counting part of the way
+     (11,517 births = 11 whole figures and about half of a twelfth). The year with fewer births has the
+     shorter row, as in the Bulletin. */
+  var counts = births.values.map(function (value) { return Math.ceil(value / births.per_figure); });
   var html = "";
   births.years.forEach(function (year, i) {
     var worth = births.values[i] / births.per_figure;               /* 11,517 births = 11.517 figures */
     html += '<div class="picto-row"><div><span class="picto-year">' + year + '</span>' +
             '<span class="picto-value">' + WCA.fmt.count(births.values[i]) + '</span></div><div class="picto-figures">';
-    for (var k = 0; k < figures; k++) {
-      var filled = Math.max(0, Math.min(1, worth - k));              /* this figure counts fully, partly or not at all */
+    for (var k = 0; k < counts[i]; k++) {
+      var filled = Math.max(0, Math.min(1, worth - k));              /* this figure counts fully or partly */
       html += '<span class="picto-figure" style="--filled:' + Math.round(filled * 100) + '%"></span>';
     }
     html += "</div></div>";
   });
   var picture = document.getElementById("pictogram-births");
+  picture.style.setProperty("--count", Math.max.apply(null, counts));   /* every row is ruled for the longest one */
   picture.innerHTML = html;
   describe(picture, "Babies born to Westchester residents: " + births.years.map(function (year, i) {
     return WCA.fmt.count(births.values[i]) + " in " + year;
   }).join(", ") + ".");
 
-  /* The line: one point a year. A year with no estimate (2020) is skipped and the line runs across it. */
+  /* The line, as the Bulletin draws it: three points (the first year, UNDER_5_MIDDLE_YEAR in Settings, and
+     the latest year), each with its number written above it, on a scale that starts one step below the
+     lowest of them and ends one step above the highest (45,000 to 65,000). The years sit where they fall
+     in time, so the two stretches of the line are as long as the years between their points. */
   var canvas = document.getElementById("chart-under-5");
-  var end = children.values.length - 1;
+  var points = [];
+  children.years.forEach(function (year, i) {
+    var wanted = i === 0 || i === children.years.length - 1 || year === UNDER_5_MIDDLE_YEAR;
+    if (wanted && children.values[i] !== null) points.push({ x: year, y: children.values[i] });
+  });
+  var years = points.map(function (p) { return p.x; }), values = points.map(function (p) { return p.y; });
+  var STEP = 5000;
+  var low = Math.floor(Math.min.apply(null, values) / STEP) * STEP - STEP;
+  var high = Math.ceil(Math.max.apply(null, values) / STEP) * STEP + STEP;
+  var span = years[years.length - 1] - years[0];
+  var color = WCA.cssVar("--db-under-5");                             /* the color of this chart's circle */
+
+  var series = lineSeries(UNDER_5_WORDS, points, color);
+  series.borderWidth = 4;
+  series.pointRadius = 6;
+  series.pointHoverRadius = 7;
+
   new Chart(canvas, {
     type: "line",
-    data: { labels: children.years, datasets: [lineSeries("Children under 5", children.values, WCA.colors.blue)] },
+    data: { datasets: [series] },
     options: {
-      interaction: { mode: "index", intersect: false },
-      layout: { padding: { top: 6, right: 8 } },
+      interaction: { mode: "nearest", axis: "x", intersect: false },
+      layout: { padding: { top: 4, right: 6 } },
       scales: {
-        x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(3) } },
-        y: { beginAtZero: true, grace: "18%", ticks: { callback: compactCount, maxTicksLimit: 5 } },
+        x: { type: "linear", min: years[0] - span * 0.1, max: years[years.length - 1] + span * 0.07,
+             grid: { display: false },
+             afterBuildTicks: function (axis) { axis.ticks = years.map(function (year) { return { value: year }; }); },
+             ticks: { maxRotation: 0, autoSkip: false, font: { size: 14 }, callback: function (value) { return String(value); } } },
+        y: { min: low, max: high, ticks: { stepSize: STEP, font: { size: 14 }, callback: function (value) { return WCA.fmt.count(value); } } },
       },
       plugins: {
-        pointNotes: { notes: [{ index: 0, text: WCA.fmt.count(children.values[0]) }, { index: end, text: WCA.fmt.count(children.values[end]) }] },
+        /* the first point carries the words as well ("59,333 Children Under 5"), the others their number */
+        pointWords: { size: 14, notes: points.map(function (p, i) {
+          return { index: i, lines: [WCA.fmt.count(p.y)].concat(i === 0 ? wrap(UNDER_5_WORDS, 9) : []) };
+        }) },
         tooltip: { callbacks: {
-          title: function (items) { return "Children under 5, " + items[0].label; },
+          title: function (items) { return UNDER_5_WORDS + ", " + items[0].parsed.x; },
           label: function (item) { return WCA.fmt.count(item.parsed.y); },
         } },
       },
     },
-    plugins: [WCA.plugins.pointNotes, hoverLine],
+    plugins: [pointWords, hoverLine],
   });
-  describe(canvas, "Children under 5 in Westchester County: " + WCA.fmt.count(children.first.value) + " in " + children.first.year +
-    ", " + WCA.fmt.count(children.last.value) + " in " + children.last.year + ".");
+  describe(canvas, "Children under 5 in Westchester County: " + points.map(function (p) {
+    return WCA.fmt.count(p.y) + " in " + p.x;
+  }).join(", ") + ".");
 }
 
 
@@ -921,14 +1022,16 @@ function drawIncomeByFamilyType(data) {
   var top = niceCeiling(Math.max.apply(null, amounts));
   function place(amount) { return (amount / top * 100).toFixed(2) + "%"; }
 
-  chart.families.forEach(function (family) {
+  chart.families.forEach(function (family, f) {
     var plot = box.querySelector('.fb-row[data-family="' + family.key + '"] .fb-plot');
     var steps = WCA.db.family[family.key].steps;                    /* lighter for earlier years, full color for the latest */
     var html = "";
     family.values.forEach(function (value, y) {
+      /* The years are printed in the first family's bars only, as in the Bulletin: every family's bars
+         are in the same order, lightest to full color. (Hovering over any bar names its year.) */
       html += '<div class="fb-bar' + (y === last ? " latest" : "") + '" style="width:' + place(value) + ";background:" + steps[y] + '">' +
-              '<span class="fb-year">' + chart.years[y] + '</span>' +
-              '<span class="fb-value" data-year="' + chart.years[y] + '">' + WCA.fmt.dollars(value) + "</span></div>";
+              (f === 0 ? '<span class="fb-year">' + chart.years[y] + '</span>' : "") +
+              '<span class="fb-value">' + WCA.fmt.dollars(value) + "</span></div>";
     });
     chart.budgets.forEach(function (budget) {                       /* the dashed line of the budget this family is held against */
       if (budget.families.indexOf(family.key) >= 0) html += '<div class="fb-benchmark" style="--at:' + place(budget.amount) + '"></div>';
@@ -945,26 +1048,29 @@ function drawIncomeByFamilyType(data) {
     if (budget) callout.style.setProperty("--at", place(budget.amount));
   });
 
-  /* The scale under the bars: six labels from $0 to the top */
-  var axis = "";
-  for (var step = 0; step <= 5; step++) axis += '<span style="left:' + (step * 20) + '%">' + compactDollars(top / 5 * step) + "</span>";
+  /* The scale under the bars: six amounts from $0 to the top, and a gray line up from each of them */
+  var axis = "", lines = "";
+  for (var step = 0; step <= 5; step++) {
+    axis += '<span style="left:' + (step * 20) + '%">' + WCA.fmt.dollars(top / 5 * step) + "</span>";
+    lines += '<span style="left:' + (step * 20) + '%"></span>';
+  }
   box.querySelector(".fb-axis").innerHTML = axis;
+  box.querySelector(".fb-grid").innerHTML = lines;
 
-  /* A value is written inside its bar's end when it fits there and the dashed line doesn't run through it;
-     otherwise just past the bar. Checked again whenever the window changes size. */
+  /* Every amount is written inside the end of its bar. Two things give way on a narrow screen, and are
+     checked again whenever the window changes size: a bar too short for its year and its amount drops
+     the year, and a bar shorter than the amount itself has it just past its end. */
   function placeValues() {
     box.querySelectorAll(".fb-bar").forEach(function (bar) {
-      bar.classList.remove("value-outside", "year-outside");
+      bar.classList.remove("value-outside", "no-year");
       var year = bar.querySelector(".fb-year"), value = bar.querySelector(".fb-value");
       var width = bar.clientWidth;
-      var line = bar.parentNode.querySelector(".fb-benchmark");
-      var crossed = line && line.offsetLeft > width - value.offsetWidth && line.offsetLeft < width + 2;
-      if (width < year.offsetWidth + value.offsetWidth + 6 || crossed) bar.classList.add("value-outside");
-      if (width < year.offsetWidth + 4) bar.classList.add("year-outside");
+      if (year && width < year.offsetWidth + value.offsetWidth + 10) bar.classList.add("no-year");
+      if (width < value.offsetWidth + 2) bar.classList.add("value-outside");
     });
   }
   placeValues();
-  whenLayoutChanges(placeValues);
+  whenLayoutChanges(placeValues, box);
   hoverTips(box);
 
   describe(box, chart.title + ". " + chart.families.map(function (family) {
@@ -975,24 +1081,50 @@ function drawIncomeByFamilyType(data) {
 
 /* Page 1.8: two sets of split bars. Each bar is one group's families with children, split into
    married-couple, single-father and single-mother families (100% together). The first set is families at
-   or above the poverty level, the second families below it. A group marked * uses 5-year estimates. */
+   or above the poverty level, the second families below it. A group marked * uses 5-year estimates.
+
+   The key above the charts is a row of buttons, and each button is a way of looking at the same bars:
+     nothing pressed    every group's bar, split into its three parts (how the charts open)
+     All races          each chart folds into its "All races" bar alone, drawn tall
+     a family type      only that type's part of every bar, lined up on the left, with the groups put in
+                        order from the smallest share to the largest (each chart in its own order)
+   Pressing the button that is already pressed brings everything back. Nothing is redrawn when a button
+   is pressed: the code only sets each part's width and each row's place, and styles.css slides them
+   there. A change that has two moves starts them a moment apart (the parts begin to fold, then the rows
+   begin to change places), so that the eye can follow it. */
 function drawFamilyComposition(data) {
   var chart = data.charts.s1_8_family_composition;
+  var types = chart.family_types.map(function (type) { return type.key; });
+  var switcher = document.getElementById("composition-views");
+  var buttons = Array.prototype.slice.call(switcher.querySelectorAll("button[data-view]"));
+  var status = document.getElementById("composition-status");
+  var STEP_MS = 320;                                                 /* how long after a change's first move its second one starts. A move takes --move
+                                                                        in styles.css (0.6 seconds), so the second begins while the first is finishing
+                                                                        and the two read as one change. */
 
-  function panel(id, part, words) {
+  /* The words on each button, as index.html has them ("Married Couples"); they are also written in the tall bar */
+  var words = {};
+  buttons.forEach(function (button) { words[button.getAttribute("data-view")] = button.textContent.trim(); });
+
+  /* Build one chart: a row per group, each with its three parts (and a place for a share that has to be
+     printed past the end of a short bar) */
+  function panel(id, part, description) {
     var box = document.getElementById(id);
     var html = "", spoken = [];
     chart.order.forEach(function (key) {
       var group = chart.groups[key];
       var name = group.label + (group.release === "5-year" ? "*" : "");
-      html += '<div class="sb-row' + (key === "all" ? " apart" : "") + '"><div class="sb-label">' + plainText(name) + '</div><div class="sb-bar">';
-      chart.family_types.forEach(function (type) {
-        var piece = group[part][type.key];
-        if (!piece.share) return;                                    /* nothing to draw for a share of zero */
-        html += '<div class="sb-part ' + type.key + '" style="flex:' + piece.share + ' 1 0%" data-group="' + key + '" data-type="' + type.key + '">' +
-                "<span>" + WCA.fmt.pct(piece.share) + "</span></div>";
+      /* The three shares can come to 99.9 or 100.1 once each is rounded. A part's width is its share of
+         their sum, so every bar is exactly full. */
+      var sum = types.reduce(function (total, type) { return total + group[part][type].share; }, 0);
+      html += '<div class="sb-row' + (key === "all" ? " apart" : "") + '" data-group="' + key + '"><div class="sb-label">' + plainText(name) + '</div><div class="sb-bar">';
+      types.forEach(function (type) {
+        var width = (group[part][type].share / sum * 100).toFixed(3);
+        html += '<div class="sb-part ' + type + '" data-group="' + key + '" data-type="' + type + '" data-width="' + width + '" style="width:' + width + '%">' +
+                '<span class="sb-value">' + WCA.fmt.pct(group[part][type].share) + '</span>' +
+                '<span class="sb-name">' + plainText(words[type] || "") + "</span></div>";
       });
-      html += "</div></div>";
+      html += '<span class="sb-out"></span></div></div>';
       spoken.push(name + ": " + chart.family_types.map(function (type) { return type.label + " " + WCA.fmt.pct(group[part][type.key].share); }).join(", "));
     });
     box.innerHTML = html;
@@ -1001,49 +1133,159 @@ function drawFamilyComposition(data) {
       var piece = group[part][type];
       var label = chart.family_types.filter(function (t) { return t.key === type; })[0].label;
       el.tip = "<strong>" + plainText(group.label + " · " + label) + "</strong><br>" +
-               WCA.fmt.pct(piece.share) + " of families with children " + words +
+               WCA.fmt.pct(piece.share) + " of families with children " + description +
                (piece.margin === null ? "" : " (± " + piece.margin.toFixed(1) + " points)") + "<br>" +
                WCA.fmt.count(piece.families) + " of " + WCA.fmt.count(group[part].families) + " families · " +
                plainText(group.period) + (group.release === "5-year" ? " five-year estimate" : " one-year estimate");
     });
     hoverTips(box);
-    describe(box, "Families with children " + words + ", by family type. " + spoken.join("; ") + ".");
-    return box;
+    describe(box, "Families with children " + description + ", by family type. " + spoken.join("; ") + ".");
+    return { box: box, part: part };
   }
 
-  var boxes = [panel("chart-composition-above", "at_or_above", "at or above the poverty level"),
-               panel("chart-composition-below", "below", "below the poverty level")];
+  var panels = [panel("chart-composition-above", "at_or_above", "at or above the poverty level"),
+                panel("chart-composition-below", "below", "below the poverty level")];
 
   /* The * note is shown only when a group really uses 5-year estimates */
   document.getElementById("note-composition-five-year").hidden = !chart.five_year_period;
 
-  /* A share is printed on its part only where it fits; checked again when the window changes size */
-  function fitShares() {
-    boxes.forEach(function (box) {
-      box.querySelectorAll(".sb-part span").forEach(function (text) {
-        text.classList.remove("too-wide");                           /* show it, measure it, then hide it if it doesn't fit */
-        text.classList.toggle("too-wide", text.offsetWidth + 10 > text.parentNode.clientWidth);
+  /* What the two charts show at this moment:
+       type    the one family type on show (null: all three parts)
+       sorted  the family type the groups are ordered by (null: the Bulletin's order)
+       tall    true when "All races" stands alone as a tall bar */
+  var state = { type: null, sorted: null, tall: false };
+  var view = "full";                                                 /* the button pressed in: "full" when none is */
+  var timer = null;
+
+  /* Put the page in step with `state` */
+  function render() {
+    panels.forEach(function (p) {
+      p.box.classList.toggle("view-all", state.tall);
+      /* the rows' order: "All races" stays first; the groups follow, smallest share first when one type is on show */
+      var keys = chart.order.filter(function (key) { return key !== "all"; });
+      if (state.sorted) keys.sort(function (a, b) {
+        return chart.groups[a][p.part][state.sorted].share - chart.groups[b][p.part][state.sorted].share;
+      });
+      keys.forEach(function (key, i) {
+        p.box.querySelector('.sb-row[data-group="' + key + '"]').style.setProperty("--slot", i + 1);
+      });
+      /* each part is as wide as its share, or folded away when another type is on show alone */
+      p.box.querySelectorAll(".sb-part").forEach(function (el) {
+        var shown = !state.type || el.getAttribute("data-type") === state.type;
+        el.style.width = shown ? el.getAttribute("data-width") + "%" : "0%";
+        el.classList.toggle("gone", !shown);
+      });
+    });
+    fitLabels();
+  }
+
+  /* A share is printed on its part only where it fits. In a bar that shows one type alone, a share too
+     wide for its bar is printed just past the bar's end. In the tall bar the numbers are larger, and a
+     part with room for it carries its name as well. Worked out from the widths the parts are going to
+     have (not the ones they have while they are still sliding), and again when the window changes size. */
+  function fitLabels() {
+    panels.forEach(function (p) {
+      p.box.querySelectorAll(".sb-row").forEach(function (row) {
+        var track = row.querySelector(".sb-bar").clientWidth;
+        var tall = state.tall && row.classList.contains("apart");
+        var past = row.querySelector(".sb-out"), pastText = null, pastAt = null;
+        row.querySelectorAll(".sb-part").forEach(function (el) {
+          var type = el.getAttribute("data-type"), text = el.querySelector(".sb-value").textContent;
+          var width = track * Number(el.getAttribute("data-width")) / 100;
+          el.classList.remove("no-value", "small-value", "with-name");
+          if (tall) {
+            if (width < textWidth(text, "600 22px") + 24) el.classList.add(width < textWidth(text, "600 13px") + 9 ? "no-value" : "small-value");
+            else if (width >= textWidth(words[type] || "", "600 13px") + 24) el.classList.add("with-name");
+          } else if (width < textWidth(text, "600 12px") + 9) {
+            el.classList.add("no-value");
+            if (state.type === type) { pastText = text; pastAt = el.getAttribute("data-width") + "%"; }
+          }
+        });
+        /* the share past a short bar's end: taken away at once, then faded in at its new place */
+        if (past.textContent !== (pastText || "") || past.style.left !== (pastAt || "")) {
+          past.style.transition = "none"; past.classList.remove("on"); void past.offsetWidth; past.style.transition = "";
+          past.textContent = pastText || ""; past.style.left = pastAt || "";
+        }
+        past.classList.toggle("on", pastText !== null);
       });
     });
   }
-  fitShares();
-  whenLayoutChanges(fitShares);
+
+  /* Change some of `state`; says whether anything really changed */
+  function change(to) {
+    var moved = false;
+    Object.keys(to).forEach(function (key) { if (state[key] !== to[key]) { state[key] = to[key]; moved = true; } });
+    if (moved) render();
+    return moved;
+  }
+
+  /* Go to a view: "full", "all" or a family type. `atOnce` skips the sliding (used when the page opens). */
+  function show(next, atOnce) {
+    clearTimeout(timer);
+    var first, second;
+    if (next === "all")       { first = { type: null, sorted: null }; second = { tall: true }; }       /* everything comes back, then folds into the tall bar */
+    else if (next === "full") { first = { tall: false, sorted: null }; second = { type: null }; }      /* the rows go back to their order, then the parts unfold */
+    else                      { first = { tall: false, type: next };  second = { sorted: next }; }     /* the other parts fold away, then the rows change places */
+    if (change(first) && !atOnce && !STILL) timer = setTimeout(function () { change(second); }, STEP_MS);
+    else change(second);
+
+    view = next;
+    buttons.forEach(function (button) { button.setAttribute("aria-pressed", button.getAttribute("data-view") === view ? "true" : "false"); });
+    status.textContent = (COMPOSITION_STATUS[view] || COMPOSITION_STATUS.type).replace("{type}", words[view] || "");
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var wanted = button.getAttribute("data-view");
+      show(wanted === view ? "full" : wanted);                         /* the pressed button, pressed again, lets go */
+    });
+  });
+
+  render();
+  if (COMPOSITION_FIRST_VIEW !== "full" && words[COMPOSITION_FIRST_VIEW]) show(COMPOSITION_FIRST_VIEW, true);
+  status.textContent = "";                                             /* nothing to announce until a button is pressed */
+  whenLayoutChanges(fitLabels, panels[0].box);
 }
 
 
 /* Page 1.9: six small charts, one per group, all on the same scale so they can be compared.
    In each: three age groups, the earlier year (lighter) beside the latest (full color, value printed).
-   A dagger marks a value the warehouse flags as unreliable. */
+   A dagger marks a value the warehouse flags as unreliable.
+   The key is two buttons, one per year. Pressing one, or clicking any bar of that year, shows that year
+   alone in all six charts, with its values printed; doing the same again brings both years back. */
 function drawPovertyByRace(data) {
   var chart = data.charts.s1_9_poverty_by_race;
   var box = document.getElementById("chart-poverty-panels");
   var last = chart.years.length - 1;
   var top = roundStep(chart.highest_rate);                           /* 26.2 -> 30, the top of every panel */
   var someUnreliable = false;
+  var panels = [];                                                   /* the six charts, so that a button can change them all */
+  var only = null;                                                   /* the one year on show (its place in chart.years); null = both */
 
-  WCA.legend("#legend-poverty", chart.years.map(function (year, y) {
-    return { label: year + (y === last ? " (full color, value shown)" : " (lighter)"), color: WCA.db.race.all.steps[y] };
-  }));
+  /* The key, as buttons. The swatches are gray (the "All races" chart's own colors) so they stand for every group. */
+  var switcher = document.getElementById("poverty-years");
+  var buttons = chart.years.map(function (year, y) {
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "view-button";
+    button.setAttribute("aria-pressed", "false");
+    button.innerHTML = '<span class="swatch" style="background:' + WCA.db.race.all.steps[y] + '"></span>';
+    button.appendChild(document.createTextNode(year + (y === last ? " (full color)" : " (lighter)")));
+    button.addEventListener("click", function () { showYear(y); });
+    switcher.appendChild(button);
+    return button;
+  });
+
+  /* Show one year alone (y is its place in chart.years); the year already on show alone goes back to both */
+  function showYear(y) {
+    only = (only === y) ? null : y;
+    buttons.forEach(function (button, i) { button.setAttribute("aria-pressed", i === only ? "true" : "false"); });
+    panels.forEach(function (panel) {
+      if (!STILL) panel.options.animation = { duration: 450 };       /* this change is allowed to move, so the eye can follow it */
+      chart.years.forEach(function (year, i) { panel.setDatasetVisibility(i, only === null || i === only); });
+      panel.update();
+    });
+  }
 
   chart.order.forEach(function (key) {
     var group = chart.groups[key];
@@ -1055,7 +1297,7 @@ function drawPovertyByRace(data) {
     box.appendChild(panel);
     var canvas = panel.querySelector("canvas");
 
-    new Chart(canvas, {
+    panels.push(new Chart(canvas, {
       type: "bar",
       data: {
         labels: chart.ages,
@@ -1064,8 +1306,11 @@ function drawPovertyByRace(data) {
         }),
       },
       options: {
-        datasets: { bar: { barPercentage: 0.9, categoryPercentage: 0.72, maxBarThickness: 24 } },
+        datasets: { bar: { barPercentage: 0.9, categoryPercentage: 0.72, maxBarThickness: 26 } },
         layout: { padding: { top: 16 } },
+        /* a click on a bar is the same as pressing its year's button; the hand cursor says a bar can be clicked */
+        onClick: function (event, bars) { if (bars.length) showYear(bars[0].datasetIndex); },
+        onHover: function (event, bars) { event.native.target.style.cursor = bars.length ? "pointer" : "default"; },
         scales: {
           x: { grid: { display: false }, ticks: { font: { size: 12 }, maxRotation: 0, autoSkip: false,
                /* "Under 18" becomes two lines where the panel is narrow (a phone) */
@@ -1073,9 +1318,10 @@ function drawPovertyByRace(data) {
           y: { beginAtZero: true, max: top, ticks: { callback: pctTick, stepSize: 10, font: { size: 12 } } },
         },
         plugins: {
+          /* the latest year's values while both years show; the chosen year's when it shows alone */
           barNotes: { size: 12, text: function (d, i) {
             var rate = group.rates[i][d];
-            if (d !== last || rate === null) return null;
+            if (d !== (only === null ? last : only) || rate === null) return null;
             return rate.toFixed(1) + (group.unreliable[i][d] ? "†" : "");
           } },
           tooltip: { callbacks: {
@@ -1094,9 +1340,9 @@ function drawPovertyByRace(data) {
         },
       },
       plugins: [barNotes],
-    });
+    }));
 
-    group.unreliable.forEach(function (pair) { if (pair[last]) someUnreliable = true; });
+    group.unreliable.forEach(function (pair) { if (pair.indexOf(true) >= 0) someUnreliable = true; });
     describe(canvas, group.label + ", poverty rate. " + chart.ages.map(function (age, i) {
       return age + ": " + chart.years.map(function (year, y) { return WCA.fmt.pct(group.rates[i][y]) + " in " + year; }).join(", ");
     }).join("; ") + ".");
@@ -1109,22 +1355,19 @@ function drawPovertyByRace(data) {
 
 
 /* Page 1.10: three rings, one per family type. Each ring is a month of median income: the part that goes
-   to infant child care, the part that goes to rent, and what is left. The buttons switch the year; every
-   number in and around the rings changes with it. Costs sit at the bottom of the ring, what is left on top. */
+   to infant child care, the part that goes to rent, and what is left. The costs sit at the bottom of the
+   ring, what is left on top; under the ring, each cost's share is written and joined to its part by a line.
+   The year buttons are in the yellow panel on the left, with that year's rent and infant child care; every
+   number in the panel and in, above and under the rings changes with the year. */
 function drawRentAndChildCare(data) {
   var chart = data.charts.s1_10_rent_and_child_care;
   var box = document.getElementById("chart-rent");
   var colors = { care: WCA.colors.blue, rent: WCA.db.teal.full, left: WCA.db.remainder };
   var rings = {};
 
-  WCA.legend("#legend-rent", [
-    { label: RING_WORDS.parts[1], color: colors.rent },
-    { label: RING_WORDS.parts[0], color: colors.care },
-    { label: RING_WORDS.parts[2], color: colors.left },
-  ]);
-
   chart.families.forEach(function (family) {
     var cell = box.querySelector('.donut-cell[data-family="' + family.key + '"]');
+    var room = parseFloat(getComputedStyle(cell.querySelector(".donut-box")).getPropertyValue("--labels")) || 52;   /* the height kept under the ring (styles.css) */
     rings[family.key] = new Chart(cell.querySelector("canvas"), {
       type: "doughnut",
       data: {
@@ -1134,16 +1377,22 @@ function drawRentAndChildCare(data) {
       },
       options: {
         cutout: "66%",
-        plugins: { tooltip: { callbacks: {
-          title: function () { return family.label; },
-          label: function (item) { return item.label + ": " + WCA.fmt.dollars(item.raw) + " a month"; },
-        } } },
+        layout: { padding: { bottom: room } },
+        plugins: {
+          ringPointers: { parts: [] },                               /* filled in for the year on show, below */
+          tooltip: { callbacks: {
+            title: function () { return family.label; },
+            label: function (item) { return item.label + ": " + WCA.fmt.dollars(item.raw) + " a month"; },
+          } },
+        },
       },
+      plugins: [ringPointers],
     });
   });
 
-  /* Show one year (y is its position in chart.years) */
-  function show(y) {
+  /* Show one year (y is its position in chart.years). `moving` lets the rings turn to their new shape
+     instead of jumping there (not when the page first draws them). */
+  function show(y, moving) {
     var rent = chart.rent[y], care = chart.infant_care[y];
     chart.families.forEach(function (family) {
       var cell = box.querySelector('.donut-cell[data-family="' + family.key + '"]');
@@ -1152,28 +1401,29 @@ function drawRentAndChildCare(data) {
       var over = left < 0;
 
       ring.data.datasets[0].data = [care, rent.value, Math.max(left, 0)];
-      /* turn the ring so the two costs are centered at the bottom */
+      /* turn the ring so the two costs are centered at the bottom: child care to the right, rent to the left */
       var costs = (care + rent.value) / (care + rent.value + Math.max(left, 0));
       ring.options.rotation = 180 - costs * 180;
+      ring.options.plugins.ringPointers.parts = [
+        { index: 1, side: "left",  lines: [RING_WORDS.rent, WCA.fmt.pct(family.rent_share_pct[y])] },
+        { index: 0, side: "right", lines: [RING_WORDS.care, WCA.fmt.pct(family.care_share_pct[y])] },
+      ];
+      if (moving && !STILL) ring.options.animation = { duration: 500 };
       ring.update();
 
       cell.querySelector(".js-income").textContent = WCA.fmt.dollars(family.income_monthly[y]);
       cell.querySelector(".js-left-words").textContent = over ? RING_WORDS.short : RING_WORDS.left;
       cell.querySelector(".js-left").textContent = (over ? "−" : "") + WCA.fmt.dollars(Math.abs(left));
       cell.querySelector(".donut-center").classList.toggle("short", over);
-      cell.querySelector(".js-rent").textContent = RING_WORDS.rent + " " + WCA.fmt.pct(family.rent_share_pct[y]);
-      cell.querySelector(".js-care").textContent = RING_WORDS.care + " " + WCA.fmt.pct(family.care_share_pct[y]);
       describe(ring.canvas, family.label + ", " + chart.years[y] + ": median monthly income " + WCA.fmt.dollars(family.income_monthly[y]) +
         "; rent " + WCA.fmt.pct(family.rent_share_pct[y]) + " of it, infant child care " + WCA.fmt.pct(family.care_share_pct[y]) +
         "; " + (over ? "short by " : "left to live on ") + WCA.fmt.dollars(Math.abs(left)) + ".");
     });
 
-    /* The line beside the buttons: that year's rent (with the month it really is) and child care */
-    var month = rent.label + (rent.is_that_january ? "" : ", " + RING_WORDS.standIn);
-    document.getElementById("rent-costs").innerHTML = plainText(RING_WORDS.costs)
-      .replace("{rent}", "<strong>" + WCA.fmt.dollars(rent.value) + "</strong>")
-      .replace("{month}", plainText(month))
-      .replace("{care}", "<strong>" + WCA.fmt.dollars(care) + "</strong>");
+    /* The yellow panel: that year's rent (with the month it really is) and infant child care */
+    box.querySelector(".js-rent").textContent = WCA.fmt.dollars(rent.value);
+    box.querySelector(".js-rent-month").textContent = rent.label + (rent.is_that_january ? "" : ", " + RING_WORDS.standIn);
+    box.querySelector(".js-care").textContent = WCA.fmt.dollars(care);
 
     buttons.forEach(function (button, i) { button.setAttribute("aria-pressed", i === y ? "true" : "false"); });
   }
@@ -1184,7 +1434,7 @@ function drawRentAndChildCare(data) {
     var button = document.createElement("button");
     button.type = "button";
     button.textContent = year;
-    button.addEventListener("click", function () { show(y); });
+    button.addEventListener("click", function () { show(y, true); });
     switcher.appendChild(button);
     return button;
   });
@@ -1223,8 +1473,8 @@ function drawInflation(data) {
   var end = chart.values.length - 1;
 
   var notes = [
-    { index: chart.months.indexOf(chart.low.month), text: WCA.fmt.pct(chart.low.value), place: "below" },
-    { index: chart.months.indexOf(chart.peak.month), text: WCA.fmt.pct(chart.peak.value) },
+    { index: chart.months.indexOf(chart.low.month), lines: [WCA.fmt.pct(chart.low.value)], place: "below" },
+    { index: chart.months.indexOf(chart.peak.month), lines: [WCA.fmt.pct(chart.peak.value)] },
   ];
 
   var series = lineSeries("Inflation", chart.values, WCA.colors.blue);
@@ -1248,17 +1498,17 @@ function drawInflation(data) {
                return (this.chart.width < 520 && year % 2) ? null : year;
              } } },
         y: { ticks: { callback: pctTick },
-             grid: { color: function (context) { return context.tick && context.tick.value === 0 ? WCA.colors.muted : WCA.colors.panel; } } },
+             grid: { color: function (context) { return context.tick && context.tick.value === 0 ? WCA.colors.muted : GRID; } } },
       },
       plugins: {
-        pointNotes: { notes: notes },
+        pointWords: { size: 12, weight: "600", notes: notes },        /* on a white patch, so the chart's gray lines don't run through the numbers */
         tooltip: { callbacks: {
           title: function (items) { return monthName(chart.months[items[0].dataIndex]); },
           label: function (item) { return WCA.fmt.pct(item.parsed.y) + " higher than a year earlier"; },
         } },
       },
     },
-    plugins: [WCA.plugins.pointNotes, hoverLine],
+    plugins: [pointWords, hoverLine],
   });
 
   describe(canvas, chart.title + ", " + chart.first.label + " to " + chart.latest.label + ". Lowest " + WCA.fmt.pct(chart.low.value) +
@@ -1272,29 +1522,37 @@ function drawSignsOfDistress(data) {
   var chart = data.charts.s1_13_signs_of_distress;
   var food = chart.food, snap = chart.snap, premiums = chart.premiums;
 
-  /* a. Food insecurity and poverty in each community: two bars per place */
+  /* a. Food insecurity and poverty in each community: two thick bars per place, in the Bulletin's purple
+        and orange, each with its value inside its end. The two names are written in the last place's bars
+        instead of a key; where the chart is too narrow for that, the key above the chart shows instead. */
   var foodSeries = [
-    { label: "Food insecure", color: WCA.db.teal.full, values: food.food_insecure_pct },
-    { label: "Below the poverty level", color: WCA.colors.blue, values: food.poverty_pct },
+    { label: FOOD_BAR_NAMES.food, color: WCA.cssVar("--db-food-insecure"), values: food.food_insecure_pct },
+    { label: FOOD_BAR_NAMES.poverty, color: WCA.cssVar("--db-poverty"), values: food.poverty_pct },
   ];
-  WCA.legend("#legend-food", foodSeries);
+  var foodKey = document.getElementById("legend-food");
+  WCA.legend(foodKey, foodSeries);
   var foodCanvas = document.getElementById("chart-food");
+  var highest = Math.max.apply(null, food.food_insecure_pct.concat(food.poverty_pct));
   new Chart(foodCanvas, {
     type: "bar",
     data: {
-      labels: food.places.map(function (place) { return wrap(place, 12); }),
+      /* a long name goes on two lines, also at its hyphen ("Croton-" over "Harmon"), which leaves the bars more room */
+      labels: food.places.map(function (place) {
+        return wrap(place.replace(/-/g, "- "), 9).map(function (line) { return line.replace(/- /g, "-"); });
+      }),
       datasets: foodSeries.map(function (s) { return { label: s.label, data: s.values, backgroundColor: s.color }; }),
     },
     options: {
       indexAxis: "y",
-      datasets: { bar: { barPercentage: 0.88, categoryPercentage: 0.74, maxBarThickness: 16 } },
-      layout: { padding: { right: 46 } },
+      datasets: { bar: { barPercentage: 0.96, categoryPercentage: 0.84, borderRadius: 3 } },
+      layout: { padding: { right: 4 } },
       scales: {
-        x: { beginAtZero: true, grace: "5%", ticks: { callback: pctTick, maxTicksLimit: 5 } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } },
+        /* the scale ends just past the longest bar, with a line every 4%, as in the Bulletin */
+        x: { beginAtZero: true, max: Math.ceil(highest * 1.03 * 2) / 2, ticks: { stepSize: 4, includeBounds: false, callback: pctTick } },
+        y: { grid: { display: false }, ticks: { color: WCA.colors.ink, font: { size: 13, weight: "600" } } },
       },
       plugins: {
-        valueLabels: { datasets: [0, 1], format: WCA.fmt.pct },
+        valuesInBars: { format: WCA.fmt.pct, names: true, onNames: function (fit) { if (foodKey.hidden !== fit) foodKey.hidden = fit; } },
         tooltip: { callbacks: {
           title: function (items) { return food.places[items[0].dataIndex]; },
           label: function (item) {
@@ -1306,7 +1564,7 @@ function drawSignsOfDistress(data) {
         } },
       },
     },
-    plugins: [WCA.plugins.valueLabels],
+    plugins: [valuesInBars],
   });
   describe(foodCanvas, "Food insecurity and poverty, " + food.year + ". " + food.places.map(function (place, i) {
     return place + ": " + WCA.fmt.pct(food.food_insecure_pct[i]) + " food insecure, " + WCA.fmt.pct(food.poverty_pct[i]) + " below the poverty level";
@@ -1335,70 +1593,148 @@ function drawSignsOfDistress(data) {
       layout: { padding: { top: 18, right: 10 } },
       scales: {
         x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(4) } },
-        y: { beginAtZero: true, grace: "12%", ticks: { callback: compactCount, maxTicksLimit: 5 } },
+        y: { beginAtZero: true, grace: "12%", ticks: { callback: compactCount, maxTicksLimit: 6 } },
       },
       plugins: {
-        pointNotes: { notes: [{ index: 0, text: WCA.fmt.count(snap.values[0]) }, { index: snapEnd, text: WCA.fmt.count(snap.values[snapEnd]) }] },
+        pointWords: { size: 12, weight: "600", notes: [{ index: 0, lines: [WCA.fmt.count(snap.values[0])] }, { index: snapEnd, lines: [WCA.fmt.count(snap.values[snapEnd])] }] },
         tooltip: { callbacks: {
           title: function (items) { return "July " + items[0].label; },
           label: function (item) { return WCA.fmt.count(item.parsed.y) + " people receiving SNAP"; },
         } },
       },
     },
-    plugins: [WCA.plugins.pointNotes, hoverLine],
+    plugins: [pointWords, hoverLine],
   });
   describe(snapCanvas, "SNAP recipients in Westchester each July: " + WCA.fmt.count(snap.first.value) + " in " + snap.first.year +
     ", a high of " + WCA.fmt.count(snap.peak.value) + " in " + snap.peak.year + ", " + WCA.fmt.count(snap.last.value) + " in " + snap.last.year + ".");
 
-  /* c. The benchmark premium: New York State in blue, the United States in gray for comparison */
-  var premiumColors = { ny: WCA.colors.blue, us: WCA.db.race.all.full };
-  WCA.legend("#legend-premiums", premiums.series.map(function (s) { return { label: s.label, color: premiumColors[s.key] }; }));
+  /* c. The benchmark premium: New York State in the Bulletin's magenta, the United States in its blue.
+        Each line carries its name near its end (and its latest value past its end), so there is no key. */
+  var premiumColors = { ny: WCA.cssVar("--db-premium-ny"), us: WCA.cssVar("--db-premium-us") };
   var premiumCanvas = document.getElementById("chart-premiums");
+  var premiumEnd = premiums.years.length - 1;
   new Chart(premiumCanvas, {
     type: "line",
     data: {
       labels: premiums.years,
-      datasets: premiums.series.map(function (s) { return lineSeries(s.label, s.values, premiumColors[s.key]); }),
+      datasets: premiums.series.map(function (s) {
+        var line = lineSeries(s.label, s.values, premiumColors[s.key]);
+        line.borderWidth = 4;
+        line.pointRadius = 0;                                        /* a plain thick line, as in the Bulletin; a dot appears under the mouse */
+        line.pointHoverRadius = 5;
+        return line;
+      }),
     },
     options: {
       interaction: { mode: "index", intersect: false },
       layout: { padding: { top: 8, right: 50 } },
       scales: {
         x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(3) } },
-        y: { beginAtZero: true, ticks: { callback: function (v) { return WCA.fmt.dollars(v); }, maxTicksLimit: 5 } },
+        y: { beginAtZero: true, ticks: { callback: function (v) { return WCA.fmt.dollars(v); }, maxTicksLimit: 6 } },
       },
       plugins: {
         endLabels: { last: true, format: WCA.fmt.dollars },
+        lineNames: { names: premiums.series.map(function (s) { return PREMIUM_LINE_NAMES[s.key] || s.label; }), size: 15 },
         tooltip: { callbacks: { label: function (item) { return item.dataset.label + ": " + WCA.fmt.dollars(item.parsed.y) + " a month"; } } },
       },
     },
-    plugins: [WCA.plugins.endLabels, hoverLine],
+    plugins: [WCA.plugins.endLabels, lineNames, hoverLine],
   });
   describe(premiumCanvas, "Monthly benchmark premium. " + premiums.series.map(function (s) {
     return s.label + ": " + WCA.fmt.dollars(s.values[0]) + " in " + premiums.years[0] + ", " +
-           WCA.fmt.dollars(s.values[s.values.length - 1]) + " in " + premiums.years[premiums.years.length - 1];
+           WCA.fmt.dollars(s.values[premiumEnd]) + " in " + premiums.years[premiumEnd];
   }).join("; ") + ".");
 }
 
 
-/* Page 1.14: two lines that count different things. Each line's first, lowest and latest value is
-   labelled; hover for the other years, and for the years to read with care. */
+/* Page 1.14: two lines that count different things. Each line carries its full name, written just above
+   it at the left (the words are in index.html), so there is no key. Each line's first, lowest and latest
+   value is labelled; hover for the other years, and for the years to read with care. The small orange box
+   sits on the chart, in the empty space between the two lines at the right. */
 function drawHomelessChildren(data) {
   var chart = data.charts.s1_14_homeless_children;
   var canvas = document.getElementById("chart-homeless");
+  var frame = canvas.parentNode;                                     /* the chart's box: the names and the orange box are placed inside it */
   var colors = { nysed: WCA.colors.blue, hud: WCA.db.teal.full };
+  var textColors = { nysed: WCA.colors.blue, hud: WCA.db.tealText };  /* teal as text is one step darker, so it reads on white */
+  var note = document.getElementById("note-homeless");
 
-  WCA.legend("#legend-homeless", chart.series.map(function (s) { return { label: s.label, color: colors[s.key] }; }));
-
+  /* The first value goes under its point (the line's name is above it); the lowest goes under too; the latest above */
   var notes = [];
   chart.series.forEach(function (s, d) {
     var known = s.values.map(function (v, i) { return v === null ? null : i; }).filter(function (i) { return i !== null; });
     var first = known[0], latest = known[known.length - 1];
     var lowest = known.reduce(function (a, b) { return s.values[b] < s.values[a] ? b : a; });
-    notes.push({ dataset: d, index: first, text: WCA.fmt.count(s.values[first]) });
-    notes.push({ dataset: d, index: latest, text: WCA.fmt.count(s.values[latest]) });
-    if (lowest !== first && lowest !== latest) notes.push({ dataset: d, index: lowest, text: WCA.fmt.count(s.values[lowest]), place: "below" });
+    notes.push({ dataset: d, index: first, lines: [WCA.fmt.count(s.values[first])], place: "below" });
+    notes.push({ dataset: d, index: latest, lines: [WCA.fmt.count(s.values[latest])] });
+    if (lowest !== first && lowest !== latest) notes.push({ dataset: d, index: lowest, lines: [WCA.fmt.count(s.values[lowest])], place: "below" });
   });
+
+  /* The empty part kept above the highest value, as a share of it: more on a narrow chart */
+  function headroom(width) { return width < 480 ? "32%" : "8%"; }
+
+  /* How high a line is on the screen at x, and the highest and lowest it gets between two x's (in pixels
+     from the top of the chart, so "highest" is the smallest number) */
+  function heightAt(points, x) {
+    for (var i = 1; i < points.length; i++) {
+      if (x <= points[i].x) {
+        var a = points[i - 1], b = points[i];
+        return a.y + (b.y - a.y) * Math.max(0, Math.min(1, (x - a.x) / (b.x - a.x || 1)));
+      }
+    }
+    return points[points.length - 1].y;
+  }
+  function reach(points, from, to) {
+    var ys = [heightAt(points, from), heightAt(points, to)];
+    points.forEach(function (point) { if (point.x >= from && point.x <= to) ys.push(point.y); });
+    return { highest: Math.min.apply(null, ys), lowest: Math.max.apply(null, ys) };
+  }
+
+  /* Put the words in place. Runs whenever the chart has been laid out again (first draw, a new window size). */
+  function placeWords(drawn) {
+    var area = drawn.chartArea;
+    var lines = chart.series.map(function (s, d) {
+      return drawn.getDatasetMeta(d).data.filter(function (point) { return !point.skip; });
+    });
+
+    /* each line's name: at the left of the chart, just above the highest point the line reaches under it.
+       A name stops short of the chart's right end (where the latest values are written); a long name
+       then takes two lines. */
+    var names = [];
+    chart.series.forEach(function (s, d) {
+      var name = frame.querySelector('.line-name[data-series="' + s.key + '"]');
+      if (!name) return;
+      name.style.color = textColors[s.key];
+      name.style.maxWidth = Math.max(120, area.right - area.left - 78) + "px";
+      var left = area.left + 8;
+      var top = Math.max(reach(lines[d], left, left + name.offsetWidth).highest - name.offsetHeight - 9, 0);
+      name.style.left = left + "px";
+      name.style.top = top + "px";
+      name.classList.add("placed");
+      names[d] = { left: left, right: left + name.offsetWidth, top: top };
+    });
+
+    /* the orange box: at the right, halfway between the two lines (clear of the numbers written at their
+       points, and of the lower line's name where the two overlap). If the space there is too small, it
+       goes above the chart instead. */
+    if (!note) return;
+    if (note.parentNode !== frame) frame.appendChild(note);            /* back on the chart to be measured */
+    note.classList.remove("above");
+    var right = area.right - 6, left = right - note.offsetWidth, CLEAR = 30;
+    var from = reach(lines[0], left, right).lowest + CLEAR;            /* under the upper line... */
+    var to = reach(lines[1], left, right).highest - CLEAR;             /* ...and over the lower one */
+    if (names[1] && names[1].right > left) to = Math.min(to, names[1].top - 8);
+    if (left >= area.left + 8 && to - from >= note.offsetHeight) {
+      note.style.left = left + "px";
+      note.style.top = (from + (to - from - note.offsetHeight) / 2) + "px";
+      note.classList.add("placed");
+    } else {
+      note.classList.remove("placed");
+      note.classList.add("above");
+      note.style.left = note.style.top = "";
+      frame.parentNode.insertBefore(note, frame);
+    }
+  }
 
   new Chart(canvas, {
     type: "line",
@@ -1406,12 +1742,14 @@ function drawHomelessChildren(data) {
     options: {
       interaction: { mode: "index", intersect: false },
       layout: { padding: { top: 20, right: 12 } },
+      /* On a narrow chart the names take two lines each, so the scale leaves more room above the upper line */
+      onResize: function (resized, size) { resized.options.scales.y.grace = headroom(size.width); },
       scales: {
-        x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(1) } },
-        y: { beginAtZero: true, grace: "8%", ticks: { callback: WCA.fmt.count, maxTicksLimit: 6 } },
+        x: { ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(1) } },      /* a gray line up from every year, as in the Bulletin */
+        y: { beginAtZero: true, grace: headroom(frame.clientWidth), ticks: { callback: WCA.fmt.count, maxTicksLimit: 7 } },
       },
       plugins: {
-        pointNotes: { notes: notes },
+        pointWords: { size: 12, weight: "600", notes: notes },
         tooltip: { callbacks: {
           label: function (item) {
             var s = chart.series[item.datasetIndex], year = chart.years[item.dataIndex];
@@ -1423,7 +1761,7 @@ function drawHomelessChildren(data) {
         } },
       },
     },
-    plugins: [WCA.plugins.pointNotes, hoverLine],
+    plugins: [pointWords, hoverLine, { id: "placeWords", afterUpdate: placeWords }],
   });
 
   describe(canvas, chart.title + ". " + chart.series.map(function (s) {
@@ -1432,18 +1770,43 @@ function drawHomelessChildren(data) {
 }
 
 
-/* Page 1.16: credit card debt per person, one bar a year. The first, the highest before the latest and
-   the latest bar are labelled; the axis and hover carry the rest. */
+/* Page 1.16: credit card debt per person, one bar a year. The first and the latest bar are labelled; the
+   axis and hover carry the rest. The Bulletin's box and up arrow (their words are in index.html) sit on the
+   lower half of the bars: under the top of the shortest bar, so no bar's height is hidden. */
 function drawCreditCardDebt(data) {
   var chart = data.charts.s1_16_credit_card_debt;
   var canvas = document.getElementById("chart-credit-card");
+  var frame = canvas.parentNode;
+  var note = document.getElementById("note-credit-card");
   var end = chart.values.length - 1;
+  var shortest = Math.min.apply(null, chart.values);
+
+  /* Put the box and arrow in place: in the middle of the chart, between the top of the shortest bar and
+     the foot of the bars. If the chart is too small to hold them, they go above the chart instead. */
+  function placeNote(drawn) {
+    if (!note) return;
+    var area = drawn.chartArea;
+    if (note.parentNode !== frame) frame.appendChild(note);            /* back on the chart to be measured */
+    note.classList.remove("above");
+    var from = drawn.scales.y.getPixelForValue(shortest) + 14, to = area.bottom - 14;
+    var width = note.offsetWidth, height = note.offsetHeight;
+    if (area.right - area.left >= width + 16 && to - from >= height) {
+      note.style.left = (area.left + (area.right - area.left - width) / 2) + "px";
+      note.style.top = (from + (to - from - height) / 2) + "px";
+      note.classList.add("placed");
+    } else {
+      note.classList.remove("placed");
+      note.classList.add("above");
+      note.style.left = note.style.top = "";
+      frame.parentNode.insertBefore(note, frame);
+    }
+  }
 
   new Chart(canvas, {
     type: "bar",
     data: { labels: chart.years, datasets: [{ label: "Credit card debt per person", data: chart.values, backgroundColor: WCA.colors.blue }] },
     options: {
-      datasets: { bar: { barPercentage: 0.9, categoryPercentage: 0.8, maxBarThickness: 28 } },
+      datasets: { bar: { barPercentage: 0.9, categoryPercentage: 0.92 } },      /* wide bars with a thin gap, as in the Bulletin */
       layout: { padding: { top: 20 } },
       scales: {
         x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, callback: yearTicks(1) } },
@@ -1457,7 +1820,7 @@ function drawCreditCardDebt(data) {
         } },
       },
     },
-    plugins: [barNotes],
+    plugins: [barNotes, { id: "placeNote", afterUpdate: placeNote }],
   });
 
   describe(canvas, chart.title + ". " + chart.years.map(function (year, i) { return year + ": " + WCA.fmt.dollars(chart.values[i]); }).join(", ") + ".");
@@ -1470,6 +1833,19 @@ function drawCreditCardDebt(data) {
 
 /* The page's own background color, for the thin gaps between touching marks (read from styles.css) */
 var SURFACE = WCA.cssVar("--white");
+
+/* True when the reader has asked their device for less movement on screen. The charts that slide or turn
+   when a button is pressed (pages 1.8, 1.9, 1.10) then change at once instead. */
+var STILL = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+/* The gray of the lines behind a chart's bars and lines (read from styles.css) */
+var GRID = WCA.cssVar("--db-grid");
+
+/* The Bulletin's charts have gray lines behind them that a reader can see. The template draws its lines
+   much fainter; called once at start-up, this gives every chart on the page the Bulletin's gray. */
+function useChartLines() {
+  Chart.defaults.scale.grid.color = GRID;
+}
 
 /* Say in words what a chart shows, for people using a screen reader (a chart is a picture to them) */
 function describe(element, text) {
@@ -1548,8 +1924,10 @@ function monthName(month) {
   return new Date(Number(parts[0]), Number(parts[1]) - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
 }
 
-/* Run fn again whenever the layout may have moved: the window changed size, or the web font arrived */
-function whenLayoutChanges(fn) {
+/* Run fn again whenever the layout may have moved: the window changed size, or the web font arrived.
+   Given an element as well, also whenever that element changes size (its tab is shown again, or its
+   text wraps differently). */
+function whenLayoutChanges(fn, element) {
   var waiting = false;
   window.addEventListener("resize", function () {
     if (waiting) return;
@@ -1557,6 +1935,7 @@ function whenLayoutChanges(fn) {
     requestAnimationFrame(function () { waiting = false; fn(); });
   });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fn);
+  if (element && window.ResizeObserver) new ResizeObserver(function () { fn(); }).observe(element);
 }
 
 /* Chart.js normally draws its hover box inside the chart, where a small chart cuts it off. Called once at
@@ -1578,6 +1957,15 @@ function useHoverBox() {
 /* Text made safe to put inside HTML (a label is data, and data is never trusted to be free of < or &) */
 function plainText(text) {
   return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/* How wide a piece of text will be on the screen, in pixels, in the page's font:
+     textWidth("76.6%", "600 12px")     ("600" is how bold, "12px" how large)
+   Lets a chart decide whether a label fits before it is drawn. */
+function textWidth(text, weightAndSize) {
+  var pen = textWidth.pen || (textWidth.pen = document.createElement("canvas").getContext("2d"));
+  pen.font = weightAndSize + " " + WCA.font;
+  return pen.measureText(text).width;
 }
 
 /* Hover boxes for charts made of plain HTML: any element inside `box` that was given a .tip
@@ -1609,12 +1997,166 @@ var barNotes = {
     ctx.strokeStyle = SURFACE; ctx.lineWidth = 3; ctx.lineJoin = "round";
     ctx.textAlign = "center"; ctx.textBaseline = "bottom";
     chart.data.datasets.forEach(function (dataset, d) {
+      if (!chart.isDatasetVisible(d)) return;                        /* nothing above a bar that is not on show */
       chart.getDatasetMeta(d).data.forEach(function (bar, i) {
         var text = write(d, i);
         if (text === null || text === undefined) return;
         var at = bar.getProps(["x", "y"], true);
         ctx.strokeText(text, at.x, at.y - 4);       /* a thin white edge, in case the text touches a neighbouring bar */
         ctx.fillText(text, at.x, at.y - 4);
+      });
+    });
+    ctx.restore();
+  },
+};
+
+/* pointWords (a Chart.js add-on): write one or more lines of text above chosen points of a line, the
+   Bulletin way ("59,333 / Children / Under 5"). Each note sits on a patch of the page's background, so the
+   chart's gray lines never run through the words, and is pulled in if it would leave the chart sideways.
+     plugins: { pointWords: { size: 14, notes: [{ index: 0, lines: ["59,333", "Children", "Under 5"] }] } }
+   `dataset` picks the line (the first if left out); place: "below" writes under the point instead;
+   `weight` is how bold the words are ("700" if left out). */
+var pointWords = {
+  id: "pointWords",
+  afterDatasetsDraw: function (chart, args, o) {
+    if (!o || !o.notes) return;
+    var ctx = chart.ctx, size = o.size || 13, lineHeight = Math.round(size * 1.25), area = chart.chartArea;
+    ctx.save();
+    ctx.font = (o.weight || "700") + " " + size + "px " + WCA.font;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    o.notes.forEach(function (note) {
+      var point = chart.getDatasetMeta(note.dataset || 0).data[note.index];
+      if (!point) return;
+      var width = Math.max.apply(null, note.lines.map(function (line) { return ctx.measureText(line).width; }));
+      var height = note.lines.length * lineHeight;
+      var x = Math.min(Math.max(point.x, area.left + width / 2 + 2), area.right - width / 2 - 2);
+      var top = note.place === "below" ? point.y + 12 : point.y - 12 - height;
+      ctx.fillStyle = SURFACE;
+      ctx.fillRect(x - width / 2 - 3, top - 1, width + 6, height + 2);
+      ctx.fillStyle = WCA.colors.ink;
+      note.lines.forEach(function (line, k) { ctx.fillText(line, x, top + lineHeight * (k + 0.5)); });
+    });
+    ctx.restore();
+  },
+};
+
+/* valuesInBars (a Chart.js add-on, for bars that run sideways): write each bar's value inside its end, the
+   Bulletin way, in white or dark text (whichever reads on the bar's color). A bar too short to hold its
+   value has it just past its end instead.
+     plugins: { valuesInBars: { format: WCA.fmt.pct } }
+   With `names: true`, each series' name is also written at the start of its bar in the LAST row, where the
+   Bulletin puts the names instead of a key. `onNames(fit)` then tells the chart whether every name
+   fitted, so that it can show a key when one did not. */
+var valuesInBars = {
+  id: "valuesInBars",
+  afterDatasetsDraw: function (chart, args, o) {
+    if (!o || !o.format) return;
+    var ctx = chart.ctx, size = o.size || 13, names = [];
+    ctx.save();
+    ctx.textBaseline = "middle";
+    chart.data.datasets.forEach(function (dataset, d) {
+      if (!chart.isDatasetVisible(d)) return;
+      var bars = chart.getDatasetMeta(d).data;
+      bars.forEach(function (bar, i) {
+        var value = dataset.data[i];
+        if (value === null || value === undefined) return;
+        var at = bar.getProps(["x", "y", "base"], true);
+        var length = at.x - at.base, text = o.format(value);
+        var fill = Array.isArray(dataset.backgroundColor) ? dataset.backgroundColor[i] : dataset.backgroundColor;
+        ctx.font = "600 " + size + "px " + WCA.font;
+        var width = ctx.measureText(text).width;
+        var inside = length >= width + 12;
+        ctx.fillStyle = inside ? textOn(fill) : WCA.colors.ink;
+        ctx.textAlign = inside ? "right" : "left";
+        ctx.fillText(text, inside ? at.x - 7 : at.x + 5, at.y + 1);
+        /* the series' name belongs in the last row's bar: note where, and how much room that bar has for it */
+        if (o.names && i === bars.length - 1) names.push({ text: dataset.label, x: at.base + 9, y: at.y + 1, color: textOn(fill), room: inside ? length - width - 30 : 0 });
+      });
+    });
+    /* the names are written only if every one of them fits: some in the bars and some in a key would be worse than either */
+    if (o.names) {
+      ctx.font = "700 " + size + "px " + WCA.font;
+      ctx.textAlign = "left";
+      var fit = names.length > 0 && names.every(function (name) { return ctx.measureText(name.text).width <= name.room; });
+      if (fit) names.forEach(function (name) { ctx.fillStyle = name.color; ctx.fillText(name.text, name.x, name.y); });
+      if (o.onNames) o.onNames(fit);
+    }
+    ctx.restore();
+  },
+};
+
+/* lineNames (a Chart.js add-on): write each line's name on the chart, above the line and ending at its last
+   point, in the line's own color, as the Bulletin does ("New York", "USA"). The names stand in for a key.
+     plugins: { lineNames: { names: ["New York", "USA"], size: 15 } }      one name per line, in order
+   Use it where the lines are far enough apart at their ends for the names not to touch. */
+var lineNames = {
+  id: "lineNames",
+  afterDatasetsDraw: function (chart, args, o) {
+    if (!o || !o.names) return;
+    var ctx = chart.ctx;
+    ctx.save();
+    ctx.font = "700 " + (o.size || 14) + "px " + WCA.font;
+    ctx.textAlign = "right"; ctx.textBaseline = "bottom";
+    ctx.lineWidth = 4; ctx.lineJoin = "round"; ctx.strokeStyle = SURFACE;
+    chart.data.datasets.forEach(function (dataset, d) {
+      var points = chart.getDatasetMeta(d).data, name = o.names[d];
+      if (!name || !points.length || !chart.isDatasetVisible(d)) return;
+      /* the highest the line gets under the name, so the name clears it */
+      var end = points[points.length - 1], width = ctx.measureText(name).width, top = end.y;
+      points.forEach(function (point) { if (point.x >= end.x - width && !isNaN(point.y)) top = Math.min(top, point.y); });
+      ctx.strokeText(name, end.x, top - 9);                          /* a white edge keeps the letters clear of the gray lines */
+      ctx.fillStyle = dataset.borderColor;
+      ctx.fillText(name, end.x, top - 9);
+    });
+    ctx.restore();
+  },
+};
+
+/* ringPointers (a Chart.js add-on, for rings): under a ring, the name and the share of chosen parts, each
+   joined by a thin line to its part of the ring, as in the Bulletin (page 1.10).
+     plugins: { ringPointers: { parts: [{ index: 1, side: "left", lines: ["Rent", "13.7%"] }] } }
+   `index` is the part's place in the data, `side` where its words go under the ring. The line goes
+   straight up from the words when the part is above them, and to the nearest point of the part when it
+   is not. The chart must leave room under the ring: layout.padding.bottom. */
+var ringPointers = {
+  id: "ringPointers",
+  afterDatasetsDraw: function (chart, args, o) {
+    if (!o || !o.parts || !o.parts.length) return;
+    var arcs = chart.getDatasetMeta(0).data, ctx = chart.ctx;
+    if (!arcs.length) return;
+    var ring = arcs[0].getProps(["x", "y", "outerRadius", "innerRadius"], true);
+    var middle = (ring.outerRadius + ring.innerRadius) / 2;          /* halfway across the ring's band */
+    var top = ring.y + ring.outerRadius + 16;                        /* where the words begin */
+    ctx.save();
+    ctx.textAlign = "center"; ctx.textBaseline = "top";
+    o.parts.forEach(function (part) {
+      var arc = arcs[part.index] && arcs[part.index].getProps(["startAngle", "endAngle"], true);
+      if (!arc || arc.endAngle - arc.startAngle < 0.03) return;      /* a part with nothing in it has nothing to point at */
+      var side = part.side === "left" ? -1 : 1;
+      var x = ring.x + side * ring.outerRadius * 0.5;                /* the words' middle: halfway out from the ring's center */
+
+      /* Angles run clockwise from 3 o'clock, as Chart.js counts them. `wanted` is the point of the band
+         straight above the words; if the part is not there, the nearest end of the part is used instead. */
+      var wanted = Math.acos(side * ring.outerRadius * 0.5 / middle);
+      var inset = Math.min(0.14, (arc.endAngle - arc.startAngle) / 4);
+      var from = arc.startAngle + inset, to = arc.endAngle - inset, angle = null;
+      [-1, 0, 1, 2].forEach(function (turn) {
+        var candidate = wanted + turn * 2 * Math.PI;
+        if (angle === null && candidate >= from && candidate <= to) angle = candidate;
+      });
+      if (angle === null) {
+        function apart(a) { var d = Math.abs(a - wanted) % (2 * Math.PI); return Math.min(d, 2 * Math.PI - d); }
+        angle = apart(from) < apart(to) ? from : to;
+      }
+      var px = ring.x + middle * Math.cos(angle), py = ring.y + middle * Math.sin(angle);
+
+      ctx.strokeStyle = WCA.colors.ink; ctx.fillStyle = WCA.colors.ink; ctx.lineWidth = 1.25;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, top - 3); ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, 2.5, 0, 2 * Math.PI); ctx.fill();
+      part.lines.forEach(function (line, k) {
+        ctx.font = (k === 0 ? "400" : "600") + " 13px " + WCA.font;
+        ctx.fillStyle = k === 0 ? WCA.colors.fine : WCA.colors.ink;
+        ctx.fillText(line, x, top + k * 16);
       });
     });
     ctx.restore();

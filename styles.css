@@ -9,10 +9,13 @@
      B.  Page basics and the pieces every section uses (template, with the
          additions this page needs).
      C.  The Bulletin page: banner, chapter tabs, chapter covers, part
-         headings, chart cards with their side panel, quote cards, and (C9)
-         the pieces the charts are built from.
+         headings, chart cards with their side panel, quote cards, (C9) the
+         pieces the charts are built from, and (C10) how a chart fills the
+         room beside the text box on a wide screen.
      D.  Layer 2 (story cards) and E. Layer 3 (community map): added later,
          in their own parts, so each layer's styling has one home.
+     Last: the rules for narrower windows (1100, 1000, 900, 700, 600 and 520
+         pixels wide and less).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -170,6 +173,24 @@
   /* Added 2026-11-18: the disc behind a cover's silhouette. The band color one step
      lighter, as a solid color (not a see-through white, which can read as a mistake). */
   --db-chapter-band-disc: #367694;
+  /* Added 2026-11-19: the children and youth slice of page 1.3's pie. The Bulletin's own magenta for
+     that slice (the same value as --db-hispanic), so the pie stands out from the blue around it. */
+  --db-children:         #B6377B;
+
+  /* ---- Added 2026-11-19 (chapter 1 review): the Bulletin's own colors on the charts that had been
+          drawn all in blue. Where the kit already holds the PDF's color the name points to it
+          ("var(--x)" means "the same color as --x"); the red and the purple of page 1.5 are the PDF's
+          own values. Change a chart's color here. ---- */
+  --db-births:           #C00000;                 /* 1.5 baby figures, their numbers and their circle: the PDF's red */
+  --db-births-light:     #EEB9B9;                 /* 1.5 the part of the last baby figure that does not count (a pale step of that red) */
+  --db-under-5:          #7030A0;                 /* 1.5 the "children under 5" circle and its line: the PDF's purple (the PDF's line is orange,
+                                                     which the color check found too close to the red beside it) */
+  --db-food-insecure:    var(--db-asian);         /* 1.13 food insecurity bars: the PDF's purple */
+  --db-poverty:          var(--db-callout);       /* 1.13 poverty bars: the PDF's orange (white text reads on it) */
+  --db-premium-ny:       var(--db-hispanic);      /* 1.13 New York's premium line: the PDF's magenta */
+  --db-premium-us:       var(--wca-blue);         /* 1.13 the United States' premium line: the PDF's blue */
+  --db-grid:             #CDCDCD;                 /* the gray lines behind the bars and lines of every chart (the PDF's are this visible) */
+  --db-track:            #E4E9F1;                 /* 1.8 the pale bar behind a single family type's share: the rest of the 100% */
 }
 
 /* Brand motifs built from the layer above */
@@ -439,12 +460,16 @@ section > h2 { margin-bottom: 4px; }
 }
 a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(--wca-blue); }
 .card h2.db-title { font-size: 20px; margin-top: 8px; }
-.card-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px; align-items: stretch; }
+/* The text box takes 17 parts of the card's width and the chart 43 (the box was one part in three; it is
+   15% narrower since 2026-11-19, so the chart has the room). On a tablet the box stops narrowing at
+   240 pixels, to keep its lines readable. How the chart uses its column is in C10. */
+.card-body { display: grid; grid-template-columns: minmax(240px, 17fr) minmax(0, 43fr); gap: 24px; align-items: stretch; }
 .card-body.full { grid-template-columns: minmax(0, 1fr); }                   /* pages with no side panel (1.11, 2.6, 2.17, 3.3) */
-.card-body .db-panel h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 10px; }
+.card-body .db-panel h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 10px; text-wrap: pretty; }   /* where the browser can, a heading never leaves one word alone on its last line */
 .card-body .db-panel p { font-size: 16px; margin-bottom: 10px; }
 .card-body .db-panel p:last-child { margin-bottom: 0; }
 .card-body .db-panel strong { font-weight: 700; color: var(--ink); }
+.keep-together { white-space: nowrap; }                                        /* a range of numbers (0–24) is never split across two lines */
 .chart-area { min-width: 0; }
 .chart-area .chart-subtitle { font-size: 15px; color: var(--fine); margin: -6px 0 10px; }
 .chart-area h3 { font-size: 16px; font-weight: 600; color: var(--db-title); margin: 0 0 6px; }
@@ -457,23 +482,34 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 }
 .chart-placeholder strong { color: var(--fine); display: block; margin-bottom: 2px; }
 
-/* C6. Quote cards (Bulletin pages 1.15 and 2.9): a figure and a speech bubble on pale blue */
+/* C6. Quote cards (Bulletin pages 1.15 and 2.9): a person speaking, on pale blue. As in the Bulletin, the
+   figure is large and is cut off at the legs by the bottom edge of the card, with a white speech bubble
+   whose tail points at the figure. --tall is how much of the card's height the figure takes; the figure
+   itself is drawn a quarter taller than that, which is the part the card's edge cuts off. */
 .quote-card {
-  margin-top: 28px; padding: 28px; border-radius: var(--radius); background: var(--db-panel);
-  display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 28px; align-items: center;
+  --tall: 384px;
+  margin-top: 28px; padding: 28px 28px 0 8px; border-radius: var(--radius); background: var(--db-panel); overflow: hidden;
+  display: grid; grid-template-columns: 216px minmax(0, 1fr); grid-template-rows: 1fr auto; column-gap: 40px; align-items: start;
 }
-.quote-card .figure { width: 120px; height: 220px; color: var(--wca-blue); justify-self: center; }
-.bubble { position: relative; background: var(--white); border-radius: 28px; padding: 24px 30px; }
-.bubble::before {                                   /* the tail, pointing at the figure */
-  content: ""; position: absolute; left: -18px; top: 44px;
-  border: 12px solid transparent; border-right: 18px solid var(--white); border-left: 0;
+.quote-card .figure {
+  grid-row: 1 / 3; align-self: end; width: 100%; height: var(--tall); color: var(--wca-blue);
+  -webkit-mask-size: auto 125%; mask-size: auto 125%; -webkit-mask-position: center top; mask-position: center top;
 }
-.bubble h3 { color: var(--db-title); font-size: 18px; font-weight: 700; margin: 0 0 10px; }
-.bubble blockquote { margin: 0 0 12px; font-size: 20px; line-height: 1.45; color: var(--ink); }
-.bubble .who { font-size: 15px; color: var(--body); margin: 0; }
+.bubble { position: relative; margin-top: 22px; background: var(--white); border-radius: 32px; padding: 30px 38px; }
+.bubble::before {                                   /* the tail: a white point on the bubble's left side, aimed at the figure */
+  content: ""; position: absolute; right: 100%; top: 54px; width: 50px; height: 40px; margin-right: -1px;
+  background: var(--white); clip-path: polygon(100% 0, 100% 100%, 0 80%);
+}
+.bubble h3 { color: var(--db-title); font-size: 20px; font-weight: 700; margin: 0 0 12px; }
+.bubble blockquote { margin: 0 0 14px; font-size: 21px; line-height: 1.45; color: var(--ink); }
+.bubble .who { font-size: 16px; color: var(--body); margin: 0; }
 .bubble .who strong { color: var(--ink); }
 .bubble .who em { color: var(--fine); }
-.quote-card .source { grid-column: 1 / -1; margin: 0; }
+/* A quote that is the card's whole message (page 1.15): large, bold, slanted and blue, as the Bulletin prints it */
+.quote-card.headline blockquote { font-size: 25px; font-weight: 600; font-style: italic; line-height: 1.4; color: var(--db-title); }
+.quote-card.headline .who, .quote-card.headline .who strong, .quote-card.headline .who em { color: var(--db-title); }
+.quote-card.headline .who::before { content: "— "; }
+.quote-card .source { grid-column: 2; align-self: end; margin: 18px 0 16px; }
 
 /* C7. "Continue to the next chapter" */
 .continue { display: flex; justify-content: flex-end; margin: 36px 0 8px; }
@@ -499,8 +535,10 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
    the table). Colors come from parts A and A2 only.
    -------------------------------------------------------------------------- */
 
-/* A chart's own heading and notes, inside a card */
+/* A chart's own heading and notes, inside a card. Where a card holds two or three charts, each chart's
+   title carries the Bulletin's blue line under it, which also shows where one chart ends and the next begins. */
 .chart-area > h3:not(:first-child) { margin-top: 22px; }
+.chart-area > h3, .chart-trio h3 { border-bottom: 2px solid var(--db-title-rule); padding-bottom: 5px; margin-bottom: 12px; }
 .note { color: var(--muted); font-size: 13px; line-height: 1.45; margin: 8px 0 0; }
 
 /* A rust callout box above a chart, at the right; a short line about the chart can sit to its left */
@@ -509,80 +547,168 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .callout-line .db-callout { margin: 0; max-width: 44ch; font-size: 15px; line-height: 1.4; }
 .db-callout strong { font-weight: 700; }
 
-/* --- Hero sentence with a picture beside it, and a donut with its notes (page 1.3) --- */
+/* --- Words placed on a chart (pages 1.14, 1.16): a line's name written just above the line, and a small
+   callout in an empty part of the chart. The words are in index.html; charts.js puts each in its place
+   (and moves it when the chart changes size). Each sits on a solid patch, so the chart's gray lines
+   never run through the words. A callout the chart has no room for is shown above the chart instead. --- */
+.line-name {
+  position: absolute; z-index: 1; left: 0; top: 0; margin: 0; pointer-events: none;
+  font-size: 14px; font-weight: 700; line-height: 1.3;
+  visibility: hidden;                                                              /* until charts.js has placed it */
+}
+.line-name > span {                                                                /* the white patch hugs the words, line by line */
+  background: var(--white); padding: 1px 6px; border-radius: 2px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.line-name.placed, .chart-note.placed { visibility: visible; }
+.chart-note { position: absolute; z-index: 1; left: 0; top: 0; margin: 0; pointer-events: none; visibility: hidden; }
+.db-callout.chart-note { width: max-content; max-width: min(290px, 70%); font-size: 13px; line-height: 1.35; padding: 8px 12px; }
+.db-callout.chart-note.above { position: static; visibility: visible; width: auto; max-width: 44ch; margin: 0 0 10px auto; }   /* no room on the chart: above it, at the right */
+
+/* --- Rise note (page 1.16): the Bulletin's box with a white arrow pointing up beside it. The box holds
+   the sentence; the arrow overlaps the box's right end and carries the increase in the box's color.
+   The arrow is a white shape cut to an arrow's outline: the numbers in "polygon" are its corners, as
+   percentages of its width and height. --- */
+.rise-note { display: flex; align-items: center; width: max-content; max-width: 100%; }
+.rise-note .db-callout {
+  flex: 0 1 auto; width: 330px; margin: 0; padding: 18px 124px 20px 24px; border-radius: 20px;
+  font-size: 17px; font-weight: 700; line-height: 1.4; text-wrap: balance;
+}
+.rise-arrow {
+  flex: 0 0 auto; width: 206px; height: 146px; margin: 0 0 0 -112px; padding-bottom: 14px;
+  background: var(--white); color: var(--db-callout-text);
+  clip-path: polygon(50% 0, 100% 50%, 75% 50%, 75% 100%, 25% 100%, 25% 50%, 0 50%);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  text-align: center; text-transform: uppercase; font-weight: 700; line-height: 1.15;
+}
+.rise-arrow span { font-size: 13px; letter-spacing: 0.02em; }
+.rise-arrow strong { font-size: 30px; line-height: 1.12; color: var(--db-callout); }
+.rise-note.above { position: static; visibility: visible; margin: 0 auto 12px; }           /* no room on the chart: above it */
+.rise-note.above .db-callout { width: auto; flex: 1 1 auto; min-width: 0; }
+
+/* --- Hero sentence with a picture beside it (page 1.3) --- */
 .hero { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 20px; align-items: center; margin-bottom: 22px; }
 .hero-sentence { font-size: 30px; font-weight: 700; line-height: 1.25; color: var(--db-title); margin: 0; }
 .hero-sentence strong { font-size: 38px; }
 .hero-art { width: 190px; height: 190px; display: block; }
-.donut-row { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 24px; align-items: center; }
-.chart-box.donut { height: 210px; }
-.donut-notes h3 { margin-bottom: 2px; }
-.donut-notes .chart-subtitle { margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
-.note-box {                                    /* a boxed statement with the color key of the slice it is about */
+
+/* --- Pie with words on its slices, and boxed statements joined to it by lines (page 1.3) ---
+   charts.js draws the slices and the lines. Where the column is too narrow for the boxes to sit beside
+   the pie they drop under it; charts.js then adds "stacked": the lines go, and each box shows the
+   color of its piece of the pie instead. */
+.pie-row { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px 28px; }
+.pie { position: relative; flex: 0 0 auto; width: min(260px, 100%); aspect-ratio: 1; }
+.pie svg { display: block; width: 100%; height: 100%; }
+.pie-slice { stroke: var(--white); stroke-width: 1.5; }               /* a thin white gap between the two slices */
+.pie-slice.older { fill: var(--wca-blue); }
+.pie-slice.young { fill: var(--db-children); }
+.pie-slice.low { stroke: none; }                                      /* white stripes over the end of the children's slice: a part of it, so no gap */
+.pie-label {                                                          /* the words on a slice; charts.js sets where */
+  position: absolute; transform: translate(-50%, -50%); pointer-events: none;
+  text-align: center; white-space: nowrap; font-size: 13px; font-weight: 600; line-height: 1.25; color: var(--white);
+}
+.pie-notes { flex: 1 1 260px; min-width: 0; }
+.pie-notes h3 { margin-bottom: 2px; }
+.pie-notes .chart-subtitle { margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.pie-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pie-lines line { stroke: var(--wca-blue); stroke-width: 1.5; }
+.note-box {                                    /* a boxed statement about one piece of the pie */
   display: flex; gap: 10px; align-items: flex-start; margin: 0 0 8px; padding: 10px 12px;
-  border: 1px solid var(--wca-blue-100); border-radius: 4px;
+  border: 1.5px solid var(--wca-blue); border-radius: 4px;
   font-size: 16px; font-weight: 600; line-height: 1.35; color: var(--ink);
 }
-.note-box .swatch { flex: 0 0 auto; width: 16px; height: 16px; border-radius: 3px; margin-top: 3px; }
-.swatch.hatched { background: repeating-linear-gradient(45deg, var(--wca-blue) 0 3px, var(--white) 3px 5px); }
+.note-box:last-child { margin-bottom: 0; }
+.note-box .swatch { display: none; flex: 0 0 auto; width: 16px; height: 16px; border-radius: 3px; margin-top: 3px; }
+.pie-row.stacked .note-box .swatch { display: block; }                /* the color key, only when there are no lines */
+.swatch.young { background: var(--db-children); }
+.swatch.hatched { background: repeating-linear-gradient(105deg, var(--db-children) 0 3px, var(--white) 3px 5px); }
 
-/* --- Stat circle: one big number in a solid circle (pages 1.5, 2.17, 3.3) --- */
+/* --- Stat circle: one big number in a solid circle (pages 1.5, 2.17, 3.3) ---
+   --circle is how wide the circle is. It is set on the row that holds the circle (.with-circle), so the
+   circle and the column it sits in always agree. */
+.with-circle { --circle: 190px; display: grid; grid-template-columns: minmax(0, 1fr) var(--circle); gap: 20px; align-items: center; }
+.with-circle.circle-first { grid-template-columns: var(--circle) minmax(0, 1fr); }
 .stat-circle {
-  width: 164px; aspect-ratio: 1; border-radius: 50%; margin: 0; padding: 14px;
+  position: relative; width: var(--circle, 164px); aspect-ratio: 1; border-radius: 50%; margin: 0; padding: 14px;
   background: var(--db-title); color: var(--white);
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.2;
 }
 .stat-circle strong { font-size: 34px; font-weight: 700; line-height: 1.1; }
 .stat-circle span { font-size: 14px; font-weight: 600; max-width: 14ch; }
 .stat-circle small { font-size: 12px; margin-top: 4px; color: var(--white); }
-.with-circle { display: grid; grid-template-columns: minmax(0, 1fr) 164px; gap: 20px; align-items: center; }
-.with-circle.circle-first { grid-template-columns: 164px minmax(0, 1fr); }
 
-/* --- Picture row: one figure for every so many, the last one filled part of the way (page 1.5) --- */
-.picto-row { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center; margin-bottom: 10px; }
-.picto-year { display: block; font-size: 14px; font-weight: 600; color: var(--fine); line-height: 1.2; }
-.picto-value { display: block; font-size: 22px; font-weight: 700; color: var(--db-title); line-height: 1.15; }
-.picto-figures { display: flex; flex-wrap: wrap; gap: 3px; }
+/* A circle that reports a fall (page 1.5), the Bulletin's way: a white arrow pointing down, with the
+   words written on the arrow in the circle's own color (--hue). The arrow is a white shape cut to an
+   arrow's outline; the numbers in "polygon" are its corners, as percentages of the circle's width and
+   height. The words are as wide as the arrow's shaft and scale with the circle. */
+.stat-circle.arrow-down {
+  --hue: var(--db-title); background: var(--hue); color: var(--hue);
+  justify-content: flex-start; padding: calc(var(--circle, 190px) * 0.19) 0 0; font-size: calc(var(--circle, 190px) / 15); line-height: 1.18;
+}
+.stat-circle.arrow-down::before {
+  content: ""; position: absolute; inset: 0; background: var(--white);
+  clip-path: polygon(25% 14%, 75% 14%, 75% 55%, 95% 55%, 50% 93%, 5% 55%, 25% 55%);
+}
+.stat-circle.arrow-down > * { position: relative; max-width: 48%; }
+.stat-circle.arrow-down strong { font-size: 2.05em; line-height: 1.16; }
+.stat-circle.arrow-down span { font-size: 1em; font-weight: 700; }
+.stat-circle.arrow-down small { font-size: 0.78em; font-weight: 600; margin-top: 0.3em; max-width: 60%; color: var(--muted); }
+.stat-circle.births { --hue: var(--db-births); }
+.stat-circle.under-5 { --hue: var(--db-under-5); }
+
+/* --- Picture rows: one figure for every so many, the last one counting part of the way (page 1.5) ---
+   --count (set by charts.js) is how many figures the longest row has. Every row is ruled into that many
+   columns, so a figure is the same size in each row and the row with fewer simply ends sooner. */
+.picto-row { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: center; margin-bottom: 14px; }
+.picto-year { display: block; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.picto-value { display: block; font-size: 24px; font-weight: 700; color: var(--db-births); line-height: 1.15; }
+.picto-figures { display: grid; grid-template-columns: repeat(var(--count, 12), minmax(0, 38px)); gap: 3px; }
 .picto-figure {
-  width: 28px; height: 28px;
+  aspect-ratio: 384 / 496;                                    /* the shape of the baby figure's file */
   /* --filled is how much of this figure counts, 0% to 100%, set by charts.js */
-  background: linear-gradient(90deg, var(--wca-blue) var(--filled, 0%), var(--db-remainder) var(--filled, 0%));
+  background: linear-gradient(90deg, var(--db-births) var(--filled, 100%), var(--db-births-light) var(--filled, 100%));
   -webkit-mask: url("resources/icons/baby.svg") no-repeat center / contain; mask: url("resources/icons/baby.svg") no-repeat center / contain;
 }
 
 /* --- Family bars: a silhouette and a name, then one bar a year (pages 1.7, 2.4) ---
    --who is the width of the silhouette column. --at (set by charts.js) is where a benchmark sits on the
    scale, as a percentage of the bars' width: the callout's pointer and the dashed line both use it. */
-.family-bars { --who: 92px; --gap: 12px; }
+.family-bars { --who: 104px; --gap: 12px; position: relative; }
+/* The gray lines behind the bars, one at each step of the scale (drawn by charts.js). They start behind
+   the first callout and end on the scale. */
+.fb-grid { position: absolute; z-index: 0; top: 22px; bottom: 22px; left: calc(var(--who) + var(--gap)); right: 0; pointer-events: none; }
+.fb-grid span { position: absolute; top: 0; bottom: 0; width: 1px; margin-left: -0.5px; background: var(--db-grid); }
+.fb-grid span:last-child { margin-left: -1px; }                                   /* the last line stays inside the chart's right edge */
 .fb-row { display: grid; grid-template-columns: var(--who) minmax(0, 1fr); gap: var(--gap); align-items: center; margin-bottom: 20px; }
 .fb-who { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.2; color: var(--ink); }
-.fb-who .figure { width: 46px; height: 62px; }
-.fb-row[data-family="married"] .figure, .legend-item.married .figure { color: var(--db-married); }
-.fb-row[data-family="father"] .figure,  .legend-item.father .figure  { color: var(--db-father); }
-.fb-row[data-family="mother"] .figure,  .legend-item.mother .figure  { color: var(--db-mother); }
-.fb-plot { position: relative; display: grid; gap: 3px; }
+.fb-who .figure { width: 66px; height: 80px; }
+.fb-row[data-family="married"] .figure { color: var(--db-married); }
+.fb-row[data-family="father"] .figure  { color: var(--db-father); }
+.fb-row[data-family="mother"] .figure  { color: var(--db-mother); }
+.fb-plot { position: relative; z-index: 1; display: grid; gap: 3px; }
 .fb-bar {
-  position: relative; height: 28px; min-width: 2px; border-radius: 0 4px 4px 0;
-  display: flex; align-items: center; justify-content: space-between;
+  position: relative; height: 30px; min-width: 2px; border-radius: 0 4px 4px 0;
+  display: flex; align-items: center;
   font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap;      /* dark text on the lighter steps */
 }
 .fb-bar.latest { color: var(--white); }                                           /* white on the full color */
 .fb-year { padding-left: 8px; }
-.fb-value { padding: 0 8px; }
-/* A bar too short to hold its value: the value goes just past the bar's end, on a solid white
-   patch so the dashed line never runs through the digits. */
+.fb-bar.no-year .fb-year { display: none; }                                       /* a bar too short for its year and its amount keeps the amount */
+/* The amount sits inside the end of its bar, as in the Bulletin, on a patch of the bar's own color: where
+   the dashed line crosses a bar's end, it passes behind the digits and not through them. */
+.fb-value { position: relative; z-index: 2; margin-left: auto; padding: 2px 8px; background: inherit; border-radius: 0 4px 4px 0; }
+/* Only a bar shorter than its own amount (on a phone) has it just past its end, on a white patch. */
 .fb-bar.value-outside .fb-value {
   position: absolute; left: 100%; margin-left: 4px; padding: 2px 4px; border-radius: 2px;
-  background: var(--white); color: var(--ink); z-index: 2;
+  background: var(--white); color: var(--ink);
 }
-.fb-bar.year-outside .fb-year { display: none; }                                  /* too short even for the year: */
-.fb-bar.year-outside .fb-value::before { content: attr(data-year) " · "; font-weight: 400; }   /* it moves out with the value */
 .fb-benchmark { position: absolute; top: -10px; bottom: -10px; left: var(--at); z-index: 1; border-left: 2px dashed var(--db-callout); pointer-events: none; }
-.fb-callout { position: relative; margin: 0 0 12px calc(var(--who) + var(--gap)); }
+.fb-callout { position: relative; z-index: 1; margin: 0 0 12px calc(var(--who) + var(--gap)); }
 .fb-callout .db-callout {
-  width: min(320px, 100%); margin: 0; font-size: 13px; line-height: 1.35; text-align: center; padding: 8px 10px;
-  /* the box is centered on the benchmark, but never leaves the bars' column */
-  margin-left: clamp(0px, calc(var(--at, 50%) - 160px), calc(100% - 320px));
+  /* wide and low, as in the Bulletin, so the boxes leave the height to the bars and the silhouettes.
+     The box is centered on the benchmark, but never leaves the bars' column. */
+  width: min(440px, 100%); margin: 0; font-size: 13px; line-height: 1.35; text-align: center; text-wrap: balance; padding: 7px 12px 8px;
+  margin-left: clamp(0px, calc(var(--at, 50%) - 220px), calc(100% - 440px));
 }
 .fb-callout .db-callout strong { display: block; font-size: 15px; }
 .fb-callout::after {                                                              /* the pointer under the box */
@@ -594,23 +720,79 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .fb-axis span:first-child { transform: none; }
 .fb-axis span:last-child { transform: translateX(-100%); }
 
-/* --- Split bars: one bar per group, split into parts that come to 100% (pages 1.8, 2.4, 4.7) --- */
-.stack-chart { display: grid; gap: 5px; }
-.sb-row { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 10px; align-items: center; }
-.sb-row.apart { margin-bottom: 8px; }                                             /* "All races" stands apart from the groups */
+/* --- View buttons: a chart's key as a row of buttons that change what the chart shows (pages 1.8, 1.9) ---
+   A button that is pressed in is tinted and outlined; pressing it again lets go of it. --hue and --tint
+   are a button's own color and its pale step (a family type's, or blue when it has none). */
+.view-switch { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 6px; }
+.view-button {
+  --hue: var(--wca-blue); --tint: var(--wca-blue-tint);
+  display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 4px 16px 4px 12px;
+  font: inherit; font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--ink); cursor: pointer;
+  background: var(--white); border: 1px solid var(--wca-blue-100); border-radius: 999px;
+}
+.view-button:hover { border-color: var(--hue); }
+.view-button:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: 2px; }
+.view-button[aria-pressed="true"] { background: var(--tint); border-color: var(--hue); box-shadow: inset 0 0 0 1.5px var(--hue); }
+.view-button .figure { width: 20px; height: 30px; color: var(--hue); }
+.view-button .swatch { width: 14px; height: 14px; border-radius: 3px; background: var(--hue); }
+.view-button.married { --hue: var(--db-married); --tint: var(--db-married-bg); }
+.view-button.father  { --hue: var(--db-father);  --tint: var(--db-father-bg); }
+.view-button.mother  { --hue: var(--db-mother);  --tint: var(--db-mother-bg); }
+.view-hint { margin: 0 0 8px; text-align: center; font-size: 13px; line-height: 1.4; color: var(--muted); }
+
+/* --- Split bars: one bar per group, split into parts that come to 100% (pages 1.8, 2.4, 4.7) ---
+   The chart's box never changes size. Each row is put in place by its number (--slot: 0 is the first
+   row, 1 the next...), and each part of a bar by its width, so charts.js can re-order the rows, fold the
+   chart into one tall bar or keep a single part of every bar just by changing a number, a width or a
+   class: the browser then slides everything to its new place (--move is how long that takes).
+     --row      how tall a row is            --apart   the extra space under the first row ("All races")
+     --row-gap  the space between two rows   --fat     how tall the first row is when it stands alone */
+.stack-chart {
+  --row: 28px; --row-gap: 5px; --apart: 8px; --rows: 6; --fat: 112px; --move: 0.6s;
+  --h: calc(var(--rows) * var(--row) + (var(--rows) - 1) * var(--row-gap) + var(--apart));
+  position: relative; height: var(--h);
+}
+.sb-row {
+  --slot: 0;
+  position: absolute; left: 0; right: 0; top: 0; height: var(--row);
+  transform: translateY(calc(var(--slot) * (var(--row) + var(--row-gap)) + var(--apart)));
+  display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 10px; align-items: center;
+  transition: transform var(--move) ease, height var(--move) ease, opacity 0.3s ease;
+}
+.sb-row.apart { transform: none; }                                                /* "All races": always the first row, set apart from the groups */
 .sb-label { font-size: 13px; font-weight: 600; line-height: 1.2; color: var(--ink); text-align: right; }
-.sb-bar { display: flex; gap: 2px; height: 28px; }                                /* 2px of white between touching parts */
-.sb-part { min-width: 0; display: flex; align-items: center; padding-left: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; color: var(--white); }
-.sb-part:first-child { border-radius: 4px 0 0 4px; }
-.sb-part:last-child { border-radius: 0 4px 4px 0; }
-.sb-part.married, .legend-item.married .swatch { background: var(--db-married); }
-.sb-part.father,  .legend-item.father .swatch  { background: var(--db-father); }
-.sb-part.mother,  .legend-item.mother .swatch  { background: var(--db-mother); }
-.sb-part .too-wide { display: none; }                                             /* a share that doesn't fit its part is not printed (hover shows it) */
-.family-legend { align-items: flex-end; gap: 6px 22px; margin-bottom: 12px; }
-.family-legend .legend-item { display: inline-flex; align-items: flex-end; gap: 6px; }
-.family-legend .figure { width: 22px; height: 34px; }
-.family-legend .swatch { margin-right: 0; }
+.sb-bar { position: relative; display: flex; height: 100%; overflow: hidden; border-radius: 4px; background: var(--db-track); }
+.sb-part {
+  flex: 0 0 auto; min-width: 0; height: 100%; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  font-size: 12px; font-weight: 600; line-height: 1.2; white-space: nowrap; color: var(--white);
+  transition: width var(--move) ease, opacity 0.3s ease;
+}
+.sb-part + .sb-part { box-shadow: -2px 0 0 var(--white); }                         /* 2px of white between touching parts */
+.sb-part.gone { opacity: 0; }                                                     /* a part folded away (charts.js also sets its width to nothing) */
+.sb-part.married { background: var(--db-married); }
+.sb-part.father  { background: var(--db-father); }
+.sb-part.mother  { background: var(--db-mother); }
+.sb-value, .sb-name { margin-left: 6px; transition: font-size var(--move) ease, margin var(--move) ease; }
+.sb-name { display: none; font-size: 13px; font-weight: 600; }                    /* the part's name: only in the tall bar */
+.sb-part.no-value .sb-value { visibility: hidden; }                               /* a share that doesn't fit its part is not printed there (hover shows it) */
+/* A share too wide for its own bar, when that bar stands alone: printed just past the bar's end */
+.sb-out {
+  position: absolute; top: 50%; transform: translateY(-50%); margin-left: 6px; pointer-events: none;
+  font-size: 12px; font-weight: 600; white-space: nowrap; color: var(--ink);
+  opacity: 0; transition: opacity 0.25s ease;
+}
+.sb-out.on { opacity: 1; transition-delay: 0.35s; }
+/* "All races" alone: the other rows fade into the middle of the box, and the first row grows into a
+   tall bar there, with larger numbers and each part's name where there is room for it */
+.stack-chart.view-all .sb-row { opacity: 0; pointer-events: none; transform: translateY(calc((var(--h) - var(--row)) / 2)); }
+.stack-chart.view-all .sb-row.apart { opacity: 1; pointer-events: auto; height: var(--fat); transform: translateY(calc((var(--h) - var(--fat)) / 2)); }
+.stack-chart.view-all .sb-row.apart .sb-value { font-size: 22px; margin-left: 12px; }
+.stack-chart.view-all .sb-row.apart .sb-part.small-value .sb-value { font-size: 13px; margin-left: 5px; }
+.stack-chart.view-all .sb-row.apart .sb-part.with-name .sb-name { display: block; margin-left: 12px; }
+@media (prefers-reduced-motion: reduce) {                                         /* for readers who have asked their device for less movement: no sliding */
+  .sb-row, .sb-part, .sb-value, .sb-name, .sb-out, .sb-out.on { transition: none; }
+}
 
 /* --- Small multiples: the same small chart once per group, all on one scale (pages 1.9, 4.4) --- */
 .small-multiples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -618,32 +800,41 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .sm-panel h4 { margin: 0 0 2px; font-size: 14px; font-weight: 600; line-height: 1.25; color: var(--ink); text-align: center; }
 .sm-panel .chart-box { height: 168px; margin-top: auto; }                         /* charts line up along the bottom, whatever the title's length */
 
-/* --- Year switch and a row of three rings (page 1.10) --- */
-.year-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 14px; }
+/* --- Year switch, costs panel and a row of three rings (page 1.10) ---
+   The yellow panel on the left (the Bulletin's) holds the year buttons and that year's two costs. It is
+   as tall as the row of rings and keeps its size whichever year shows, so nothing moves when the year
+   changes. Under each ring there is room (--labels) for the two shares that charts.js writes there. */
+.rings-row { display: grid; grid-template-columns: 146px minmax(0, 1fr); gap: 12px; align-items: stretch; }
+.costs-panel {
+  background: var(--db-highlight-strong); border-radius: var(--radius); padding: 14px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center;
+}
 .year-switch { display: inline-flex; border: 1px solid var(--wca-blue-100); border-radius: 6px; overflow: hidden; }
 .year-switch button {
-  font: inherit; font-size: 15px; font-weight: 700; padding: 6px 18px; border: 0; cursor: pointer;
+  font: inherit; font-size: 16px; font-weight: 700; padding: 6px 11px; border: 0; cursor: pointer;
   background: var(--white); color: var(--db-title);
 }
 .year-switch button + button { border-left: 1px solid var(--wca-blue-100); }
-.year-switch button[aria-pressed="true"] { background: var(--db-highlight-strong); color: var(--ink); }
+.year-switch button[aria-pressed="true"] { background: var(--db-title); color: var(--white); }
 .year-switch button:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: -3px; }
-.year-costs { margin: 0; font-size: 14px; color: var(--fine); }
-.year-costs strong { color: var(--ink); font-weight: 600; }
-.donut-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.costs-panel .cost { margin: 0; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.costs-panel .cost strong { display: block; font-size: 21px; font-weight: 700; line-height: 1.25; }
+.costs-panel .cost small { display: block; min-height: 2.7em; margin-top: 2px; font-size: 12px; line-height: 1.35; color: var(--fine); }   /* room for two lines, so the panel is the same in every year */
+.donut-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-content: center; }
 .donut-cell { min-width: 0; text-align: center; }
 .chart-area .donut-cell h3 { color: var(--ink); font-size: 15px; margin: 0; }
-.donut-income { font-size: 13px; color: var(--fine); margin: 0 0 6px; }
-.donut-box { position: relative; height: 172px; }
+.donut-income { font-size: 13px; line-height: 1.35; color: var(--fine); margin: 0 0 8px; }
+.donut-income span { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }      /* the amount, on its own line */
+.donut-box { --labels: 52px; position: relative; width: 100%; max-width: 212px; margin: 0 auto; }
+.donut-box::before { content: ""; display: block; padding-top: calc(100% + var(--labels)); }   /* as tall as it is wide (the ring), plus the room under it */
+.donut-box > canvas { position: absolute; top: 0; left: 0; }
 .donut-center {                                 /* the words in the middle of the ring: HTML laid over the chart */
-  position: absolute; inset: 0; pointer-events: none;
+  position: absolute; inset: 0 0 var(--labels) 0; pointer-events: none;
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
 }
-.donut-center span { max-width: 86px; font-size: 11px; font-weight: 600; line-height: 1.25; color: var(--ink); }
-.donut-center strong { font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+.donut-center span { max-width: 92px; font-size: 12px; font-weight: 600; line-height: 1.25; color: var(--ink); }
+.donut-center strong { font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--ink); }
 .donut-center.short strong { color: var(--db-callout-text); }                     /* costs higher than the income */
-.donut-shares { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 14px; margin: 6px 0 0; font-size: 13px; color: var(--fine); }
-#legend-rent { justify-content: center; margin-top: 12px; }
 
 /* --- Icon table with one highlighted column (page 1.11) --- */
 .cost-table { width: 100%; border-collapse: collapse; font-size: 15px; }
@@ -657,8 +848,7 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .cost-table tbody tr { border-bottom: 1px solid var(--rule); }
 .cost-table tbody th { padding: 11px 12px; text-align: left; font-weight: 600; color: var(--db-title); }
 .cost-table td { padding: 11px 12px; text-align: center; font-weight: 600; color: var(--ink); white-space: nowrap; }
-.cost-table .current { background: var(--db-highlight); }                         /* the "Most current" column */
-.cost-table thead .current { color: var(--ink); }
+.cost-table td.current { background: var(--db-highlight); }                       /* the "Most current" column: its figures are highlighted, its heading is not (as in the Bulletin) */
 .row-head { display: flex; align-items: center; gap: 12px; }
 .cost-icon { flex: 0 0 auto; width: 30px; height: 30px; }
 .cell-note { display: block; font-size: 12px; font-weight: 400; color: var(--fine); white-space: normal; }
@@ -670,7 +860,79 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .chart-trio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .chart-trio > div { min-width: 0; }
 .chart-trio h3 { font-size: 14px; line-height: 1.3; }
-.chart-box.food { height: 372px; }
+.chart-box.food { height: 400px; }
+.chart-trio .legend[hidden] { display: none; }                                    /* the food chart's key shows only where the names don't fit in the bars */
+
+
+/* --------------------------------------------------------------------------
+   C10. WIDE SCREENS  ·  the chart uses all the room beside the text box
+   --------------------------------------------------------------------------
+   From 701 pixels up the text box sits beside the chart. (Narrower than that
+   it sits above the chart, and the sizes in B and C9 apply as they are.)
+   Two things happen here:
+   1. Every chart piece is about 7.5% larger than its size in B and C9. That is
+      the room the charts gained when the text box was made 15% narrower.
+   2. The chart's column is as tall as the text box whenever the text is the
+      longer of the two. The chart stretches down to use that height, so it ends
+      level with the bottom of the text box and no white gap is left under it.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 701px) {
+  /* The column is a stack of pieces (key, chart, note...). The chart takes all the height the other
+     pieces leave. Where the chart sits inside another piece (beside a stat circle, in a row of rings),
+     that piece is marked "fills" in index.html and takes the height instead. */
+  .chart-area { display: flex; flex-direction: column; }
+  .chart-area > .chart-box, .chart-area > .fills, .chart-area > .chart-placeholder { flex: 1 0 auto; }
+
+  /* A chart's box is at least this tall, and taller when its column is. The canvas (the drawing) is
+     lifted out of the flow of its box, so the box decides the height and not the drawing inside it:
+     without that a chart could grow but never shrink back. */
+  .chart-area .chart-box { height: auto; min-height: 322px; max-height: 560px; }   /* 560: about three quarters of the column's width, so a chart never turns tall and thin */
+  .chart-area .chart-box.short { min-height: 236px; }
+  .chart-area .chart-box > canvas { position: absolute; top: 0; left: 0; }
+
+  /* In a stack, the space between two pieces is the sum of their margins (in plain text the larger one
+     wins). These two keep the spacing the cards had before. */
+  .chart-area > .callout-line + .legend { margin-top: 0; }
+  .chart-area > .view-hint + h3:not(:first-child) { margin-top: 6px; }
+
+  /* Page 1.3: the picture and the pie */
+  .hero { grid-template-columns: minmax(0, 1fr) 204px; }
+  .hero-art { width: 204px; height: 204px; }
+  .pie { width: min(280px, 100%); }
+  .pie-label { font-size: 14px; }
+
+  /* Stat circles (page 1.5). A chart beside a circle stretches; the circle stays centered beside it. */
+  .with-circle { --circle: 208px; }
+  .with-circle.fills { max-height: 410px; }                            /* the chart beside a circle is narrower, so it stops stretching sooner */
+  .with-circle.fills .chart-box { height: 100%; }                      /* as tall as the row it shares with the circle */
+
+  /* Family bars and split bars (pages 1.7, 1.8): thicker bars */
+  .fb-bar { height: 32px; }
+  .stack-chart { --row: 30px; --fat: 132px; }
+
+  /* Small multiples (page 1.9). The charts keep one height so they stay comparable; spare height goes
+     between each panel's title and its chart. */
+  .sm-panel .chart-box { height: 180px; min-height: 0; }
+  .small-multiples.fills { grid-auto-rows: 1fr; }
+
+  /* (Page 1.10's rings need nothing here: a ring is as large as its third of the row allows, the yellow
+     panel runs the row's whole height, and spare height is shared above and below the rings.) */
+
+  /* Three charts in one card (page 1.13): both columns end level, each chart taking its share of the height */
+  .chart-trio.fills { align-items: stretch; }
+  .chart-trio.fills > div { display: flex; flex-direction: column; }
+  .chart-trio.fills .chart-box { flex: 1 0 auto; }
+  .chart-trio.fills .chart-box.food { min-height: 440px; }
+}
+
+/* On a tablet (701 to 900 pixels) the text box is narrow, so it is much taller than a chart. A chart
+   stretches only part of the way there, so it never ends up taller than it is wide. */
+@media (min-width: 701px) and (max-width: 900px) {
+  .chart-area .chart-box { max-height: 400px; }
+  .with-circle.fills { max-height: 250px; }
+  .chart-trio.fills .chart-box.food { min-height: 366px; }
+}
 
 
 /* --------------------------------------------------------------------------
@@ -692,6 +954,20 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 @media (max-width: 1100px) {
   .tab .long { display: none; }        /* narrow windows show the short labels */
   .tab .short { display: inline; }
+}
+
+@media (max-width: 1000px) {
+  /* Two pieces that sit beside a chart give it the whole width a little before the others do, so that
+     the chart's parts keep their size. */
+  /* Page 1.5: the circle goes under the rows of baby figures */
+  .with-circle:not(.circle-first) { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .with-circle:not(.circle-first) > :not(.stat-circle) { width: 100%; }
+  /* Page 1.10: the costs panel sits above the rings, each cost on one line */
+  .rings-row { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .costs-panel { gap: 8px; padding: 12px; }
+  .costs-panel .cost strong { display: inline; font-size: 17px; }
+  .costs-panel .cost small { display: inline; min-height: 0; }
+  .costs-panel .cost small:not(:empty)::before { content: " · "; }
 }
 
 @media (max-width: 900px) {
@@ -719,10 +995,13 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .cover-art { display: none; }                            /* the art goes; the words stay */
   .cover-band h2 { font-size: 24px; }
   .cover-intro { padding: 18px 20px; }
-  .quote-card { grid-template-columns: 1fr; padding: 20px; }
-  .quote-card .figure { height: 140px; }
+  /* the quote card on a phone: the figure's head and shoulders above the bubble, no tail */
+  .quote-card { --tall: 190px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; padding: 20px 20px 4px; }
+  .quote-card .figure { grid-row: auto; -webkit-mask-size: auto 190%; mask-size: auto 190%; }
+  .quote-card .source { grid-column: 1; }
+  .bubble { margin-top: 0; padding: 22px 24px; border-radius: 24px; }
   .bubble::before { display: none; }
-  .bubble blockquote { font-size: 18px; }
+  .bubble blockquote, .quote-card.headline blockquote { font-size: 19px; }
   .footer-grid { grid-template-columns: 1fr; }
 
   /* Chart pieces on a phone */
@@ -734,9 +1013,16 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .fb-who .figure { width: 32px; height: 44px; }
   .fb-callout .db-callout { width: 100%; margin-left: 0; text-align: left; }
   .fb-axis span:nth-child(even) { display: none; }         /* every other label on the scale, so they don't touch */
+  .stack-chart { --row: 42px; --fat: 124px; }                 /* taller rows: a group's name can take three lines on a phone */
   .sb-row { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
-  .sb-label { font-size: 12px; }
-  .donut-trio { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .sb-label { font-size: 12px; line-height: 1.15; }
+  .view-button { min-height: 40px; padding: 4px 12px 4px 9px; font-size: 13px; }
+  .line-name { font-size: 13px; }
+  .rise-note .db-callout { font-size: 15px; padding: 14px 92px 16px 16px; border-radius: 16px; }
+  .rise-arrow { width: 164px; height: 122px; margin-left: -86px; padding-bottom: 12px; }
+  .rise-arrow span { font-size: 11px; }
+  .rise-arrow strong { font-size: 24px; }
+  .donut-trio { grid-template-columns: minmax(0, 1fr); gap: 22px; }   /* the rings come one under the other */
 
   /* The table's rows become cards: the name, then the five figures in two columns, each under its heading */
   .cost-table thead { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }   /* kept for screen readers */
@@ -753,11 +1039,13 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 @media (max-width: 520px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
   .hero-art { display: none; }                             /* the picture goes; the sentence and its number stay */
-  .donut-row { grid-template-columns: minmax(0, 1fr); }
   .with-circle, .with-circle.circle-first { grid-template-columns: minmax(0, 1fr); justify-items: center; }
   .with-circle > :not(.stat-circle) { width: 100%; }
-  .stat-circle { width: 150px; }
-  .stat-circle strong { font-size: 30px; }
+  .stat-circle:not(.arrow-down) { width: 150px; }
+  .stat-circle:not(.arrow-down) strong { font-size: 30px; }
+  .picto-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }      /* the year and the number sit above their row of figures */
+  .picto-year, .picto-value { display: inline; }
+  .picto-year::after { content: " · "; font-weight: 400; }
 }
 
 @media (max-width: 600px) {
