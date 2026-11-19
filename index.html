@@ -23,24 +23,52 @@
   The words themselves (titles, commentary, captions) live here and are edited here.
   Text marked [PLACEHOLDER] is a first draft for Brandon to rewrite.
 
-  WHERE THE BUILD STANDS (2026-11-10, Layer 1 of 3)
-    Layer 1, this file: the page's frame. Banner, header, headline tiles, chapter tabs, chapter
-      covers and parts, one card per Bulletin page with its title, and the quote cards. The charts
-      themselves are placeholders and the side panels hold only their headings; both are filled in
-      chart by chart, when each chart's data block is added to data.json.
+  WHERE THE BUILD STANDS (2026-11-18)
+    Layer 1, the page's frame: done. Banner, header, headline tiles, chapter tabs, chapter covers and
+      parts, one card per Bulletin page, the quote cards.
+    Charts, chapter by chapter: chapter 1 (pages 1.3 to 1.16) is in, with the Bulletin's own text in
+      every side panel. Chapters 2 to 4 still show a placeholder where each chart will go.
     Layer 2 (to come): sticky-scroll stories for the selected charts.
     Layer 3 (to come): the community map (the "Map" tab).
 
   FIXED FACTS TYPED ON PURPOSE (not from the tables, so they are allowed in the text):
     * The Bulletin's structure: four chapters, their parts, and each page's number (1.3, 2.11 ...)
     * The chapter and part titles and introductions, copied from the Bulletin's chapter and part pages
+    * The side-panel text of each card ("What We See", "What We Do", "Takeaway"): the Bulletin's own
+      words, typed as printed. Every number in them that a table carries is a data-fill tag.
     * The two quotations (pages 1.15 and 2.9) and who said them
     * WCA's address, phone and website; the Bulletin's team and funders (the Bulletin's last page)
     * The link to the PDF report (PDF_URL in charts.js Settings; empty until the report is online)
+    * Page 1.7: the two callouts say which households the ALICE budgets are for ("two adults and two
+      children", "one adult and one child"). They must match ALICE_BUDGETS in build_data.py Settings.
+    * Page 1.12: "through 2023 and much of 2024" and "early 2026". The month whose value fills that
+      sentence is INFLATION_QUOTED_MONTH in build_data.py Settings.
+    * Page 1.14: "Policies implemented in 2020 ... lifted at the start of 2022".
+    * What the measures mean, in the notes under the charts and in "About the data": low income (below
+      twice the federal poverty level), the two definitions of homelessness, the ALICE budget, the
+      benchmark premium, what each price is.
   Everything else that is a number comes from data.json.
 
   CLAIMS TO RE-CHECK AFTER EVERY DATA UPDATE. The numbers refill themselves; these words don't.
-    * None yet: the commentary is added with each chart, and each claim is listed here when it is.
+    * 1.3: "Nearly 3 in 10"; "more than one in five"
+    * 1.4: "more diverse over the past decade"; "still the largest group but declining"; "a growing share"
+    * 1.5: "decline" in both circles; "has Gone Down"; "Fewer Young Children"; "state and national trends"
+      (build_data.py prints a CHECK line if either count stops falling)
+    * 1.7: "roughly three to four times" (2.7 and 3.8 times in 2024); "all groups experienced increased
+      income"; "married couples captured the largest absolute gains"
+    * 1.8: "Most Westchester children (77%) live in married-couple households". The number filled in is
+      the married-couple share of families with children AT OR ABOVE the poverty level, as the Bulletin
+      used it; it is a share of families, not of children, and not of all families. Also "climbs to".
+    * 1.9: "roughly 10-26%"; "stay below 10%"; "some groups' rates have actually shifted downward"
+    * 1.10: "almost all of their paychecks"; "Despite income gains"; "retain less"
+    * 1.12: "peaking"; "before declining"; "increasing again"; "early 2026"
+    * 1.13: "more than doubled"; "tops 13–16% in Yonkers, Mount Vernon, and New Rochelle"; "jumped"
+    * 1.14: "a rise back to the usual levels"; "thousands of children"
+    * 1.16: "increased" and "increase" (the callout), "Increasing" (the text). build_data.py prints a
+      CHECK line if the balance stops rising.
+    * About the data: "no estimates for 2020"; "October 2025 was never published"; "January 2015 stands
+      in for 2014" (build_data.py prints a CHECK line while that is so).
+    * Headline tiles are numbers only; nothing to re-check.
 
   PAGE SECTIONS, top to bottom
     1. Banner (the PDF's blue-to-green header)
@@ -140,42 +168,81 @@
          This part looks at the changing population demographics of the County's children.</p>
     </div>
 
+    <!-- Page 1.3. The donut is drawn by charts.js (drawPopulation) from data.json "s1_3_population". -->
     <article class="card" id="card-1-3">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
         <span class="page-tag" data-page="1.3">Bulletin page 1.3</span>
       </div>
-      <h2 class="db-title">Westchester County population, 2024</h2>
+      <h2 class="db-title">Westchester County population, <span data-fill="charts.s1_3_population.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Westchester Population Breakdown</h3>
-          <p class="placeholder">[PLACEHOLDER] The page's "What We See" and "What We Do" text goes here when the chart is built, with every number filled from data.json.</p>
+          <p><strong>What We See:</strong> Nearly 3 in 10 Westchester residents
+             (<span data-fill="charts.s1_3_population.children_and_youth.share_pct" data-format="pct"></span>) are children
+             and youth ages 0–24, and more than one in five of them
+             (<span data-fill="charts.s1_3_population.low_income.share_pct" data-format="pct"></span>) are considered
+             low-income.</p>
+          <p><strong>What We Do:</strong> WCA continues to advocate for expanded tax credits, affordable child care,
+             housing stability, and other supports that help families meet basic needs and reduce child poverty.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.3</strong>Hero sentence, crowd illustration and donut (pattern P15), built in the next step</div></div>
+          <div class="hero">
+            <p class="hero-sentence">There are <strong data-fill="charts.s1_3_population.children_and_youth.people"></strong>
+               children and youth ages 0 to 24 in Westchester County, New York</p>
+            <img class="hero-art" src="resources/silhouettes/crowd-circle.svg" alt="">
+          </div>
+          <div class="donut-row">
+            <div class="chart-box donut"><canvas id="chart-population"></canvas></div>
+            <div class="donut-notes">
+              <h3>Westchester County Population</h3>
+              <p class="chart-subtitle">Per <span data-fill="charts.s1_3_population.year" data-format="raw"></span> American Community Survey</p>
+              <p class="note-box"><span class="swatch" style="background: var(--wca-blue)"></span>
+                <span><span data-fill="charts.s1_3_population.children_and_youth.share_pct" data-format="pct"></span> of
+                Westchester's population are children and youth ages 0 to 24</span></p>
+              <p class="note-box"><span class="swatch hatched"></span>
+                <span><span data-fill="charts.s1_3_population.low_income.share_pct" data-format="pct"></span> of those
+                children and youth are considered Low Income</span></p>
+              <p class="legend"><span class="legend-item"><span class="swatch" style="background: var(--db-remainder)"></span>Westchester's
+                population over 24 (<span data-fill="charts.s1_3_population.older_residents.share_pct" data-format="pct"></span>)</span></p>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_3_population.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.4. Bars drawn by charts.js (drawRaceEthnicity) from "s1_4_race_ethnicity". -->
     <article class="card" id="card-1-4">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
         <span class="page-tag" data-page="1.4">Bulletin page 1.4</span>
       </div>
-      <h2 class="db-title">Race and ethnicity of Westchester children and youth ages 0 to 24, 2014 vs 2024</h2>
+      <h2 class="db-title">Race and ethnicity of Westchester children and youth ages 0 to 24,
+        <span data-fill="charts.s1_4_race_ethnicity.years.0" data-format="raw"></span> vs
+        <span data-fill="charts.s1_4_race_ethnicity.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>A Change in Demographics</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Westchester's population has become more diverse over the past decade, with
+             White, Non-Hispanic youth still the largest group but declining, while Hispanic or Latino youth make up a
+             growing share.</p>
+          <p><strong>What We Do:</strong> WCA works to ensure that policies reflect the needs of Westchester's increasingly
+             diverse population, by elevating community voice, advocating equitable solutions, &amp; promoting culturally
+             responsive systems.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.4</strong>Paired bars by race group, 2014 lighter and 2024 full (pattern P2)</div></div>
+          <div class="legend" id="legend-race"></div>
+          <div class="chart-box"><canvas id="chart-race"></canvas></div>
+          <p class="note placeholder">[PLACEHOLDER] Each bar is the group's share of all residents ages 0 to 24. Hispanic or
+            Latino residents can be of any race, so the groups overlap and the shares pass 100% together.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_4_race_ethnicity.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.5. The row of baby figures and the line are drawn by charts.js (drawBirthsAndYoungChildren)
+         from "s1_5_births_and_young_children"; the two circles are plain text filled from the same block. -->
     <article class="card" id="card-1-5">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Population &amp; Demographics</div>
@@ -185,13 +252,41 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Westchester's Youngest Population Is Shrinking</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+          <p><strong>What We See:</strong> The decline in babies and young children in Westchester reflects state and
+             national trends. Increasing economic stress could discourage families from having or raising children here.</p>
+          <p><strong>What We Do:</strong> WCA supports investments in affordable child care, including the Westchester
+             Works Scholarship and the Child Care Assistance Programs, as well as other family economic supports that help
+             make Westchester a place where families can afford to have and raise children.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 1.5</strong>Babies born: a pictogram row and a stat circle (P16 + P11); children under 5: a line with end labels (P7)</div></div>
+          <h3>The Number of Babies in Westchester County has Gone Down</h3>
+          <div class="with-circle">
+            <div>
+              <div class="pictogram" id="pictogram-births"></div>
+              <p class="note">Each figure stands for <span data-fill="charts.s1_5_births_and_young_children.births.per_figure"></span> babies.</p>
+            </div>
+            <p class="stat-circle">
+              <span>There was a</span>
+              <strong data-fill="charts.s1_5_births_and_young_children.births.decline_pct" data-format="pct"></strong>
+              <span>decline in babies born</span>
+              <small>(<span data-fill="charts.s1_5_births_and_young_children.births.years.0" data-format="raw"></span> to
+                <span data-fill="charts.s1_5_births_and_young_children.births.years.1" data-format="raw"></span>)</small>
+            </p>
+          </div>
+
+          <h3>Fewer Young Children Live in Westchester</h3>
+          <div class="with-circle circle-first">
+            <p class="stat-circle">
+              <strong data-fill="charts.s1_5_births_and_young_children.under_5.decline_pct" data-format="pct"></strong>
+              <span>decline in children under 5</span>
+              <small>(<span data-fill="charts.s1_5_births_and_young_children.under_5.first.year" data-format="raw"></span> to
+                <span data-fill="charts.s1_5_births_and_young_children.under_5.last.year" data-format="raw"></span>)</small>
+            </p>
+            <div class="chart-box short"><canvas id="chart-under-5"></canvas></div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_5_births_and_young_children.source" data-format="raw"></span></p>
     </article>
 
     <!-- Part 2 -->
@@ -202,78 +297,187 @@
          and living expenses, and the stress from debt, food insecurity, and housing costs.</p>
     </div>
 
+    <!-- Page 1.7. The words (family names, the two callouts) are here; charts.js (drawIncomeByFamilyType)
+         draws the bars into each "fb-plot" and puts the callouts and dashed lines at the budgets' place on
+         the scale, from "s1_7_income_by_family_type". -->
     <article class="card" id="card-1-7">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.7">Bulletin page 1.7</span>
       </div>
-      <h2 class="db-title">Median income by family type, 2014 vs 2019 vs 2024</h2>
+      <h2 class="db-title">Median income by family type,
+        <span data-fill="charts.s1_7_income_by_family_type.years.0" data-format="raw"></span> vs
+        <span data-fill="charts.s1_7_income_by_family_type.years.1" data-format="raw"></span> vs
+        <span data-fill="charts.s1_7_income_by_family_type.years.2" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>The Relationship Between Family Type and Income</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Married-couple families earn roughly <strong>three to four times</strong> what
+             single-parent households earn. While all groups experienced increased income since
+             <span data-fill="charts.s1_7_income_by_family_type.years.0" data-format="raw"></span>, married couples captured
+             the largest absolute gains.</p>
+          <p><strong>Takeaway:</strong> Cost-of-living pressures do not impact all family types equally — in particular,
+             single-mother households are starting from a lower baseline.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.7</strong>Silhouette-labeled bars with year steps and the ALICE budget callouts (P1 + P2 + P3)</div></div>
+          <div class="family-bars" id="chart-income">
+            <div class="fb-callout" data-budget="0">
+              <p class="db-callout"><strong data-fill="charts.s1_7_income_by_family_type.budgets.0.amount" data-format="dollars"></strong>
+                That's the ALICE Survival Budget (<span data-fill="charts.s1_7_income_by_family_type.budgets.0.data_year" data-format="raw"></span>)
+                for two adults and two children in a Married Couple household</p>
+            </div>
+            <div class="fb-row" data-family="married">
+              <div class="fb-who"><span class="figure" style="--figure: url(resources/silhouettes/family-married-couple.svg)" aria-hidden="true"></span>Married Couple</div>
+              <div class="fb-plot"></div>
+            </div>
+            <div class="fb-callout" data-budget="1">
+              <p class="db-callout"><strong data-fill="charts.s1_7_income_by_family_type.budgets.1.amount" data-format="dollars"></strong>
+                That's the ALICE Survival Budget (<span data-fill="charts.s1_7_income_by_family_type.budgets.1.data_year" data-format="raw"></span>)
+                for one adult and one child in a Single Led Household</p>
+            </div>
+            <div class="fb-row" data-family="father">
+              <div class="fb-who"><span class="figure" style="--figure: url(resources/silhouettes/family-single-father.svg)" aria-hidden="true"></span>Single Father</div>
+              <div class="fb-plot"></div>
+            </div>
+            <div class="fb-row" data-family="mother">
+              <div class="fb-who"><span class="figure" style="--figure: url(resources/silhouettes/family-single-mother.svg)" aria-hidden="true"></span>Single Mother</div>
+              <div class="fb-plot"></div>
+            </div>
+            <div class="fb-axis" aria-hidden="true"></div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_7_income_by_family_type.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.8. Two sets of bars drawn by charts.js (drawFamilyComposition) from "s1_8_family_composition". -->
     <article class="card" id="card-1-8">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.8">Bulletin page 1.8</span>
       </div>
-      <h2 class="db-title">Family composition of all children and of children below poverty, by race, 2024</h2>
+      <h2 class="db-title">Westchester family composition above and below the poverty level, by race,
+        <span data-fill="charts.s1_8_family_composition.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Family Composition of All Children vs. Children Below Poverty</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Most Westchester children
+             (<span data-fill="charts.s1_8_family_composition.groups.all.at_or_above.married.share" data-format="pct0"></span>)
+             live in married-couple households, but among children in poverty
+             <span data-fill="charts.s1_8_family_composition.groups.all.below.mother.share" data-format="pct0"></span> live
+             with a single mother — and that rate climbs to
+             <span data-fill="charts.s1_8_family_composition.groups.multiracial.below.mother.share" data-format="pct0"></span>
+             for multiracial children and
+             <span data-fill="charts.s1_8_family_composition.groups.asian.below.mother.share" data-format="pct0"></span> for
+             Asian children in poverty.</p>
+          <p><strong>Takeaway:</strong> Poverty in Westchester is disproportionately concentrated in single-mother
+             households, reinforcing that family structure and income gaps lead to child economic insecurity.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 1.8</strong>Two panels of 100% stacked bars in family colors, "All races" in gray</div></div>
+          <div class="legend family-legend">
+            <span class="legend-item married"><span class="figure" style="--figure: url(resources/silhouettes/family-married-couple.svg)" aria-hidden="true"></span><span class="swatch"></span>Married Couples</span>
+            <span class="legend-item father"><span class="figure" style="--figure: url(resources/silhouettes/family-single-father.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Father</span>
+            <span class="legend-item mother"><span class="figure" style="--figure: url(resources/silhouettes/family-single-mother.svg)" aria-hidden="true"></span><span class="swatch"></span>Single Mother</span>
+          </div>
+          <h3>Westchester Families With Children At or Above Poverty Level by Race,
+            <span data-fill="charts.s1_8_family_composition.year" data-format="raw"></span></h3>
+          <div class="stack-chart" id="chart-composition-above"></div>
+          <h3>Westchester Family Composition Below Poverty Level, by Race,
+            <span data-fill="charts.s1_8_family_composition.year" data-format="raw"></span></h3>
+          <div class="stack-chart" id="chart-composition-below"></div>
+          <p class="note" id="note-composition-five-year" hidden>*Five-Year Estimates used when One-Year Estimates were not available.</p>
+          <p class="note placeholder">[PLACEHOLDER] These are shares of families with children, not of children. Below the
+            poverty level the samples are small: hover over a bar for its margin of error.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_8_family_composition.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.9. Six small charts drawn by charts.js (drawPovertyByRace) from "s1_9_poverty_by_race". -->
     <article class="card" id="card-1-9">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.9">Bulletin page 1.9</span>
       </div>
-      <h2 class="db-title">Westchester poverty rates by race and ethnicity, 2022 vs 2024</h2>
+      <h2 class="db-title">Westchester poverty rates by race and ethnicity,
+        <span data-fill="charts.s1_9_poverty_by_race.years.0" data-format="raw"></span> vs
+        <span data-fill="charts.s1_9_poverty_by_race.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Poverty Rates by Race &amp; Ethnicity</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Black, Hispanic, and Multiracial children face poverty rates of roughly 10-26%
+             across age groups, while White, Non-Hispanic children stay below 10% — and some groups' rates have actually
+             shifted downward from <span data-fill="charts.s1_9_poverty_by_race.years.0" data-format="raw"></span> to
+             <span data-fill="charts.s1_9_poverty_by_race.years.1" data-format="raw"></span>.</p>
+          <p><strong>What We Do:</strong> Through research, coalition building, and policy advocacy (e.g., our work in NY
+             Can End Child Poverty), WCA works to address structural inequities that contribute to racial and ethnic
+             economic disparities.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 1.9</strong>Six small panels (one per group), 2022 lighter and 2024 full (P2)</div></div>
+          <div class="legend" id="legend-poverty"></div>
+          <div class="small-multiples" id="chart-poverty-panels"></div>
+          <p class="note placeholder" id="note-poverty-unreliable" hidden>[PLACEHOLDER] † An unreliable estimate: its margin of
+            error is large next to the number itself, so treat it with care. Hover over any bar for the margin.</p>
+          <p class="note" id="note-poverty-five-year" hidden>*Five-Year Estimates used when One-Year Estimates were not available.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_9_poverty_by_race.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.10. Three rings drawn by charts.js (drawRentAndChildCare) from "s1_10_rent_and_child_care".
+         The year buttons, and every number in and around the rings, change with the year chosen. -->
     <article class="card" id="card-1-10">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.10">Bulletin page 1.10</span>
       </div>
-      <h2 class="db-title">After rent and child care, what's left of monthly income? 2014 vs 2024</h2>
+      <h2 class="db-title">After rent and child care, what's left of monthly income?
+        <span data-fill="charts.s1_10_rent_and_child_care.years.0" data-format="raw"></span> vs
+        <span data-fill="charts.s1_10_rent_and_child_care.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Rent and Child Care Consumes Paychecks for Some Parents</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> For single-parent households, housing and child care consumes almost all of
+             their paychecks, which makes starting or growing a family in Westchester feels out of reach.</p>
+          <p><strong>Takeaway:</strong> Despite income gains, rising costs continue to strain single-parent households —
+             especially single mothers, who retain less after essential expenses when compared to single fathers and
+             married couples.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.10</strong>Three donuts per year, with a 2014 / 2024 switch (P5)</div></div>
+          <div class="year-bar">
+            <div class="year-switch" id="rent-years" role="group" aria-label="Choose the year to show"></div>
+            <p class="year-costs" id="rent-costs" aria-live="polite"></p>
+          </div>
+          <div class="donut-trio" id="chart-rent">
+            <div class="donut-cell" data-family="married">
+              <h3>Married Couple</h3>
+              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
+            </div>
+            <div class="donut-cell" data-family="father">
+              <h3>Single Father</h3>
+              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
+            </div>
+            <div class="donut-cell" data-family="mother">
+              <h3>Single Mother</h3>
+              <p class="donut-income">Median monthly income <span class="js-income"></span></p>
+              <div class="donut-box"><canvas></canvas><div class="donut-center"><span class="js-left-words"></span><strong class="js-left"></strong></div></div>
+              <p class="donut-shares"><span class="js-rent"></span><span class="js-care"></span></p>
+            </div>
+          </div>
+          <div class="legend" id="legend-rent"></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_10_rent_and_child_care.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.11. A table, not a chart: the words are here and every amount is filled from
+         "s1_11_cost_of_living". charts.js (drawCostOfLiving) writes the last column, which is a dash where
+         nothing newer than the "now" year is published (income), and copies each column's heading onto its
+         cells for the phone layout. -->
     <article class="card" id="card-1-11">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -282,12 +486,90 @@
       <h2 class="db-title">Families struggle with increased costs of living</h2>
       <div class="card-body full">
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Table 1.11</strong>Icon table: 2014, 2024, the change, the most current figure in a highlighted column (P6)</div></div>
+          <table class="cost-table" id="table-costs">
+            <thead>
+              <tr>
+                <th scope="col">On average</th>
+                <th scope="col"><span data-fill="charts.s1_11_cost_of_living.year_then" data-format="raw"></span></th>
+                <th scope="col"><span data-fill="charts.s1_11_cost_of_living.year_now" data-format="raw"></span></th>
+                <th scope="col">Change <small>(<span data-fill="charts.s1_11_cost_of_living.year_then" data-format="raw"></span> vs <span data-fill="charts.s1_11_cost_of_living.year_now" data-format="raw"></span>)</small></th>
+                <th scope="col" class="current">Most current <small>(dates vary)</small></th>
+                <th scope="col">Change <small>(<span data-fill="charts.s1_11_cost_of_living.year_now" data-format="raw"></span> vs most current)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-annual-income.svg); color: var(--wca-green)" aria-hidden="true"></span>Annual Income for a Family</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.income.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.income.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.income.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.income.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.income.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="income"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-rent.svg); color: var(--db-callout-text)" aria-hidden="true"></span>1 Month's Rent for a Typical Rental Home</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rent.then" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.rent.then_note" data-format="raw"></small></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rent.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rent.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.rent.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.rent.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="rent"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-infant-child-care.svg); color: var(--wca-blue)" aria-hidden="true"></span>1 Month of Infant Child Care at a Center</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.infant_care.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.infant_care.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.infant_care.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.infant_care.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.infant_care.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="infant_care"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-electricity.svg); color: var(--db-multiracial)" aria-hidden="true"></span>600 kWh Electricity</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.electricity.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.electricity.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.electricity.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.electricity.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.electricity.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="electricity"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-eggs.svg); color: var(--db-black)" aria-hidden="true"></span>1 Dozen Eggs</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.eggs.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.eggs.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.eggs.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.eggs.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.eggs.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="eggs"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-ground-beef.svg); color: var(--db-tile-brown)" aria-hidden="true"></span>1 lb. Ground Beef</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.ground_beef.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.ground_beef.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.ground_beef.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.ground_beef.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.ground_beef.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="ground_beef"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-rice.svg); color: var(--db-teal-mid)" aria-hidden="true"></span>1 lb. Rice</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rice.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rice.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.rice.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.rice.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.rice.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="rice"></td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="row-head"><span class="figure cost-icon" style="--figure: url(resources/icons/cost-gas.svg); color: var(--db-callout-text)" aria-hidden="true"></span>1 Gallon of Gas</span></th>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.gasoline.then" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.gasoline.now" data-format="dollars"></span></td>
+                <td><span data-fill="charts.s1_11_cost_of_living.items.gasoline.change_pct" data-format="change0"></span></td>
+                <td class="current"><span data-fill="charts.s1_11_cost_of_living.items.gasoline.latest" data-format="dollars"></span><small class="cell-note" data-fill="charts.s1_11_cost_of_living.items.gasoline.latest_label" data-format="raw"></small></td>
+                <td class="js-latest-change" data-item="gasoline"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_11_cost_of_living.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.12. One line drawn by charts.js (drawInflation) from "s1_12_inflation". -->
     <article class="card" id="card-1-12">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -297,15 +579,27 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Inflation is Creeping Back Up</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Inflation in the region has remained volatile in recent years, peaking at
+             <span data-fill="charts.s1_12_inflation.peak.value" data-format="pct"></span> in
+             <span data-fill="charts.s1_12_inflation.peak.year" data-format="raw"></span> before declining, though prices
+             continue to rise faster than pre-pandemic levels. After moderating through 2023 and much of 2024, inflation
+             appears to be increasing again, reaching
+             <span data-fill="charts.s1_12_inflation.quoted.value" data-format="pct"></span> in early 2026. This suggests
+             that the cost-of-living pressures on families may persist despite earlier signs of stabilization.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.12</strong>One blue line with notes at the peaks and a callout for the latest value (P7)</div></div>
+          <div class="callout-line">
+            <p class="chart-subtitle">Prices compared with the same month a year earlier</p>
+            <p class="db-callout">Latest: <strong data-fill="charts.s1_12_inflation.latest.value" data-format="pct"></strong>
+              in <span data-fill="charts.s1_12_inflation.latest.label" data-format="raw"></span></p>
+          </div>
+          <div class="chart-box"><canvas id="chart-inflation"></canvas></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_12_inflation.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.13. Three charts drawn by charts.js (drawSignsOfDistress) from "s1_13_signs_of_distress". -->
     <article class="card" id="card-1-13">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
@@ -315,31 +609,78 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Other Signs of Distress</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "What We Do" text, added with the chart.</p>
+          <p><strong>What We See:</strong> SNAP enrollment in Westchester more than doubled since
+             <span data-fill="charts.s1_13_signs_of_distress.snap.first.year" data-format="raw"></span>
+             (<span data-fill="charts.s1_13_signs_of_distress.snap.first.in_thousands" data-format="raw"></span> →
+             <span data-fill="charts.s1_13_signs_of_distress.snap.last.in_thousands" data-format="raw"></span>), food
+             insecurity tops 13–16% in Yonkers, Mount Vernon, and New Rochelle, and NY ACA benchmark premiums have jumped
+             from <span data-fill="charts.s1_13_signs_of_distress.premiums.first.value" data-format="dollars"></span> in
+             <span data-fill="charts.s1_13_signs_of_distress.premiums.first.year" data-format="raw"></span> to
+             <span data-fill="charts.s1_13_signs_of_distress.premiums.last.value" data-format="dollars"></span> in
+             <span data-fill="charts.s1_13_signs_of_distress.premiums.last.year" data-format="raw"></span>.</p>
+          <p><strong>What We Do:</strong> WCA gathers data from our frontline nonprofit partners to publish
+             <em>Poverty Pulse</em>, a data dashboard that provides a real-time snapshot of the economic need and struggle
+             facing Westchester families today.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 1.13</strong>Three charts: food insecurity and poverty by community (bars), SNAP recipients by year (area), ACA premiums New York vs US (lines)</div></div>
+          <div class="chart-trio">
+            <div>
+              <h3>Percentage Experiencing Food Insecurity &amp; Poverty in Westchester Communities,
+                <span data-fill="charts.s1_13_signs_of_distress.food.year" data-format="raw"></span></h3>
+              <div class="legend" id="legend-food"></div>
+              <div class="chart-box food"><canvas id="chart-food"></canvas></div>
+            </div>
+            <div>
+              <h3>SNAP Recipients in Westchester,
+                <span data-fill="charts.s1_13_signs_of_distress.snap.first.year" data-format="raw"></span> to
+                <span data-fill="charts.s1_13_signs_of_distress.snap.last.year" data-format="raw"></span></h3>
+              <div class="chart-box short"><canvas id="chart-snap"></canvas></div>
+              <h3>Average Monthly Premiums under the Affordable Care Act, New York State vs USA,
+                <span data-fill="charts.s1_13_signs_of_distress.premiums.first.year" data-format="raw"></span> to
+                <span data-fill="charts.s1_13_signs_of_distress.premiums.last.year" data-format="raw"></span></h3>
+              <div class="legend" id="legend-premiums"></div>
+              <div class="chart-box short"><canvas id="chart-premiums"></canvas></div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_13_signs_of_distress.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 1.14. Two lines drawn by charts.js (drawHomelessChildren) from "s1_14_homeless_children". -->
     <article class="card" id="card-1-14">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.14">Bulletin page 1.14</span>
       </div>
-      <h2 class="db-title">Homeless children in Westchester, two counts: NYSED and HUD, 2014 to 2025</h2>
+      <h2 class="db-title">Homeless children in Westchester, two counts: NYSED and HUD,
+        <span data-fill="charts.s1_14_homeless_children.first_year" data-format="raw"></span> to
+        <span data-fill="charts.s1_14_homeless_children.last_year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Two Definitions, Two Very Different Counts</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Policies implemented in 2020 to prevent family homelessness were lifted at the
+             start of 2022, leading to a rise back to the usual levels in children experiencing unstable housing. The chart
+             underscores HUD's continued refusal to count children in doubled-up conditions as homeless. This is a critical
+             blind spot in Westchester.</p>
+          <p><strong>Takeaway:</strong> There still remains a significant inconsistency when it comes to counting the
+             actual number of children experiencing homelessness in Westchester. Failure to account for all means that
+             thousands of children are not receiving the services they need at an especially vulnerable time.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.14</strong>Two lines with end labels and a callout explaining the two definitions (P7 + P3)</div></div>
+          <div class="callout-line">
+            <p class="db-callout">In <span data-fill="charts.s1_14_homeless_children.latest.year" data-format="raw"></span>,
+              schools identified <strong data-fill="charts.s1_14_homeless_children.latest.nysed"></strong> homeless students.
+              HUD's one-night count found <strong data-fill="charts.s1_14_homeless_children.latest.hud"></strong> children.</p>
+          </div>
+          <div class="legend" id="legend-homeless"></div>
+          <div class="chart-box"><canvas id="chart-homeless"></canvas></div>
+          <p class="note placeholder">[PLACEHOLDER] The school count covers a whole school year (the year shown is the one it
+            ends in) and includes families doubled up with others. HUD's count is one night in January, in shelters
+            or unsheltered.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_14_homeless_children.source" data-format="raw"></span></p>
     </article>
 
     <!-- Page 1.15: a quotation (a fixed fact; see the comment at the top) -->
@@ -353,22 +694,36 @@
       <p class="source">Quoted on page 1.15 of the Bulletin.</p>
     </aside>
 
+    <!-- Page 1.16. Bars drawn by charts.js (drawCreditCardDebt) from "s1_16_credit_card_debt". -->
     <article class="card" id="card-1-16">
       <div class="card-head">
         <div class="kicker">Chapter 1 · Family Economic Insecurity</div>
         <span class="page-tag" data-page="1.16">Bulletin page 1.16</span>
       </div>
-      <h2 class="db-title">Average annual credit card debt held by New York State individuals, 2010 to 2024</h2>
+      <h2 class="db-title">Average annual credit card debt held by New York State individuals,
+        <span data-fill="charts.s1_16_credit_card_debt.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s1_16_credit_card_debt.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Credit Card Debt: Short-Term Survival vs. Long-Term Stability</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Increasing Credit Card Debt per Household is one warning that families are going
+             beyond paycheck to paycheck. Expenses are exceeding income.</p>
+          <p><strong>Takeaway:</strong> WCA will continue to pay attention to this indicator. Although credit cards can
+             provide short-term relief, in the long run credit card debt is a liability that can lead families to sacrifice
+             long-term goals such as college education and investments in generational wealth.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 1.16</strong>Blue bars by year with a rust callout for the increase (P3)</div></div>
+          <div class="callout-line">
+            <p class="db-callout">From <span data-fill="charts.s1_16_credit_card_debt.first.year" data-format="raw"></span> to
+              <span data-fill="charts.s1_16_credit_card_debt.last.year" data-format="raw"></span>, NYS Individual Annual Credit
+              Card Debt increased from <span data-fill="charts.s1_16_credit_card_debt.first.value" data-format="dollars"></span>
+              to <span data-fill="charts.s1_16_credit_card_debt.last.value" data-format="dollars"></span>.
+              <strong>That's a <span data-fill="charts.s1_16_credit_card_debt.change_pct" data-format="pct"></span> increase</strong></p>
+          </div>
+          <div class="chart-box"><canvas id="chart-credit-card"></canvas></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s1_16_credit_card_debt.source" data-format="raw"></span></p>
     </article>
 
     <div class="continue"><a class="btn-continue" href="#chapter-2">Continue to Chapter 2 →</a></div>
@@ -1173,6 +1528,48 @@
       <strong>Rounding and definitions.</strong> [PLACEHOLDER] Rates round half up. Where "Westchester" means the school
       districts added together rather than the county as a whole, the chart's source line says so.
     </p>
+    <h3>Chapter 1, chart by chart</h3>
+    <ul class="placeholder">
+      <li><strong>Population and race (pages 1.3 and 1.4).</strong> [PLACEHOLDER] One-year estimates from the American
+        Community Survey. "Low income" means a family income below twice the federal poverty level, among the children
+        and youth whose income the survey measured. The race and ethnicity groups overlap: Hispanic or Latino residents
+        can be of any race, and are also counted in the Asian, Black and Multiracial groups; "White" leaves them out.</li>
+      <li><strong>Births and young children (1.5).</strong> [PLACEHOLDER] Births are to Westchester residents, wherever
+        the baby was born. The Census Bureau published no standard one-year estimates for 2020, so the line of children
+        under 5 skips that year.</li>
+      <li><strong>Family income (1.7, 1.10, 1.11).</strong> [PLACEHOLDER] The median income of families with their own
+        children under 18, in each year's dollars (not adjusted for inflation). Page 1.11's "annual income for a family"
+        is the median of all families. The ALICE Household Survival Budget is United For ALICE's estimate of what the
+        basics cost a household of that size in Westchester.</li>
+      <li><strong>Family composition (1.8).</strong> [PLACEHOLDER] Shares of families with children under 18, not of
+        children. One-year estimates where the Census Bureau publishes them; five-year estimates, marked *, for the
+        smaller groups. Hover over a bar for its margin of error.</li>
+      <li><strong>Poverty rates (1.9).</strong> [PLACEHOLDER] One-year estimates. A dagger (†) marks a rate whose margin
+        of error is large next to the rate itself; a change between two such rates may not be a real change.</li>
+      <li><strong>Rent (1.10, 1.11).</strong> [PLACEHOLDER] Zillow's Observed Rent Index for Westchester County: the
+        typical asking rent of homes listed for rent, in January of each year. Zillow revises all its past figures every
+        month, so every rent here comes from one release, that of
+        <span data-fill="charts.s1_10_rent_and_child_care.rent_release" data-format="raw"></span>. Its file starts in
+        January 2015, so January 2015 stands in for 2014.</li>
+      <li><strong>Child care (1.10, 1.11).</strong> [PLACEHOLDER] The Child Care Council of Westchester's average
+        monthly cost of care for an infant at a child care center.</li>
+      <li><strong>Prices and inflation (1.11, 1.12).</strong> [PLACEHOLDER] Each year's price is the average of its
+        months, across U.S. cities (Bureau of Labor Statistics). Electricity is 600 kWh at the average price per kWh.
+        Gasoline is New York State's average for all grades (Energy Information Administration). "Most current" is the
+        latest month on file. Inflation is the Consumer Price Index against the same month a year earlier; October 2025
+        was never published.</li>
+      <li><strong>Other signs of distress (1.13).</strong> [PLACEHOLDER] Food insecurity and poverty are Feeding
+        America's estimates for eight communities. SNAP recipients are the people receiving benefits each July. The
+        premium is KFF's benchmark for the health insurance marketplace: the second-lowest-cost silver plan for a
+        40-year-old, per month.</li>
+      <li><strong>Homeless children (1.14).</strong> [PLACEHOLDER] The school count (NYSED, through NYS-TEACHS) is every
+        student identified as homeless at any time in a school year, including families doubled up with others. HUD's
+        count is the children under 18 found on one night in January, in shelters or unsheltered; its 2021 count was a
+        partial one.</li>
+      <li><strong>Credit card debt (1.16).</strong> [PLACEHOLDER] The average credit card balance per person with a
+        credit report in New York State, in the last quarter of each year, in that year's dollars (Federal Reserve Bank
+        of New York).</li>
+    </ul>
     <p class="muted">
       Data file built <span data-fill="meta.generated" data-format="raw"></span>.
     </p>

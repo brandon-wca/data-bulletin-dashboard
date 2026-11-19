@@ -1,7 +1,7 @@
 {
   "meta": {
     "dashboard": "2026 Data Bulletin dashboard",
-    "generated": "2026-11-10 12:34 (local time)",
+    "generated": "2026-11-18 13:48 (local time)",
     "built_by": "build_data.py",
     "sources": {
       "CUR-0014": {
@@ -9,15 +9,65 @@
         "rows": 258795,
         "md5": "31e66d473c01236e934ac872c66bc826"
       },
+      "CUR-0015": {
+        "file": "CUR-0015_family-poverty-and-median-income-by-type_westchester-places.csv",
+        "rows": 123556,
+        "md5": "da26152bd8d4d3389d0a0a27217227e7"
+      },
       "CUR-0016": {
         "file": "CUR-0016_population-by-age-and-race_westchester.csv",
         "rows": 244,
         "md5": "7be2caff2f8c7ee9d249723b09b9977f"
       },
+      "CUR-0018": {
+        "file": "CUR-0018_rent-index-by-place-and-month_westchester.csv",
+        "rows": 5416,
+        "md5": "55fca55c81e27f5a1b6cc8aabdae852a"
+      },
+      "CUR-0019": {
+        "file": "CUR-0019_cost-of-living-series-by-year_westchester-ny-us.csv",
+        "rows": 852,
+        "md5": "0211ef01e1018470d19efe89f1737ffa"
+      },
+      "CUR-0020": {
+        "file": "CUR-0020_snap-recipients-and-food-insecurity_westchester.csv",
+        "rows": 130,
+        "md5": "72a510ba61ee6d337a453d02534b8407"
+      },
+      "CUR-0021": {
+        "file": "CUR-0021_births-and-fertility-by-year_westchester.csv",
+        "rows": 398,
+        "md5": "5b92b78a5e4f0a76e6da04729dacdb90"
+      },
+      "CUR-0022": {
+        "file": "CUR-0022_household-debt-per-capita-by-type_ny-us.csv",
+        "rows": 207,
+        "md5": "789978ae2084d599670cc4bd7dc8a20f"
+      },
       "CUR-0023": {
         "file": "CUR-0023_infant-care-cost-and-share-of-income_westchester.csv",
         "rows": 194,
         "md5": "dfdb25d8fc5f2a21293597ce0c2717e8"
+      },
+      "CUR-0026": {
+        "file": "CUR-0026_alice-households-by-place-and-survival-budget_westchester.csv",
+        "rows": 34,
+        "md5": "21c85277964f27210e4b0792688a1275"
+      },
+      "CUR-0028": {
+        "file": "CUR-0028_homeless-students-by-district-race-residence_westchester.csv",
+        "rows": 592,
+        "md5": "600387f9dbea621a0bac9fa00842ae7a"
+      },
+      "CUR-0029": {
+        "file": "CUR-0029_homeless-people-point-in-time-by-group_ny-604.csv",
+        "rows": 1148,
+        "md5": "06010e25b7e9467e8c9984e206f41853"
+      },
+      "CUR-0035": {
+        "file": "CUR-0035_health-safety-and-insurance-series-by-year_westchester-ny-us.csv",
+        "rows": 1373,
+        "md5": "0f7e7ed2826f20fb999d7f6d753332ae"
       },
       "CUR-0043": {
         "file": "CUR-0043_attainment-race-and-disconnected-youth-by-puma_westchester.csv",
@@ -89,5 +139,1911 @@
       "source": "U.S. Census Bureau, ACS 5-year Public Use Microdata Sample (CUR-0043, people_with_outcome / people_in_group)"
     }
   ],
-  "charts": {}
+  "charts": {
+    "s1_3_population": {
+      "page": "1.3",
+      "title": "Westchester County population, 2024",
+      "year": 2024,
+      "residents": 1006447,
+      "children_and_youth": {
+        "label": "Children and youth ages 0 to 24",
+        "people": 295488,
+        "share_pct": 29.4
+      },
+      "older_residents": {
+        "label": "Residents ages 25 and older",
+        "people": 710959,
+        "share_pct": 70.6
+      },
+      "low_income": {
+        "label": "Low income",
+        "means": "family income below twice the federal poverty level",
+        "people": 60751,
+        "of": 281120,
+        "share_pct": 21.6,
+        "unreliable": false
+      },
+      "source": "U.S. Census Bureau, American Community Survey 1-year estimates, 2024.",
+      "tables": "CUR-0016 (people, share_pct); CUR-0014 (below_200pct, ratio_universe, below_200pct_rate_pct)"
+    },
+    "s1_4_race_ethnicity": {
+      "page": "1.4",
+      "title": "Race and ethnicity of Westchester children and youth ages 0 to 24, 2014 vs 2024",
+      "unit": "%",
+      "years": [
+        2014,
+        2024
+      ],
+      "groups": [
+        {
+          "key": "asian",
+          "label": "Asian",
+          "shares": [
+            5.4,
+            5.5
+          ],
+          "people": [
+            16775,
+            16391
+          ]
+        },
+        {
+          "key": "black",
+          "label": "Black or African American",
+          "shares": [
+            15.1,
+            13.3
+          ],
+          "people": [
+            46579,
+            39204
+          ]
+        },
+        {
+          "key": "hispanic",
+          "label": "Hispanic or Latino",
+          "shares": [
+            30.1,
+            34.8
+          ],
+          "people": [
+            92760,
+            102839
+          ]
+        },
+        {
+          "key": "multiracial",
+          "label": "Multiracial",
+          "shares": [
+            5.8,
+            16.9
+          ],
+          "people": [
+            17743,
+            49997
+          ]
+        },
+        {
+          "key": "white",
+          "label": "White, not Hispanic or Latino",
+          "shares": [
+            47,
+            40.1
+          ],
+          "people": [
+            145020,
+            118537
+          ]
+        }
+      ],
+      "residents_0_24": [
+        308461,
+        295488
+      ],
+      "source": "U.S. Census Bureau, American Community Survey 1-year estimates, 2014 and 2024.",
+      "tables": "CUR-0016 (share_pct, people, base_people)"
+    },
+    "s1_5_births_and_young_children": {
+      "page": "1.5",
+      "title": "Births and young children in Westchester County",
+      "births": {
+        "years": [
+          2008,
+          2023
+        ],
+        "values": [
+          11517,
+          9688
+        ],
+        "change_pct": -15.9,
+        "decline_pct": 15.9,
+        "per_figure": 1000
+      },
+      "under_5": {
+        "years": [
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "values": [
+          59333,
+          57116,
+          56628,
+          56140,
+          55627,
+          55202,
+          55260,
+          54797,
+          55272,
+          53737,
+          53502,
+          null,
+          52214,
+          50823,
+          51825,
+          52498
+        ],
+        "missing_years": [
+          2020
+        ],
+        "first": {
+          "year": 2009,
+          "value": 59333
+        },
+        "last": {
+          "year": 2024,
+          "value": 52498
+        },
+        "change_pct": -11.5,
+        "decline_pct": 11.5
+      },
+      "source": "New York State Department of Health, Vital Statistics (births, 2008 and 2023); U.S. Census Bureau, American Community Survey 1-year estimates (children under 5, 2009 to 2024).",
+      "tables": "CUR-0021 (value: live births, all ages); CUR-0016 (people: ages 0-4, WCA's yearly rows)"
+    },
+    "s1_7_income_by_family_type": {
+      "page": "1.7",
+      "title": "Median income by family type, 2014 vs 2019 vs 2024",
+      "unit": "$",
+      "years": [
+        2014,
+        2019,
+        2024
+      ],
+      "families": [
+        {
+          "key": "married",
+          "label": "Married couple",
+          "values": [
+            152777,
+            187482,
+            242313
+          ]
+        },
+        {
+          "key": "father",
+          "label": "Single father",
+          "values": [
+            46102,
+            65107,
+            88999
+          ]
+        },
+        {
+          "key": "mother",
+          "label": "Single mother",
+          "values": [
+            36828,
+            40360,
+            64502
+          ]
+        }
+      ],
+      "budgets": [
+        {
+          "household": "Two Adults Two Children",
+          "amount": 113748,
+          "data_year": 2024,
+          "families": [
+            "married"
+          ]
+        },
+        {
+          "household": "One Adult One Child",
+          "amount": 76080,
+          "data_year": 2024,
+          "families": [
+            "father",
+            "mother"
+          ]
+        }
+      ],
+      "source": "U.S. Census Bureau, American Community Survey 1-year estimates, 2014, 2019 and 2024; United For ALICE, Household Survival Budget for Westchester County, 2024.",
+      "tables": "CUR-0015 (median_family_income_with_own_children); CUR-0026 (annual_total, data_year)"
+    },
+    "s1_8_family_composition": {
+      "page": "1.8",
+      "title": "Family composition of families with children, by poverty level and race, 2024",
+      "unit": "%",
+      "year": 2024,
+      "five_year_period": "2020-2024",
+      "family_types": [
+        {
+          "key": "married",
+          "label": "Married couple"
+        },
+        {
+          "key": "father",
+          "label": "Single father"
+        },
+        {
+          "key": "mother",
+          "label": "Single mother"
+        }
+      ],
+      "order": [
+        "all",
+        "asian",
+        "black",
+        "hispanic",
+        "multiracial",
+        "white"
+      ],
+      "groups": {
+        "all": {
+          "label": "All races",
+          "release": "1-year",
+          "period": "2024",
+          "at_or_above": {
+            "families": 100359,
+            "married": {
+              "share": 76.6,
+              "margin": 4.9,
+              "families": 76835
+            },
+            "father": {
+              "share": 6.5,
+              "margin": 1.4,
+              "families": 6513
+            },
+            "mother": {
+              "share": 17,
+              "margin": 2.7,
+              "families": 17011
+            }
+          },
+          "below": {
+            "families": 7086,
+            "married": {
+              "share": 31,
+              "margin": 8.2,
+              "families": 2194
+            },
+            "father": {
+              "share": 13.4,
+              "margin": 8.8,
+              "families": 948
+            },
+            "mother": {
+              "share": 55.7,
+              "margin": 13.4,
+              "families": 3944
+            }
+          }
+        },
+        "asian": {
+          "label": "Asian",
+          "release": "5-year",
+          "period": "2020-2024",
+          "at_or_above": {
+            "families": 8907,
+            "married": {
+              "share": 92.4,
+              "margin": 1.5,
+              "families": 8229
+            },
+            "father": {
+              "share": 2,
+              "margin": 1,
+              "families": 176
+            },
+            "mother": {
+              "share": 5.6,
+              "margin": 1.7,
+              "families": 502
+            }
+          },
+          "below": {
+            "families": 443,
+            "married": {
+              "share": 29.1,
+              "margin": 9.8,
+              "families": 129
+            },
+            "father": {
+              "share": 2.3,
+              "margin": 3.5,
+              "families": 10
+            },
+            "mother": {
+              "share": 68.6,
+              "margin": 26.5,
+              "families": 304
+            }
+          }
+        },
+        "black": {
+          "label": "Black or African American",
+          "release": "1-year",
+          "period": "2024",
+          "at_or_above": {
+            "families": 11873,
+            "married": {
+              "share": 52,
+              "margin": 7.1,
+              "families": 6177
+            },
+            "father": {
+              "share": 11.5,
+              "margin": 5.6,
+              "families": 1361
+            },
+            "mother": {
+              "share": 36.5,
+              "margin": 9,
+              "families": 4335
+            }
+          },
+          "below": {
+            "families": 1777,
+            "married": {
+              "share": 26.7,
+              "margin": 18.7,
+              "families": 474
+            },
+            "father": {
+              "share": 16.4,
+              "margin": 23.8,
+              "families": 292
+            },
+            "mother": {
+              "share": 56.9,
+              "margin": 25,
+              "families": 1011
+            }
+          }
+        },
+        "hispanic": {
+          "label": "Hispanic or Latino",
+          "release": "1-year",
+          "period": "2024",
+          "at_or_above": {
+            "families": 29718,
+            "married": {
+              "share": 66.9,
+              "margin": 2.1,
+              "families": 19888
+            },
+            "father": {
+              "share": 10.1,
+              "margin": 3.2,
+              "families": 3006
+            },
+            "mother": {
+              "share": 23,
+              "margin": 5.7,
+              "families": 6824
+            }
+          },
+          "below": {
+            "families": 4107,
+            "married": {
+              "share": 32.1,
+              "margin": 13.4,
+              "families": 1319
+            },
+            "father": {
+              "share": 8.6,
+              "margin": 8.6,
+              "families": 352
+            },
+            "mother": {
+              "share": 59.3,
+              "margin": 15.2,
+              "families": 2436
+            }
+          }
+        },
+        "multiracial": {
+          "label": "Multiracial",
+          "release": "5-year",
+          "period": "2020-2024",
+          "at_or_above": {
+            "families": 12833,
+            "married": {
+              "share": 73.5,
+              "margin": 3.6,
+              "families": 9431
+            },
+            "father": {
+              "share": 7.6,
+              "margin": 2.8,
+              "families": 974
+            },
+            "mother": {
+              "share": 18.9,
+              "margin": 3.7,
+              "families": 2428
+            }
+          },
+          "below": {
+            "families": 2002,
+            "married": {
+              "share": 20.4,
+              "margin": 6.2,
+              "families": 408
+            },
+            "father": {
+              "share": 5.3,
+              "margin": 4.7,
+              "families": 107
+            },
+            "mother": {
+              "share": 74.3,
+              "margin": 9.8,
+              "families": 1487
+            }
+          }
+        },
+        "white": {
+          "label": "White, not Hispanic or Latino",
+          "release": "1-year",
+          "period": "2024",
+          "at_or_above": {
+            "families": 46147,
+            "married": {
+              "share": 85.9,
+              "margin": 8.1,
+              "families": 39650
+            },
+            "father": {
+              "share": 3.4,
+              "margin": 1.6,
+              "families": 1574
+            },
+            "mother": {
+              "share": 10.7,
+              "margin": 3.1,
+              "families": 4923
+            }
+          },
+          "below": {
+            "families": 897,
+            "married": {
+              "share": 29.7,
+              "margin": 16.3,
+              "families": 266
+            },
+            "father": {
+              "share": 27.4,
+              "margin": 29.5,
+              "families": 246
+            },
+            "mother": {
+              "share": 42.9,
+              "margin": 33.6,
+              "families": 385
+            }
+          }
+        }
+      },
+      "source": "U.S. Census Bureau, American Community Survey, 2024 1-year estimates; 2020-2024 5-year estimates for the groups marked *.",
+      "tables": "CUR-0015 (share_of_nonpoor_families_with_children_pct, share_of_poor_families_with_children_pct, their margins, families_with_children_at_or_above_poverty, families_with_children_below_poverty)"
+    },
+    "s1_9_poverty_by_race": {
+      "page": "1.9",
+      "title": "Westchester poverty rates by race and ethnicity, 2022 vs 2024",
+      "unit": "%",
+      "years": [
+        2022,
+        2024
+      ],
+      "ages": [
+        "Under 5",
+        "Under 18",
+        "18 to 24"
+      ],
+      "order": [
+        "all",
+        "asian",
+        "black",
+        "hispanic",
+        "multiracial",
+        "white"
+      ],
+      "groups": {
+        "all": {
+          "label": "All races",
+          "rates": [
+            [
+              11.7,
+              5.4
+            ],
+            [
+              10.6,
+              7.7
+            ],
+            [
+              8.5,
+              13.7
+            ]
+          ],
+          "unreliable": [
+            [
+              false,
+              true
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ],
+          "margins": [
+            [
+              3.7,
+              2.7
+            ],
+            [
+              1.6,
+              1.3
+            ],
+            [
+              2.3,
+              2.6
+            ]
+          ],
+          "below_poverty": [
+            [
+              5883,
+              2775
+            ],
+            [
+              21749,
+              15722
+            ],
+            [
+              6540,
+              10602
+            ]
+          ],
+          "people": [
+            [
+              50266,
+              51279
+            ],
+            [
+              204276,
+              203854
+            ],
+            [
+              77016,
+              77266
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        },
+        "asian": {
+          "label": "Asian",
+          "rates": [
+            [
+              2.3,
+              0
+            ],
+            [
+              8,
+              0.6
+            ],
+            [
+              7.6,
+              6
+            ]
+          ],
+          "unreliable": [
+            [
+              true,
+              true
+            ],
+            [
+              true,
+              true
+            ],
+            [
+              true,
+              true
+            ]
+          ],
+          "margins": [
+            [
+              7.6,
+              11.9
+            ],
+            [
+              5.8,
+              5.8
+            ],
+            [
+              7.8,
+              5.7
+            ]
+          ],
+          "below_poverty": [
+            [
+              75,
+              0
+            ],
+            [
+              950,
+              72
+            ],
+            [
+              329,
+              250
+            ]
+          ],
+          "people": [
+            [
+              3309,
+              2605
+            ],
+            [
+              11816,
+              12072
+            ],
+            [
+              4302,
+              4199
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        },
+        "black": {
+          "label": "Black or African American",
+          "rates": [
+            [
+              21.9,
+              22.3
+            ],
+            [
+              26.2,
+              19.1
+            ],
+            [
+              7,
+              15.8
+            ]
+          ],
+          "unreliable": [
+            [
+              true,
+              true
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              true,
+              false
+            ]
+          ],
+          "margins": [
+            [
+              12.8,
+              14.5
+            ],
+            [
+              7.2,
+              6.3
+            ],
+            [
+              6.4,
+              6.5
+            ]
+          ],
+          "below_poverty": [
+            [
+              1445,
+              1414
+            ],
+            [
+              6974,
+              4757
+            ],
+            [
+              899,
+              1707
+            ]
+          ],
+          "people": [
+            [
+              6608,
+              6344
+            ],
+            [
+              26588,
+              24918
+            ],
+            [
+              12875,
+              10776
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        },
+        "hispanic": {
+          "label": "Hispanic or Latino",
+          "rates": [
+            [
+              22.6,
+              6.6
+            ],
+            [
+              17,
+              12
+            ],
+            [
+              10.5,
+              18.6
+            ]
+          ],
+          "unreliable": [
+            [
+              false,
+              true
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ],
+          "margins": [
+            [
+              8.6,
+              4.7
+            ],
+            [
+              3.6,
+              2.9
+            ],
+            [
+              3.8,
+              5.5
+            ]
+          ],
+          "below_poverty": [
+            [
+              4176,
+              1330
+            ],
+            [
+              11578,
+              8560
+            ],
+            [
+              2599,
+              4956
+            ]
+          ],
+          "people": [
+            [
+              18451,
+              20086
+            ],
+            [
+              68281,
+              71038
+            ],
+            [
+              24706,
+              26664
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        },
+        "multiracial": {
+          "label": "Multiracial",
+          "rates": [
+            [
+              5.9,
+              2.7
+            ],
+            [
+              6.9,
+              5.5
+            ],
+            [
+              12.3,
+              19.1
+            ]
+          ],
+          "unreliable": [
+            [
+              true,
+              true
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              true,
+              false
+            ]
+          ],
+          "margins": [
+            [
+              4.5,
+              3.9
+            ],
+            [
+              2.9,
+              2.7
+            ],
+            [
+              6.3,
+              7.7
+            ]
+          ],
+          "below_poverty": [
+            [
+              650,
+              295
+            ],
+            [
+              2549,
+              2070
+            ],
+            [
+              1199,
+              2072
+            ]
+          ],
+          "people": [
+            [
+              11041,
+              11050
+            ],
+            [
+              36695,
+              37436
+            ],
+            [
+              9717,
+              10820
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        },
+        "white": {
+          "label": "White, not Hispanic or Latino",
+          "rates": [
+            [
+              0.9,
+              0.9
+            ],
+            [
+              2.2,
+              2.7
+            ],
+            [
+              7.2,
+              9.1
+            ]
+          ],
+          "unreliable": [
+            [
+              true,
+              true
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ],
+          "margins": [
+            [
+              0.9,
+              1.1
+            ],
+            [
+              1,
+              1.2
+            ],
+            [
+              3.1,
+              3.9
+            ]
+          ],
+          "below_poverty": [
+            [
+              164,
+              155
+            ],
+            [
+              1895,
+              2167
+            ],
+            [
+              2502,
+              3031
+            ]
+          ],
+          "people": [
+            [
+              18665,
+              17192
+            ],
+            [
+              85154,
+              80481
+            ],
+            [
+              34634,
+              33304
+            ]
+          ],
+          "five_year": [
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ],
+            [
+              false,
+              false
+            ]
+          ]
+        }
+      },
+      "highest_rate": 26.2,
+      "five_year_used": false,
+      "source": "U.S. Census Bureau, American Community Survey 1-year estimates, 2022 and 2024.",
+      "tables": "CUR-0014 (poverty_rate_pct, poverty_rate_moe_pct, unreliable_rate, below_poverty, poverty_universe)"
+    },
+    "s1_10_rent_and_child_care": {
+      "page": "1.10",
+      "title": "After rent and child care, what's left of monthly income? 2014 vs 2024",
+      "unit": "$",
+      "years": [
+        2014,
+        2024
+      ],
+      "rent": [
+        {
+          "value": 1947,
+          "month": "2015-01",
+          "label": "January 2015",
+          "is_that_january": false
+        },
+        {
+          "value": 2771,
+          "month": "2024-01",
+          "label": "January 2024",
+          "is_that_january": true
+        }
+      ],
+      "rent_release": "October 2026",
+      "infant_care": [
+        1649,
+        2105
+      ],
+      "families": [
+        {
+          "key": "married",
+          "label": "Married couple",
+          "income_annual": [
+            152777,
+            242313
+          ],
+          "income_monthly": [
+            12731,
+            20193
+          ],
+          "rent_share_pct": [
+            15.3,
+            13.7
+          ],
+          "care_share_pct": [
+            13.0,
+            10.4
+          ],
+          "left": [
+            9135,
+            15317
+          ]
+        },
+        {
+          "key": "father",
+          "label": "Single father",
+          "income_annual": [
+            46102,
+            88999
+          ],
+          "income_monthly": [
+            3842,
+            7417
+          ],
+          "rent_share_pct": [
+            50.7,
+            37.4
+          ],
+          "care_share_pct": [
+            42.9,
+            28.4
+          ],
+          "left": [
+            246,
+            2541
+          ]
+        },
+        {
+          "key": "mother",
+          "label": "Single mother",
+          "income_annual": [
+            36828,
+            64502
+          ],
+          "income_monthly": [
+            3069,
+            5375
+          ],
+          "rent_share_pct": [
+            63.4,
+            51.6
+          ],
+          "care_share_pct": [
+            53.7,
+            39.2
+          ],
+          "left": [
+            -527,
+            499
+          ]
+        }
+      ],
+      "source": "Zillow Observed Rent Index, October 2026 release (rent); Child Care Council of Westchester (infant care at a center); U.S. Census Bureau, American Community Survey 1-year estimates (median family income).",
+      "tables": "CUR-0018 (rent_index_dollars, January); CUR-0023 (wca_monthly_average, infants at a center); CUR-0015 (median_family_income_with_own_children)"
+    },
+    "s1_11_cost_of_living": {
+      "page": "1.11",
+      "title": "Families struggle with increased costs of living",
+      "unit": "$",
+      "year_then": 2014,
+      "year_now": 2024,
+      "items": {
+        "income": {
+          "then": 107995,
+          "then_note": "",
+          "now": 155722,
+          "change_pct": 44.2,
+          "latest": 155722,
+          "latest_label": "2024, latest available",
+          "latest_change_pct": null
+        },
+        "rent": {
+          "then": 1947,
+          "then_note": "January 2015, earliest available",
+          "now": 2771,
+          "change_pct": 42.3,
+          "latest": 3097,
+          "latest_label": "September 2026",
+          "latest_change_pct": 11.8
+        },
+        "infant_care": {
+          "then": 1649,
+          "then_note": "",
+          "now": 2105,
+          "change_pct": 27.7,
+          "latest": 2094,
+          "latest_label": "2026",
+          "latest_change_pct": -0.5
+        },
+        "electricity": {
+          "then": 82.25,
+          "then_note": "",
+          "now": 105.4,
+          "change_pct": 28.1,
+          "latest": 117.6,
+          "latest_label": "September 2026",
+          "latest_change_pct": 11.6
+        },
+        "eggs": {
+          "then": 2.02,
+          "then_note": "",
+          "now": 3.17,
+          "change_pct": 56.9,
+          "latest": 2.27,
+          "latest_label": "September 2026",
+          "latest_change_pct": -28.4
+        },
+        "ground_beef": {
+          "then": 3.97,
+          "then_note": "",
+          "now": 5.43,
+          "change_pct": 36.8,
+          "latest": 6.48,
+          "latest_label": "September 2026",
+          "latest_change_pct": 19.3
+        },
+        "rice": {
+          "then": 0.73,
+          "then_note": "",
+          "now": 1.03,
+          "change_pct": 41.1,
+          "latest": 1.12,
+          "latest_label": "September 2026",
+          "latest_change_pct": 8.7
+        },
+        "gasoline": {
+          "then": 3.7,
+          "then_note": "",
+          "now": 3.43,
+          "change_pct": -7.3,
+          "latest": 4.49,
+          "latest_label": "September 2026",
+          "latest_change_pct": 30.9
+        }
+      },
+      "rent_release": "October 2026",
+      "source": "U.S. Census Bureau (income); Zillow, October 2026 release (rent); Child Care Council of Westchester (infant care); U.S. Bureau of Labor Statistics (electricity, eggs, ground beef and rice, U.S. city averages); U.S. Energy Information Administration (gasoline, New York State).",
+      "tables": "CUR-0015 (median_family_income, all families); CUR-0018 (rent_index_dollars); CUR-0023 (wca_monthly_average); CUR-0019 (value: yearly averages and the latest month)"
+    },
+    "s1_12_inflation": {
+      "page": "1.12",
+      "title": "Inflation: the Consumer Price Index in New York-Newark-Jersey City",
+      "unit": "%",
+      "months": [
+        "2015-01",
+        "2015-02",
+        "2015-03",
+        "2015-04",
+        "2015-05",
+        "2015-06",
+        "2015-07",
+        "2015-08",
+        "2015-09",
+        "2015-10",
+        "2015-11",
+        "2015-12",
+        "2016-01",
+        "2016-02",
+        "2016-03",
+        "2016-04",
+        "2016-05",
+        "2016-06",
+        "2016-07",
+        "2016-08",
+        "2016-09",
+        "2016-10",
+        "2016-11",
+        "2016-12",
+        "2017-01",
+        "2017-02",
+        "2017-03",
+        "2017-04",
+        "2017-05",
+        "2017-06",
+        "2017-07",
+        "2017-08",
+        "2017-09",
+        "2017-10",
+        "2017-11",
+        "2017-12",
+        "2018-01",
+        "2018-02",
+        "2018-03",
+        "2018-04",
+        "2018-05",
+        "2018-06",
+        "2018-07",
+        "2018-08",
+        "2018-09",
+        "2018-10",
+        "2018-11",
+        "2018-12",
+        "2019-01",
+        "2019-02",
+        "2019-03",
+        "2019-04",
+        "2019-05",
+        "2019-06",
+        "2019-07",
+        "2019-08",
+        "2019-09",
+        "2019-10",
+        "2019-11",
+        "2019-12",
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "values": [
+        -0.5,
+        0.1,
+        -0.1,
+        0,
+        -0.1,
+        0.1,
+        -0.1,
+        0.1,
+        0.3,
+        0.4,
+        0.6,
+        0.7,
+        0.8,
+        0.6,
+        0.7,
+        1,
+        0.9,
+        0.9,
+        1,
+        1.1,
+        1,
+        1.2,
+        1.6,
+        2.1,
+        2.5,
+        2.6,
+        2.3,
+        2,
+        1.8,
+        1.8,
+        1.6,
+        1.7,
+        2.1,
+        1.8,
+        1.6,
+        1.6,
+        1.4,
+        1.7,
+        1.7,
+        1.9,
+        2.2,
+        2,
+        2.2,
+        2.2,
+        2,
+        2,
+        1.9,
+        1.6,
+        1.6,
+        1.3,
+        1.6,
+        1.6,
+        1.5,
+        1.7,
+        1.7,
+        1.8,
+        1.4,
+        1.5,
+        1.8,
+        2.2,
+        2.5,
+        2.4,
+        2,
+        1.1,
+        1.4,
+        1.3,
+        1.7,
+        1.4,
+        1.9,
+        1.7,
+        1.4,
+        1.6,
+        1.2,
+        1.4,
+        2,
+        3.2,
+        3.2,
+        4.1,
+        3.5,
+        3.7,
+        3.8,
+        4.3,
+        5,
+        4.4,
+        5.1,
+        5.1,
+        6.1,
+        6.3,
+        6.3,
+        6.7,
+        6.5,
+        6.6,
+        6.2,
+        6,
+        5.9,
+        6.3,
+        6,
+        6,
+        4.6,
+        3.7,
+        3.5,
+        2.5,
+        3.2,
+        3.5,
+        3.7,
+        3.5,
+        3,
+        2.9,
+        3.1,
+        2.9,
+        3.4,
+        3.8,
+        3.9,
+        4.2,
+        4.1,
+        3.7,
+        3.8,
+        4,
+        4.3,
+        4.3,
+        4,
+        4.2,
+        3.8,
+        3.9,
+        3.4,
+        3.5,
+        3.2,
+        3.2,
+        3,
+        null,
+        3,
+        3.4,
+        2.9,
+        3.2,
+        4,
+        4.6,
+        5.1,
+        4.1,
+        4.6,
+        4.3,
+        4.5
+      ],
+      "missing_months": [
+        "October 2025"
+      ],
+      "first": {
+        "month": "2015-01",
+        "label": "January 2015",
+        "year": 2015,
+        "value": -0.5
+      },
+      "peak": {
+        "month": "2022-06",
+        "label": "June 2022",
+        "year": 2022,
+        "value": 6.7
+      },
+      "low": {
+        "month": "2015-01",
+        "label": "January 2015",
+        "year": 2015,
+        "value": -0.5
+      },
+      "latest": {
+        "month": "2026-09",
+        "label": "September 2026",
+        "year": 2026,
+        "value": 4.5
+      },
+      "quoted": {
+        "month": "2026-04",
+        "label": "April 2026",
+        "year": 2026,
+        "value": 4.6
+      },
+      "source": "U.S. Bureau of Labor Statistics, Consumer Price Index for All Urban Consumers, New York-Newark-Jersey City: change from the same month a year earlier.",
+      "tables": "CUR-0019 (value: CPI-U, all items, 12-month percent change)"
+    },
+    "s1_13_signs_of_distress": {
+      "page": "1.13",
+      "title": "Other signs of distress: food insecurity, SNAP and health insurance premiums",
+      "food": {
+        "year": 2023,
+        "places": [
+          "Bedford",
+          "Croton-Harmon",
+          "Mount Vernon",
+          "New Rochelle",
+          "Peekskill",
+          "Scarsdale",
+          "White Plains",
+          "Yonkers"
+        ],
+        "food_insecure_pct": [
+          9.4,
+          9.8,
+          14.2,
+          13.6,
+          12.6,
+          5.7,
+          13.5,
+          16.5
+        ],
+        "poverty_pct": [
+          6.6,
+          3.7,
+          13.3,
+          10.8,
+          8.9,
+          2.3,
+          10.9,
+          14.7
+        ],
+        "people_food_insecure": [
+          2540,
+          880,
+          10310,
+          11080,
+          3030,
+          1080,
+          8050,
+          34510
+        ],
+        "population": [
+          26976,
+          8959,
+          72528,
+          81591,
+          24076,
+          18879,
+          59818,
+          209529
+        ]
+      },
+      "snap": {
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ],
+        "values": [
+          32017,
+          31129,
+          32889,
+          36229,
+          38515,
+          39898,
+          39786,
+          42639,
+          48357,
+          58919,
+          68245,
+          75022,
+          79166,
+          81216,
+          83714,
+          84819,
+          82879,
+          77944,
+          76377,
+          72591,
+          74411,
+          73018,
+          77237,
+          76457
+        ],
+        "first": {
+          "year": 2000,
+          "value": 32017,
+          "in_thousands": "32K"
+        },
+        "last": {
+          "year": 2023,
+          "value": 76457,
+          "in_thousands": "76K"
+        },
+        "peak": {
+          "year": 2015,
+          "value": 84819
+        }
+      },
+      "premiums": {
+        "years": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "series": [
+          {
+            "key": "ny",
+            "label": "New York State",
+            "values": [
+              343,
+              380,
+              393,
+              454,
+              506,
+              569,
+              610,
+              597,
+              592,
+              627,
+              736,
+              790,
+              817
+            ]
+          },
+          {
+            "key": "us",
+            "label": "United States",
+            "values": [
+              273,
+              276,
+              299,
+              359,
+              481,
+              478,
+              462,
+              452,
+              438,
+              456,
+              477,
+              497,
+              625
+            ]
+          }
+        ],
+        "first": {
+          "year": 2014,
+          "value": 343
+        },
+        "last": {
+          "year": 2026,
+          "value": 817
+        }
+      },
+      "source": "Feeding America, Map the Meal Gap 2023 (food insecurity and poverty); U.S. Census Bureau (SNAP recipients each July); KFF (marketplace benchmark premiums).",
+      "tables": "CUR-0020 (value: food insecurity rate, poverty rate, people food insecure, total population; SNAP recipients in July); CUR-0035 (value: ACA marketplace benchmark premiums)"
+    },
+    "s1_14_homeless_children": {
+      "page": "1.14",
+      "title": "Homeless children in Westchester, two counts: NYSED and HUD, 2014 to 2025",
+      "unit": "count",
+      "years": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "first_year": 2014,
+      "last_year": 2025,
+      "series": [
+        {
+          "key": "nysed",
+          "label": "NYSED: students identified as homeless during the school year",
+          "values": [
+            2662,
+            2678,
+            2732,
+            2697,
+            2799,
+            2716,
+            2357,
+            1959,
+            2147,
+            2106,
+            2569,
+            2607
+          ],
+          "school_years": [
+            "2013-14",
+            "2014-15",
+            "2015-16",
+            "2016-17",
+            "2017-18",
+            "2018-19",
+            "2019-20",
+            "2020-21",
+            "2021-22",
+            "2022-23",
+            "2023-24",
+            "2024-25"
+          ],
+          "notes": {}
+        },
+        {
+          "key": "hud",
+          "label": "HUD: children under 18 counted on one night in January",
+          "values": [
+            784,
+            628,
+            662,
+            702,
+            739,
+            732,
+            640,
+            498,
+            498,
+            419,
+            584,
+            647
+          ],
+          "notes": {
+            "2021": "sheltered and partial unsheltered count"
+          }
+        }
+      ],
+      "latest": {
+        "year": 2025,
+        "nysed": 2607,
+        "hud": 647
+      },
+      "source": "New York State Education Department, through NYS-TEACHS (students); U.S. Department of Housing and Urban Development, point-in-time count for Westchester County (children under 18).",
+      "tables": "CUR-0028 (homeless_students, county_by_year); CUR-0029 (people_counted, under_18, NY-604)"
+    },
+    "s1_16_credit_card_debt": {
+      "page": "1.16",
+      "title": "Average credit card debt per person in New York State, 2010 to 2025",
+      "unit": "$",
+      "quarter": "Q4",
+      "years": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "values": [
+        3510,
+        3440,
+        3390,
+        3250,
+        3270,
+        3380,
+        3520,
+        3710,
+        3840,
+        4010,
+        3410,
+        3520,
+        3970,
+        4470,
+        4650,
+        4820
+      ],
+      "first": {
+        "year": 2010,
+        "value": 3510
+      },
+      "last": {
+        "year": 2025,
+        "value": 4820
+      },
+      "change_pct": 37.3,
+      "source": "Federal Reserve Bank of New York, Consumer Credit Panel / Equifax: credit card balance per person in the fourth quarter of each year.",
+      "tables": "CUR-0022 (ny_value: credit card, balance per capita, Q4)"
+    }
+  }
 }
