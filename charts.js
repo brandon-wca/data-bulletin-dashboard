@@ -5539,6 +5539,9 @@ function drawCommunityMap(data) {
 
 function cmapVariant() { return cmap.measure.variants.filter(function (v) { return v.id === cmap.variant; })[0]; }
 function cmapPlaces(kind) { return cmap.map.places[kind || cmap.kind] || {}; }
+/* Whether a name read from a link is one of the table's own entries. Every JavaScript object also answers to a few
+   built-in names ("constructor", "toString", "__proto__"), so table[name] alone would take those for a measure or a place. */
+function cmapHas(table, name) { return Object.prototype.hasOwnProperty.call(table, name); }
 function cmapSeries(variantId, kind, place) {
   var numbers = cmap.measure.numbers[variantId];
   return numbers && numbers[kind] ? numbers[kind][place] || null : null;
@@ -5569,7 +5572,7 @@ function cmapKindsOf(measure) {
    picks the measure's first kind of place, unless the reader picked one and the measure has it too. */
 function cmapChoose(measureId, keep) {
   keep = keep || {};
-  var measure = cmap.measures[measureId] || cmap.measures[cmap.map.first.measure];
+  var measure = cmapHas(cmap.measures, measureId) ? cmap.measures[measureId] : cmap.measures[cmap.map.first.measure];
   var yearName = cmap.measure ? cmap.measure.years[cmap.year] : null;
   cmap.measure = measure;
   cmap.variant = measure.variants.some(function (v) { return v.id === keep.variant; }) ? keep.variant : measure.variants[0].id;
@@ -5642,15 +5645,15 @@ function cmapReadLink() {
   cmap.kindChoice = cmap.kinds[kind] && cmap.kinds[kind].shown ? kind : null;
   cmap.more = true;                                        /* so that the year asked for is kept */
   cmapChoose(asked.measure, { variant: asked["for"], kind: kind, year: asked.year });
-  cmap.place = place && cmapPlaces()[place] ? place : null;
-  cmap.compare = cmap.place && other && cmapPlaces()[other] && other !== cmap.place ? other : null;
+  cmap.place = place && cmapHas(cmapPlaces(), place) ? place : null;
+  cmap.compare = cmap.place && other && cmapHas(cmapPlaces(), other) && other !== cmap.place ? other : null;
   cmap.table = asked.view === "table";
   cmap.more = cmap.table || !!cmap.compare || cmap.year !== cmapYearSpan()[1];      /* open only when the link needs it */
 }
 /* A town's code in a link made before 2026-11-20. A city, or a town that is also a village, is known by its place code
    now; a town with no villages keeps its code; a town with villages has no piece of its own, so no place is picked. */
 function cmapOldPlace(key) {
-  if (!key || cmapPlaces("municipal")[key]) return key || null;
+  if (!key || cmapHas(cmapPlaces("municipal"), key)) return key || null;
   var twin = cmap.outlines.features.filter(function (f) {
     var p = f.properties;
     return p.cousub_geoid === key && p.place_geoid && (p.municipality_type === "city" || p.municipality_type === "town/village");
