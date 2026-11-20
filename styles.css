@@ -191,6 +191,90 @@
   --db-premium-us:       var(--wca-blue);         /* 1.13 the United States' premium line: the PDF's blue */
   --db-grid:             #CDCDCD;                 /* the gray lines behind the bars and lines of every chart (the PDF's are this visible) */
   --db-track:            #E4E9F1;                 /* 1.8 the pale bar behind a single family type's share: the rest of the 100% */
+
+  /* ---- Added 2026-11-19 for chapter 2 (Child Care & Early Education). Each name says what the color
+          stands for on the page and points at a color the page already had, so a thing keeps one color
+          on every card it appears on. Only the last two are new values, both taken from the PDF. ---- */
+  --db-rise:             var(--db-births);        /* 2.3 the circle with the white arrow pointing up: the PDF's red */
+  --db-ccap:             var(--wca-green);        /* 2.6, 2.7, 2.8 the Child Care Assistance Program (CCAP): green on all three cards */
+  --db-ccap-bg:          var(--db-father-bg);     /*   its pale step: the tinted panel of Family 1 (2.7) */
+  --db-works:            var(--db-mother);        /* 2.6, 2.7, 2.8 the Westchester Works Scholarship: purple on all three cards */
+  --db-works-light:      var(--db-mother-light);  /*   2.8 the band of incomes the scholarship covers */
+  --db-works-bg:         var(--db-mother-bg);     /*   its pale step: the tinted panel of Family 2 (2.7) */
+  --db-district-low:     var(--wca-green);        /* 2.11 Yonkers' bars and boxed note */
+  --db-district-high:    var(--db-mother);        /* 2.11 Scarsdale's bars and boxed note (checked against the green beside it) */
+  --db-head-start:       var(--wca-blue);         /* 2.13 Head Start's line and its name */
+  --db-early-head-start: var(--wca-green);        /* 2.13 Early Head Start's line and its name */
+  --db-outcome-social:   var(--wca-blue);         /* 2.14, 2.16 "Positive Social-Emotional Skills": the same color on both cards */
+  --db-outcome-knowledge:var(--wca-green);        /* 2.14, 2.16 "Knowledge & Skills" */
+  --db-outcome-behavior: var(--db-callout);       /* 2.14, 2.16 "Appropriate Behaviors": the PDF's rust (as text it is --db-callout-text) */
+  --db-therapists:       var(--db-under-5);       /* 2.15 the bars: the PDF's purple */
+  --db-prek-enrolled:    var(--wca-blue);         /* 2.17 four-year-olds enrolled (the pie), and the circle beside the trend */
+  --db-prek-not:         var(--db-teal);          /* 2.17 four-year-olds not enrolled (checked against the blue beside it) */
+  --db-program-early:    var(--db-tile-steel);    /* 2.12 Head Start's name cell */
+  --db-program-ei:       var(--wca-green);        /* 2.12 Early Intervention's name cell */
+  --db-program-prek:     var(--db-callout-text);  /* 2.12 Universal Pre-K's name cell */
+  --db-quiet:            #C9CBCE;                 /* a figure or a line that is there but not the subject: the student figures behind the bars
+                                                     (2.11, the PDF's gray), and the two lines that step back when one is singled out (2.14, 2.16) */
+  --db-cream:            #FFFAE9;                 /* 2.12 the tint of Universal Pre-K's row (the PDF's) */
+
+  /* ---- Added 2026-11-19 for chapter 3 (Child Well-Being & Opportunity). As for chapter 2: each name says
+          what the color stands for and points at a color the page already had wherever one fits. The new
+          values are the PDF's own (checked with the color validator). Where the PDF's color failed the
+          check, the name points at the page's nearest color that passes, and says so. ---- */
+  --db-four-places:      var(--db-map-highlight); /* 3.3, 3.7 the four communities on the maps; 3.3's table heading; 3.7's homeless bar */
+  --db-other-places:     var(--db-map-base);      /* 3.3, 3.7 every other place on the maps */
+  --db-homeless-line:    var(--db-title);         /* 3.4 the rate's line */
+  --db-pandemic:         var(--db-track);         /* 3.4 the pandemic years (the PDF's #E5E6EE; the page's pale step is the same to the eye) */
+  --db-rising-row:       #F9F0C7;                 /* 3.5 the rows whose count rose: the PDF's cream */
+  --db-falling:          var(--muted);            /* 3.5 the arrows and numbers of the rows whose count fell; 3.9 the gray box */
+  --db-all-students:     var(--db-all);           /* 3.7 the bar for all students: the page's "all" gray (1.8) */
+  --db-abuse:            var(--db-asian);         /* 3.9 the line since 2022 and the circle: the PDF's purple */
+  --db-abuse-before:     var(--db-asian-light);   /* 3.9 the line before 2022: its pale step */
+  --db-abuse-band:       #F5EFFA;                 /* 3.9 the years since the standard changed: the PDF's pale purple */
+  --db-partner:          var(--wca-blue);         /* 3.10 intimate partner line and the circle (the PDF's #205E99 is too close to the teal line for the check) */
+  --db-family:           var(--db-teal);          /* 3.10 other family line */
+  --db-family-text:      var(--db-teal-text);     /*   as text */
+  --db-dv-band:          #F1F6FB;                 /* 3.10 the years since 2022: the PDF's pale blue */
+  --db-relative:         var(--wca-green);        /* 3.11 approved-relative homes */
+  --db-foster:           var(--wca-blue);         /* 3.11 foster boarding or adoptive homes */
+  --db-congregate:       var(--db-hispanic);      /* 3.11 congregate and other settings (the PDF's #A501AF can't be told from the blue by color-blind readers) */
+  --db-ages-other:       var(--wca-blue-700);     /* 3.12 every age group but the one the card is about: the dashboard's navy (the PDF's is #143D63) */
+  --db-ages-focus:       var(--db-callout);       /* 3.12 ages 10 to 19, its circle's edge and words */
+  --db-district-dot:     var(--wca-blue);         /* 3.13 a school district: the dashboard's blue (the PDF's is #434BFE) */
+  --db-district-ends:    var(--db-hispanic);      /* 3.13 the lowest and the highest district: the PDF's magenta */
+  --db-ela:              #084F6A;                 /* 3.15 English (grades 3-8): the PDF's dark teal */
+  --db-ap:               #A02B93;                 /* 3.15 Advanced Placement: the PDF's magenta */
+  --db-score-track:      var(--rule);             /* 3.15 the gray track behind each bar (the full 100%) */
+  --db-wedge:            var(--db-grid);          /* 3.15 the wedge from most to least disadvantaged (solid; the PDF fades it) */
+  --db-district-bar:     var(--db-title);         /* 3.18 the districts' bars */
+  --db-district-gray:    #AEAEAE;                 /* 3.18 the two districts the PDF draws in gray */
+  --db-change-up:        var(--db-callout);       /* 3.6 the triangle over a rise (solid; the PDF fades it); 3.5 the up arrows */
+  --db-change-down:      var(--db-quiet);         /* 3.6 the triangle under a fall */
+
+  /* ---- Added 2026-11-20 for chapter 4 (Youth, Ages 18 to 24). As for chapters 2 and 3: each name says what the
+          color stands for and points at a color the page already had wherever one fits, so a thing keeps one
+          color on every card. Three values are new, all three the PDF's own: the young adults' blue, its light
+          step (both from page 4.9) and the amber of page 4.7. Every pair that touches or sits side by side was
+          run through the color validator. ---- */
+  --db-young-adults:       #0B76A0;                 /* young adults, the chapter's subject: 4.3 Westchester's 20- to 24-year-olds, 4.4 men,
+                                                       4.5 ages 19 to 24, 4.9 their share of arrests, 4.10 the two age groups */
+  --db-young-adults-light: #79B5CD;                 /*   its light step: an earlier period (4.4, 4.10); their share of all adults (4.9) */
+  --db-state-youth:        var(--db-hispanic);      /* 4.3 New York State's 20- to 24-year-olds: the page's magenta, New York's color on 1.13
+                                                       (the PDF's blue beside its magenta fails the check; this blue passes, with each tile's words) */
+  --db-other-ages:         var(--wca-green);        /* 4.3 residents 25 and over; 4.5 every age group outside 19 to 24 */
+  --db-women:              var(--db-callout);       /* 4.4 women, latest period: the PDF's rust */
+  --db-women-light:        var(--wca-orange-100);   /*   and the earlier period */
+  --db-rent-studio:        var(--db-tile-steel);    /* 4.5 the three solid tiles (the design kit's names for them) */
+  --db-rent-one-bedroom:   var(--db-tile-plum);
+  --db-rent-affordable:    var(--db-tile-brown);
+  --db-has-diploma:        var(--wca-blue);         /* 4.7 has a high school diploma or GED: as "enrolled" on 2.17 */
+  --db-no-credential:      var(--db-teal);          /* 4.7 no high school diploma (left pie), no college degree (right pie): as "not enrolled" on 2.17 */
+  --db-bachelors:          var(--db-births);        /* 4.7 a bachelor's degree or higher: the page's red (1.5); the PDF's is a crimson */
+  --db-associate:          #FE9309;                 /* 4.7 an associate degree: the PDF's amber (dark words on it) */
+  --db-college:            var(--wca-blue);         /* 4.8 the enrollment line, as in the PDF */
+  --db-black-or-hispanic:  var(--db-mother);        /* 4.9 the Black or Hispanic share of young people in state custody: the page's purple */
+  --db-black-or-hispanic-light: var(--db-mother-light);   /* and of all 18- to 24-year-olds: its light step */
 }
 
 /* Brand motifs built from the layer above */
@@ -509,6 +593,10 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .quote-card.headline blockquote { font-size: 25px; font-weight: 600; font-style: italic; line-height: 1.4; color: var(--db-title); }
 .quote-card.headline .who, .quote-card.headline .who strong, .quote-card.headline .who em { color: var(--db-title); }
 .quote-card.headline .who::before { content: "— "; }
+/* A quote set in the middle of its bubble (page 2.9): a dash before the name, the speaker's role on its own line */
+.quote-card.centered .bubble { text-align: center; }
+.quote-card.centered .who::before { content: "— "; font-weight: 700; color: var(--ink); }
+.quote-card.centered .who em { display: block; }
 .quote-card .source { grid-column: 2; align-self: end; margin: 18px 0 16px; }
 
 /* C7. "Continue to the next chapter" */
@@ -547,10 +635,11 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .callout-line .db-callout { margin: 0; max-width: 44ch; font-size: 15px; line-height: 1.4; }
 .db-callout strong { font-weight: 700; }
 
-/* --- Words placed on a chart (pages 1.14, 1.16): a line's name written just above the line, and a small
-   callout in an empty part of the chart. The words are in index.html; charts.js puts each in its place
-   (and moves it when the chart changes size). Each sits on a solid patch, so the chart's gray lines
-   never run through the words. A callout the chart has no room for is shown above the chart instead. --- */
+/* --- Words placed on a chart (pages 1.14, 1.16, 2.3, 2.13, 2.17): a line's name written just above the
+   line, and a small callout in an empty part of the chart. The words are in index.html; charts.js puts
+   each in its place (and moves it when the chart changes size). Each sits on a solid patch, so the
+   chart's gray lines never run through the words. A callout the chart has no room for is shown above
+   the chart instead. --- */
 .line-name {
   position: absolute; z-index: 1; left: 0; top: 0; margin: 0; pointer-events: none;
   font-size: 14px; font-weight: 700; line-height: 1.3;
@@ -564,6 +653,24 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .chart-note { position: absolute; z-index: 1; left: 0; top: 0; margin: 0; pointer-events: none; visibility: hidden; }
 .db-callout.chart-note { width: max-content; max-width: min(290px, 70%); font-size: 13px; line-height: 1.35; padding: 8px 12px; }
 .db-callout.chart-note.above { position: static; visibility: visible; width: auto; max-width: 44ch; margin: 0 0 10px auto; }   /* no room on the chart: above it, at the right */
+
+/* --- A key placed on a chart whose entries are buttons (pages 2.14, 2.16): a small white box with one row
+   per line (a dot in the line's color and its name). Pressing an entry singles its line out. charts.js
+   writes the entries and puts the box in the chart's upper right corner; where the chart has no room
+   for it there, it sits above the chart. --hue is an entry's color. --- */
+.chart-key { display: grid; gap: 1px; padding: 4px; border: 1px solid var(--db-grid); border-radius: 4px; background: var(--white); }
+.chart-key.chart-note { pointer-events: auto; }                                   /* unlike other words on a chart, this one is clicked */
+.key-button {
+  --hue: var(--wca-blue); display: flex; align-items: center; gap: 8px; padding: 3px 10px 3px 7px; border: 0; border-radius: 3px;
+  background: none; font: inherit; font-size: 13.5px; line-height: 1.3; color: var(--ink); text-align: left; cursor: pointer;
+}
+.key-button .dot { flex: 0 0 auto; width: 11px; height: 11px; border-radius: 50%; background: var(--hue); transition: background-color 0.45s ease; }
+.key-button:hover { background: var(--wca-blue-tint); }
+.key-button:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: 1px; }
+.key-button[aria-pressed="true"] { background: var(--wca-blue-tint); box-shadow: inset 0 0 0 1.5px var(--hue); }
+.chart-key.one-on .key-button[aria-pressed="false"] .dot { background: var(--db-quiet); }     /* the lines that stepped back are gray in the chart, so they are gray here too */
+.chart-key.above { position: static; visibility: visible; width: max-content; max-width: 100%; margin: 0 0 8px auto; }
+@media (prefers-reduced-motion: reduce) { .key-button .dot { transition: none; } }
 
 /* --- Rise note (page 1.16): the Bulletin's box with a white arrow pointing up beside it. The box holds
    the sentence; the arrow overlaps the box's right end and carries the increase in the box's color.
@@ -623,7 +730,7 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .swatch.young { background: var(--db-children); }
 .swatch.hatched { background: repeating-linear-gradient(105deg, var(--db-children) 0 3px, var(--white) 3px 5px); }
 
-/* --- Stat circle: one big number in a solid circle (pages 1.5, 2.17, 3.3) ---
+/* --- Stat circle: one big number in a solid circle (pages 1.5, 2.3, 3.3) ---
    --circle is how wide the circle is. It is set on the row that holds the circle (.with-circle), so the
    circle and the column it sits in always agree. */
 .with-circle { --circle: 190px; display: grid; grid-template-columns: minmax(0, 1fr) var(--circle); gap: 20px; align-items: center; }
@@ -656,6 +763,31 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .stat-circle.births { --hue: var(--db-births); }
 .stat-circle.under-5 { --hue: var(--db-under-5); }
 
+/* A circle that reports a rise (page 2.3): the same idea with the arrow pointing up. The Bulletin's up
+   arrow is wider and shorter than its down arrow, and every word on it is in the circle's color. */
+.stat-circle.arrow-up {
+  --hue: var(--db-title); background: var(--hue); color: var(--hue);
+  justify-content: flex-start; padding: calc(var(--circle, 190px) * 0.225) 0 0; font-size: calc(var(--circle, 190px) / 15.5); line-height: 1.16;
+}
+.stat-circle.arrow-up::before {
+  content: ""; position: absolute; inset: 0; background: var(--white);
+  clip-path: polygon(50% 9%, 91% 36%, 80% 36%, 80% 80%, 20% 80%, 20% 36%, 9% 36%);
+}
+.stat-circle.arrow-up > * { position: relative; max-width: 57%; }
+.stat-circle.arrow-up strong { font-size: 2.3em; line-height: 1.22; }
+.stat-circle.arrow-up span { font-size: 1em; font-weight: 700; }
+.stat-circle.rise { --hue: var(--db-rise); }
+/* A circle placed ON a chart (page 2.3): charts.js sets its size (--circle) and its place. Where the chart
+   has no room for it, it is shown above the chart instead. */
+.stat-circle.chart-note { position: absolute; }
+.stat-circle.chart-note.above { position: relative; visibility: visible; --circle: 172px; margin: 0 auto 12px; }
+
+/* A quiet note on a chart about a year with no figure (pages 2.3, 2.13): "(2021 data is unavailable)" */
+.gap-note { max-width: 128px; font-size: 13px; line-height: 1.3; color: var(--muted); }
+.gap-note > span { background: var(--white); padding: 1px 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.gap-note.one-line { max-width: none; white-space: nowrap; }
+.gap-note.under { position: static; visibility: visible; max-width: none; margin: 4px 0 0; text-align: center; }   /* no room on the chart: a line under it */
+
 /* --- Picture rows: one figure for every so many, the last one counting part of the way (page 1.5) ---
    --count (set by charts.js) is how many figures the longest row has. Every row is ruled into that many
    columns, so a figure is the same size in each row and the row with fewer simply ends sooner. */
@@ -670,7 +802,7 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   -webkit-mask: url("resources/icons/baby.svg") no-repeat center / contain; mask: url("resources/icons/baby.svg") no-repeat center / contain;
 }
 
-/* --- Family bars: a silhouette and a name, then one bar a year (pages 1.7, 2.4) ---
+/* --- Family bars: a silhouette and a name, then one bar a year (page 1.7) ---
    --who is the width of the silhouette column. --at (set by charts.js) is where a benchmark sits on the
    scale, as a percentage of the bars' width: the callout's pointer and the dashed line both use it. */
 .family-bars { --who: 104px; --gap: 12px; position: relative; }
@@ -720,6 +852,50 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .fb-axis span:first-child { transform: none; }
 .fb-axis span:last-child { transform: translateX(-100%); }
 
+/* --- Share bars: a family's silhouette, name and income on a tinted cell, then ONE bar split in two: the
+   share that is spent (full color) and the share that is left (the lighter step) (page 2.4) ---
+   --who is the width of the tinted cell. --at (set by charts.js, a number from 0 to 1) is where the
+   benchmark sits along the bars: the dashed line and the pointer of the box under the bars both use it.
+   The two headings above the bars say what the two parts are, so there is no key. A year switch sits
+   above the tinted cells; when the year changes, the parts slide to their new widths. */
+.share-bars { --who: 232px; --at: 0.07; display: flex; flex-direction: column; }
+.shb-top { display: grid; grid-template-columns: var(--who) minmax(0, 1fr); align-items: end; margin-bottom: 8px; }
+.shb-top .year-switch { justify-self: start; }
+.shb-headings { display: flex; justify-content: space-between; gap: 14px; font-size: 12px; font-weight: 700; line-height: 1.25; color: var(--ink); }
+.shb-headings span:last-child { text-align: right; }
+.shb-rows { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; gap: 14px; }
+.shb-row { flex: 1 1 auto; min-height: 80px; display: grid; grid-template-columns: var(--who) minmax(0, 1fr); }
+.shb-row[data-family="married"] { --hue: var(--db-married); --light: var(--db-married-light); --tint: var(--db-married-bg); }
+.shb-row[data-family="father"]  { --hue: var(--db-father);  --light: var(--db-father-light);  --tint: var(--db-father-bg); }
+.shb-row[data-family="mother"]  { --hue: var(--db-mother);  --light: var(--db-mother-light);  --tint: var(--db-mother-bg); }
+.shb-who { display: flex; align-items: center; gap: 12px; padding: 6px 10px 6px 16px; background: var(--tint); }
+.shb-who .figure { flex: 0 0 auto; width: 54px; height: 68px; color: var(--hue); }
+.shb-who p { margin: 0; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.shb-who strong { display: block; font-size: 15px; font-weight: 700; line-height: 1.25; margin-bottom: 2px; }
+.shb-who .js-income { display: block; }
+.shb-bar { position: relative; display: flex; min-width: 0; }
+.shb-part { position: relative; min-width: 0; display: flex; align-items: flex-end; justify-content: flex-end; }
+.shb-part.spent { flex: 0 0 auto; background: var(--hue); color: var(--white); transition: width 0.5s ease; }
+.shb-part.rest { flex: 1 1 0; background: var(--light); color: var(--ink); }               /* dark numbers on the lighter step */
+/* A share is written large at the lower right of its part, on a patch of the part's own color, so the
+   dashed line passes behind the digits. A part too narrow for that has its share in small type; one too
+   narrow even for that has it just past its end. */
+.shb-value { position: relative; z-index: 2; padding: 2px 12px 10px; background: inherit; font-size: 27px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.shb-part.small .shb-value { padding: 2px 5px 8px; font-size: 13px; }
+.shb-part.rest.small .shb-value { padding: 2px 8px 8px; font-size: 16px; }
+.shb-part.outside .shb-value { position: absolute; left: 100%; bottom: 0; padding: 2px 5px 8px; font-size: 13px; background: none; color: var(--ink); }
+.shb-benchmark {
+  position: absolute; z-index: 1; top: -8px; bottom: -18px; left: calc(var(--who) + (100% - var(--who)) * var(--at)); margin-left: -1px;
+  border-left: 2px dashed var(--db-callout); pointer-events: none;
+}
+.shb-callout { position: relative; margin-top: 18px; padding-left: calc(var(--who) * 0.2); }
+.shb-callout .db-callout { margin: 0; max-width: 580px; padding: 12px 18px; font-size: 15px; line-height: 1.4; text-align: center; text-wrap: balance; }
+.shb-callout::before {                                                            /* the pointer on top of the box, under the dashed line */
+  content: ""; position: absolute; bottom: 100%; left: calc(var(--who) + (100% - var(--who)) * var(--at)); transform: translateX(-50%);
+  border: 10px solid transparent; border-top: 0; border-bottom-color: var(--db-callout);
+}
+@media (prefers-reduced-motion: reduce) { .shb-part.spent { transition: none; } }
+
 /* --- View buttons: a chart's key as a row of buttons that change what the chart shows (pages 1.8, 1.9) ---
    A button that is pressed in is tinted and outlined; pressing it again lets go of it. --hue and --tint
    are a button's own color and its pale step (a family type's, or blue when it has none). */
@@ -740,7 +916,7 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .view-button.mother  { --hue: var(--db-mother);  --tint: var(--db-mother-bg); }
 .view-hint { margin: 0 0 8px; text-align: center; font-size: 13px; line-height: 1.4; color: var(--muted); }
 
-/* --- Split bars: one bar per group, split into parts that come to 100% (pages 1.8, 2.4, 4.7) ---
+/* --- Split bars: one bar per group, split into parts that come to 100% (pages 1.8, 4.7) ---
    The chart's box never changes size. Each row is put in place by its number (--slot: 0 is the first
    row, 1 the next...), and each part of a bar by its width, so charts.js can re-order the rows, fold the
    chart into one tall bar or keep a single part of every bar just by changing a number, a width or a
@@ -800,7 +976,7 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .sm-panel h4 { margin: 0 0 2px; font-size: 14px; font-weight: 600; line-height: 1.25; color: var(--ink); text-align: center; }
 .sm-panel .chart-box { height: 168px; margin-top: auto; }                         /* charts line up along the bottom, whatever the title's length */
 
-/* --- Year switch, costs panel and a row of three rings (page 1.10) ---
+/* --- Year switch (pages 1.10, 2.4, 2.17), and page 1.10's costs panel and row of three rings ---
    The yellow panel on the left (the Bulletin's) holds the year buttons and that year's two costs. It is
    as tall as the row of rings and keeps its size whichever year shows, so nothing moves when the year
    changes. Under each ring there is room (--labels) for the two shares that charts.js writes there. */
@@ -856,12 +1032,673 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 .cell-note:not(:empty)::before { content: "("; }
 .cell-note:not(:empty)::after { content: ")"; }
 
+/* --- Tables of words (pages 2.5, 2.6, 2.12): the Bulletin's tables whose cells hold sentences, not figures ---
+   One base look, then one block of rules per table. A table marked up inside "table-frame fills" grows
+   to the height of the text box beside it, its rows sharing the extra height. On a phone every row
+   becomes a card and each cell shows its column's heading above it (charts.js copies the headings onto
+   the cells as data-label). */
+.table-frame { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }   /* one column that is never wider than the card, whatever the table holds */
+.word-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.4; color: var(--ink); }
+.word-table th, .word-table td { padding: 11px 13px; text-align: left; vertical-align: top; font-weight: 400; }
+.word-table small { display: block; font-size: 13px; color: var(--fine); }
+
+/* Tax credits (2.5): two colored column headings; each row's label is a name over an outline map */
+.credits thead th { padding: 16px 18px; text-align: center; vertical-align: middle; font-size: 20px; font-weight: 700; line-height: 1.25; color: var(--white); }
+.credits thead th small { margin-top: 4px; font-size: 15px; font-weight: 400; font-style: italic; color: var(--white); }
+.credits thead .child { background: var(--db-title); }
+.credits thead .care { background: var(--wca-green); }
+.credits tbody th, .credits tbody td { text-align: center; vertical-align: middle; border-top: 1px solid var(--db-title-rule); }
+.credits tbody tr:last-child > * { border-bottom: 1px solid var(--db-title-rule); }
+.credits tbody th { width: 22%; padding: 12px 8px; }
+.credits tbody td { width: 39%; font-size: 16px; }
+.credits td.child { background: var(--db-panel); border-left: 1px solid var(--db-title-rule); }
+.credits td.care { background: var(--wca-green-tint); }
+.credits td strong { display: block; font-weight: 700; }
+.credits td small { margin-top: 2px; color: var(--ink); }
+.credits .where { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--db-title); }
+.credits .figure { width: 100%; max-width: 112px; height: 68px; margin: 0 auto; color: var(--db-map-state); }
+
+/* Two programs (2.6): one block per program under its own colored heading row; thin lines between the columns */
+.programs { table-layout: fixed; }
+.programs .heads th { padding: 8px 13px; font-size: 15px; font-weight: 700; color: var(--white); background: var(--hue); }
+.programs tbody.ccap { --hue: var(--db-ccap); }
+.programs tbody.works { --hue: var(--db-works); }
+.programs tbody tr:not(.heads) > * { padding-bottom: 22px; }
+.programs tbody tr:not(.heads) > * + * { border-left: 1px solid var(--db-title-rule); }
+.programs tbody th[scope="row"], .programs td.now { font-weight: 700; }
+
+/* Programs before kindergarten (2.12): a dark heading row, each program's name on its own color, its row lightly tinted */
+.before-k { border-collapse: separate; border-spacing: 2px; width: calc(100% + 4px); margin: -2px; }      /* the 2px of white between the cells is not added around the table */
+.before-k thead th { padding: 8px 10px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--db-all); }
+.before-k tbody th, .before-k tbody td { padding: 9px 10px; font-size: 14px; background: var(--tint); }
+.before-k tbody th { width: 17%; font-weight: 700; color: var(--white); background: var(--hue); }
+.before-k td.ages { width: 12%; font-weight: 700; }
+.before-k tr.early { --hue: var(--db-program-early); --tint: var(--wca-blue-tint); }
+.before-k tr.ei    { --hue: var(--db-program-ei);    --tint: var(--wca-green-tint); }
+.before-k tr.prek  { --hue: var(--db-program-prek);  --tint: var(--db-cream); }
+
+/* --- Family example cards (page 2.7): a tab ("FAMILY 1"), then a box with the family's words on a tinted
+   panel, a walking-family figure that stands across the panel's edge, and a small table of sums whose
+   last row is in the card's color. --hue and --tint are the card's color and its pale step (the program's).
+   --split is where the tinted panel ends. Two cards share the height of the text box beside them. */
+.family-cards { display: flex; flex-direction: column; gap: 18px; }
+.family-card { --hue: var(--db-title); --tint: var(--db-panel); --split: 38%; flex: 1 1 auto; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.family-card.ccap  { --hue: var(--db-ccap);  --tint: var(--db-ccap-bg); }
+.family-card.works { --hue: var(--db-works); --tint: var(--db-works-bg); }
+.chart-area .fc-tab { margin: 0; padding: 4px 16px 3px; border: 0; background: var(--hue); color: var(--white); font-size: 18px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+.fc-body { position: relative; flex: 1 1 auto; align-self: stretch; display: grid; grid-template-columns: var(--split) minmax(0, 1fr); border: 2px solid var(--tint); }
+.fc-who { background: var(--tint); padding: 14px 64px 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.fc-who p { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+/* The picture file has empty room around the family (they fill 143 of its 200 units of height), so it is
+   drawn 140% as tall as its box: the family then fills the box from top to bottom. */
+.family-card .figure {
+  position: absolute; top: 10px; bottom: 10px; left: var(--split); width: 124px; margin-left: -62px; color: var(--hue);
+  -webkit-mask-size: auto 140%; mask-size: auto 140%;
+}
+.fc-sums { padding: 12px 20px 12px 78px; display: flex; flex-direction: column; justify-content: center; }
+.fc-table { width: 100%; border-collapse: collapse; font-size: 16px; color: var(--ink); }
+.fc-table caption { caption-side: top; padding-bottom: 6px; font-size: 16px; font-weight: 700; color: var(--ink); text-align: center; }
+.fc-table th, .fc-table td { padding: 6px 10px; font-weight: 400; background: var(--tint); border-bottom: 2px solid var(--white); }
+.fc-table th { text-align: left; border-right: 2px solid var(--white); }
+.fc-table td { text-align: right; white-space: nowrap; }
+.fc-table .pays th, .fc-table .pays td { background: var(--hue); color: var(--white); font-weight: 700; border-bottom: 0; }
+.fc-share { margin: 6px 0 0; font-size: 15px; text-align: center; color: var(--ink); }
+
+/* --- Range bars (page 2.8): one row per household size. A bar runs from the start of the scale to the
+   first limit (CCAP), a pale band continues to the second limit (Westchester Works) and ends in a dot.
+   charts.js writes the rows and puts everything at its place on the scale.
+     --tag   the width of the numbered tag at the start of a row      --bar  how tall a bar is
+   Each row is a button. When one is pressed (the chart then has "one-on"), the other rows turn to pale
+   steps of their colors. Where the amounts do not fit in the bars (a tablet, a phone) charts.js adds
+   "compact": the bubble and the amounts on the bars go, and each row has its names and amounts written
+   under it. */
+.range-bars { --tag: 56px; --gap: 10px; --bar: 46px; --half: calc(var(--bar) / 2); display: flex; flex-direction: column; }
+.rb-top { position: relative; flex: 0 0 auto; height: 104px; }
+.rb-heading {                                                                     /* "HOUSEHOLD / SIZE", centered over the tags */
+  position: absolute; left: calc(var(--tag) / 2); bottom: 6px; transform: translateX(-50%); width: max-content; margin: 0;
+  font-size: 10px; font-weight: 700; line-height: 1.2; text-transform: uppercase; text-align: center; color: var(--ink);
+}
+.rb-heading span { display: block; }
+/* The Bulletin's bubble: a boxed name with a point at its foot, aimed at the pale band of the first row.
+   charts.js sets its place, and --tip, how far along its lower edge the point is. */
+.rb-bubble {
+  --tip: 50%; position: absolute; bottom: 14px; left: 0; width: 158px; margin: 0; padding: 8px 10px;
+  border: 2px solid var(--db-works-light); border-radius: 4px; background: var(--white);
+  font-size: 14px; font-weight: 700; line-height: 1.3; text-align: center; color: var(--db-works); visibility: hidden;
+}
+.rb-bubble.placed { visibility: visible; }
+.rb-bubble::before, .rb-bubble::after { content: ""; position: absolute; top: 100%; left: var(--tip); transform: translateX(-50%); border: 11px solid transparent; border-bottom: 0; }
+.rb-bubble::before { border-top-color: var(--db-works-light); }
+.rb-bubble::after { margin-top: -3px; border-top-color: var(--white); }
+.rb-rows { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.rb-grid { position: absolute; z-index: 0; top: -8px; bottom: -6px; left: calc(var(--tag) + var(--gap)); right: 0; pointer-events: none; }
+.rb-grid span { position: absolute; top: 0; bottom: 0; width: 1px; margin-left: -0.5px; background: var(--db-grid); }
+.rb-row { position: relative; z-index: 1; display: grid; grid-template-columns: var(--tag) minmax(0, 1fr); column-gap: var(--gap); align-items: center; cursor: pointer; }
+.rb-row:has(.rb-tag:focus-visible) { outline: 2px solid var(--wca-blue); outline-offset: 3px; border-radius: 2px; }
+.rb-tag {                                                                         /* the numbered tag: a box with a point on its right side */
+  height: var(--bar); padding: 0 12% 0 0; border: 0; cursor: pointer; font: inherit; font-size: 30px; font-weight: 700; line-height: 1;
+  color: var(--white); background: var(--db-all); clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%); outline: 0;
+}
+.rb-track { position: relative; height: var(--bar); }
+.rb-band { position: absolute; top: 0; height: 100%; background: var(--db-works-light); }
+.rb-bar {
+  position: absolute; left: 0; top: 0; height: 100%; border-radius: 0 var(--half) var(--half) 0; background: var(--db-ccap); color: var(--white);
+  display: flex; align-items: center; justify-content: flex-end; font-size: 13px; font-weight: 700; white-space: nowrap;
+}
+.rb-bar .rb-value { padding: 0 7px 0 5px; }
+.rb-bar .rb-name { margin-right: auto; padding-left: 14px; }
+.rb-dot { position: absolute; top: 0; width: var(--bar); height: var(--bar); margin-left: calc(-1 * var(--half)); border-radius: 50%; background: var(--db-works); }
+.rb-limit { position: absolute; top: 50%; transform: translateY(-50%); margin-left: calc(var(--half) + 7px); display: flex; align-items: center; gap: 10px; white-space: nowrap; font-size: 13px; }
+.rb-limit .rb-value { padding: 2px 6px; border: 1px solid var(--db-works-light); border-radius: 2px; background: var(--white); font-weight: 700; color: var(--db-works); }
+.rb-limit .rb-name { padding: 1px 4px; border-radius: 2px; background: var(--white); font-weight: 600; color: var(--db-works); }
+.rb-limit .rb-name::before { content: "← "; }
+.range-bars.tight .rb-bar { font-size: 12px; }
+.range-bars.tight .rb-bar .rb-value { padding: 0 4px; }
+.rb-caption { display: none; grid-column: 2; margin: 0; padding-top: 3px; font-size: 12px; line-height: 1.35; color: var(--ink); background: var(--white); }   /* on white, so the gray lines stop at the words */
+.rb-caption .ccap b { color: var(--db-ccap); }
+.rb-caption .works b { color: var(--db-works); }
+.rb-axis { position: relative; flex: 0 0 auto; height: 24px; margin: 6px 0 0 calc(var(--tag) + var(--gap)); }
+.rb-axis span { position: absolute; top: 6px; transform: translateX(-50%); font-size: 12px; color: var(--fine); white-space: nowrap; }
+/* one row pressed: the others step back to pale tints (solid colors, nothing see-through) */
+.rb-tag, .rb-band, .rb-bar, .rb-dot, .rb-limit .rb-value { transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease; }
+.range-bars.one-on .rb-row:not(.on) .rb-tag { background: var(--db-all-light); color: var(--ink); }
+.range-bars.one-on .rb-row:not(.on) .rb-bar { background: var(--db-ccap-bg); color: var(--fine); }
+.range-bars.one-on .rb-row:not(.on) .rb-band { background: var(--db-works-bg); }
+.range-bars.one-on .rb-row:not(.on) .rb-dot { background: var(--db-works-light); }
+.range-bars.one-on .rb-row:not(.on) .rb-limit .rb-value { color: var(--fine); border-color: var(--db-works-bg); }
+.range-bars.one-on .rb-row:not(.on) .rb-name, .range-bars.one-on .rb-row:not(.on) .rb-caption b { color: var(--fine); }
+@media (prefers-reduced-motion: reduce) { .rb-tag, .rb-band, .rb-bar, .rb-dot, .rb-limit .rb-value { transition: none; } }
+/* too narrow for the amounts to fit in the bars: names and amounts under each row */
+.range-bars.compact { --tag: 44px; --gap: 8px; --bar: 34px; }
+.range-bars.compact .rb-top { height: auto; margin-bottom: 4px; }
+.range-bars.compact .rb-heading { position: static; transform: none; width: auto; text-align: left; }
+.range-bars.compact .rb-heading span { display: inline; }
+.range-bars.compact .rb-bubble, .range-bars.compact .rb-bar .rb-value, .range-bars.compact .rb-bar .rb-name, .range-bars.compact .rb-limit { display: none; }
+.range-bars.compact .rb-tag { font-size: 22px; }
+.range-bars.compact .rb-row { align-items: start; }
+.range-bars.compact .rb-caption { display: block; }
+.range-bars.compact .rb-grid { bottom: -6px; }
+#income-limits-status { min-height: 2.8em; margin: 8px 0 0; }                      /* room for two lines, so the card is the same height whatever it says */
+
+/* --- District bars (page 2.11): for each subject, one thick bar per district, with the district's name
+   written in the bar and its share inside the bar's end. Student figures stand behind the bars at the
+   right, in a quiet gray. --full is how much of the width a bar of 100% would take: the rest is the room
+   the figures stand in. Under the chart, one boxed statement per district carries its color (the key). */
+.district-bars { --label: 112px; --full: 86%; position: relative; display: flex; flex-direction: column; padding-top: 34px; }
+.dsb-figures { position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; display: flex; align-items: flex-end; gap: 2%; pointer-events: none; }
+.dsb-figures .figure { color: var(--db-quiet); -webkit-mask-size: auto 100%; mask-size: auto 100%; }
+.dsb-figures .one { height: 100%; aspect-ratio: 204 / 523; -webkit-mask-position: right center; mask-position: right center; }   /* the right-hand figure of the two in its file */
+.dsb-figures .two { height: 96%; aspect-ratio: 353 / 535; }
+.dsb-groups { position: relative; z-index: 1; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.dsb-group { flex: 1 1 auto; max-height: 150px; display: grid; grid-template-columns: var(--label) minmax(0, 1fr); column-gap: 14px; align-items: center; }
+.dsb-subject { font-size: 17px; font-weight: 700; line-height: 1.25; text-align: right; color: var(--ink); }
+.dsb-pair { height: 100%; display: grid; grid-auto-rows: minmax(44px, 1fr); row-gap: 6px; padding-right: calc(100% - var(--full)); }
+.dsb-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; padding: 0 12px 0 14px; color: var(--white); font-size: 20px; font-weight: 700; white-space: nowrap; }
+.dsb-bar.low { background: var(--db-district-low); }
+.dsb-bar.high { background: var(--db-district-high); }
+.dsb-value { margin-left: auto; }
+.district-bars.no-names .dsb-name { display: none; }                               /* a bar too short for its name: no bar carries one (the boxed statements name the colors) */
+.district-notes { margin-top: 22px; display: grid; gap: 12px; }
+.district-note { --hue: var(--db-title); margin: 0; display: flex; border: 2px solid var(--hue); font-size: 14px; line-height: 1.35; color: var(--ink); }
+.district-note::before { content: ""; flex: 0 0 38px; background: var(--hue); }
+.district-note > span { padding: 11px 12px; }
+.district-note.low { --hue: var(--db-district-low); }
+.district-note.high { --hue: var(--db-district-high); }
+
+/* --- Pre-K page (2.17): full width, no text box, laid out as the Bulletin's page. Top: the year buttons and
+   the lead sentence, with the pie at the right. Under them: a circle with children's figures, the filled
+   trend, and a note under the pie. The pie is taller than the sentence, so it reaches down beside the
+   trend (--tuck is by how much) and the note sits at the foot of its column.
+   The sentence can wrap differently from year to year; charts.js gives the lead the height of its
+   tallest year, so a change of year never moves what is under it. --- */
+.prek-page { --pie: 250px; --tuck: 84px; display: grid; grid-template-columns: var(--pie) minmax(0, 1fr) var(--pie); column-gap: 24px;
+        grid-template-areas: "lead lead pie" "circle trend note"; }
+.prek-lead { grid-area: lead; padding-bottom: 16px; }
+.prek-lead .year-switch { margin-bottom: 16px; }
+.prek-sentence { margin: 0 0 12px; font-size: 22px; line-height: 1.35; color: var(--ink); }
+.prek-sentence:last-child { margin-bottom: 0; }
+.prek-sentence strong { font-weight: 700; }
+.pie.prek-pie { grid-area: pie; width: var(--pie); margin-bottom: calc(-1 * var(--tuck)); }
+.pie-slice.enrolled { fill: var(--db-prek-enrolled); }
+.pie-slice.not { fill: var(--db-prek-not); }
+.prek-pie .pie-label { font-size: 15px; font-weight: 700; line-height: 1.2; }
+.prek-pie .pie-label strong { display: block; margin-bottom: 4px; font-size: 34px; line-height: 1.1; }
+/* The circle: a count of districts, a row of children's figures, and a quiet line under them. (A piece of
+   its own, not a "stat-circle": it holds pictures and two sentences, and keeps its size on a phone.) */
+.prek-circle {
+  grid-area: circle; align-self: center; width: var(--pie); aspect-ratio: 1; border-radius: 50%; padding: 22px 20px 18px;
+  background: var(--db-prek-enrolled); color: var(--white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center;
+}
+.prek-circle p { margin: 0; max-width: 190px; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.prek-circle p strong { display: block; font-size: 23px; line-height: 1.25; }
+.prek-circle p em { font-weight: 400; }
+.pc-figures { display: flex; align-items: flex-end; justify-content: center; gap: 8px; }
+.pc-figures .figure { height: 62px; color: var(--white); }
+.pc-figures .figure:first-child { aspect-ratio: 96.43 / 71.8; }
+.pc-figures .figure:last-child { aspect-ratio: 96.65 / 66.52; height: 58px; }
+.prek-trend { grid-area: trend; align-self: end; min-width: 0; }
+.chart-area .prek-trend h3 { border-bottom: 2px solid var(--db-title-rule); padding-bottom: 5px; margin-bottom: 8px; }
+.prek-trend .chart-box.short { height: 200px; min-height: 200px; }
+.prek-note { grid-area: note; align-self: end; margin: 0; padding-bottom: 26px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+/* the words written on the filled shape */
+.area-words { width: max-content; max-width: 96%; font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--white); text-align: center; }
+.area-words.small { font-size: 18px; }
+.area-words.above { position: static; visibility: visible; margin: 0 0 6px; font-size: 18px; color: var(--db-title); }
+.area-words .cap { text-transform: capitalize; }
+/* five year buttons in one row */
+.year-switch.five button { padding: 6px 12px; font-size: 15px; white-space: nowrap; }
+
 /* --- Three charts in one card: a tall one on the left, two stacked on the right (page 1.13) --- */
 .chart-trio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .chart-trio > div { min-width: 0; }
 .chart-trio h3 { font-size: 14px; line-height: 1.3; }
 .chart-box.food { height: 400px; }
 .chart-trio .legend[hidden] { display: none; }                                    /* the food chart's key shows only where the names don't fit in the bars */
+
+
+/* ==== Chapter 3 pieces (added 2026-11-19, redrawn 2026-11-20). Named for what they are, so later chapters can
+   reuse them. They follow the habits of chapters 1 and 2: numbers and names on a chart are 12 to 15 pixels (big
+   type is kept for a card's featured number), a value sits inside the end of its bar, words placed on a chart
+   sit on the color that is behind them, and a button sits right above the chart it changes. ==== */
+
+/* --- County map (pages 3.3, 3.7): Westchester's cities, towns and villages as plain SVG, drawn by charts.js
+   from data/Geography.json. The places the card is about are teal and named, each name joined to its place
+   by a thin line. Pointing at a place (or its row in the table beside it) lights it up. --- */
+.county-map { position: relative; width: 100%; }
+.map-fit { position: relative; width: 100%; }                                  /* the map and its words: always the map's own shape */
+.county-map svg { display: block; width: 100%; height: auto; overflow: visible; }
+.map-place { fill: var(--db-other-places); stroke: var(--white); stroke-width: 0.8; vector-effect: non-scaling-stroke; }
+.map-place.on { fill: var(--db-four-places); cursor: pointer; transition: fill 0.3s ease; }
+.map-place.on:focus { outline: none; }
+.county-map.one-lit .map-place.on { fill: var(--db-teal-light); }               /* while one place is lit, the other named places step back */
+.county-map.one-lit .map-place.on.lit { fill: var(--db-four-places); stroke: var(--ink); stroke-width: 2; }
+.map-pointer { stroke: var(--ink); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.map-dot { fill: var(--white); }
+.map-label {
+  position: absolute; transform: translate(-50%, -50%); margin: 0; white-space: nowrap; cursor: pointer;
+  font-size: 14px; font-weight: 700; line-height: 1.25; color: var(--ink); text-align: center;
+}
+.map-label.left { transform: translate(-100%, -50%); text-align: right; padding-right: 4px; }
+.map-label.right { transform: translate(0, -50%); text-align: left; padding-left: 4px; }
+.map-label.below { transform: translate(-50%, 0); padding-top: 2px; }
+.map-label strong { display: block; font-weight: 700; }                           /* 3.7: the count, under the name */
+.map-label.lit { text-decoration: underline; text-underline-offset: 3px; }
+
+/* --- The poverty page (3.3): the map with its circle on the left; on the right the Bulletin's headline sentence,
+   the sentence about the poverty level and the table. The table takes the height the sentences leave, so the
+   right side ends level with the map. --mapw is how much of its column the map takes. --- */
+.poverty-page { --mapw: 76%; display: grid; grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); gap: 28px; align-items: stretch; }
+.poverty-map { position: relative; }
+.poverty-map .county-map { width: var(--mapw); }
+/* The circle sits where the Bulletin has it: over the north of the county, a little left of the map's middle. Its
+   middle is 43.9% of the way across the map and 23.7% of the way down it, measured on the PDF's page 3.3. The map is
+   1.305 times as tall as it is wide (the county's own shape), so 23.7% of its height is 30.9% of its width; a
+   percentage in "margin-top" counts from the box's width, which is how the circle follows the map at every size. */
+.places-circle {
+  position: absolute; z-index: 1; top: 0; left: calc(var(--mapw) * 0.439); margin-top: calc(var(--mapw) * 0.309); transform: translate(-50%, -50%);
+  --circle: 184px; padding: 14px 18px;
+  background: var(--db-callout); color: var(--white);
+}
+.places-circle strong { font-size: 34px; }
+.places-circle span { font-size: 14px; font-weight: 700; line-height: 1.25; max-width: 16ch; }
+.poverty-words { display: flex; flex-direction: column; min-width: 0; }
+.poverty-lead { margin: 0 0 12px; font-size: 24px; font-weight: 700; line-height: 1.3; color: var(--db-title); text-wrap: pretty; }
+.poverty-sentence { margin: 0 0 16px; font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--ink); text-wrap: pretty; }
+.poverty-words .table-frame { flex: 1 1 auto; }
+.places-table { width: 100%; height: 100%; border-collapse: collapse; font-size: 16px; color: var(--ink); }
+.places-table thead th {
+  padding: 9px 12px; background: var(--db-four-places); color: var(--white); font-size: 15px; font-weight: 700; line-height: 1.3; text-align: center;
+}
+.places-table thead th:first-child { text-align: left; }
+.places-table thead th + th { border-left: 1px solid var(--white); }
+.places-table tbody th { padding: 10px 12px; text-align: left; font-weight: 700; white-space: nowrap; }
+.places-table tbody td { padding: 10px 12px; text-align: center; font-variant-numeric: tabular-nums; border-left: 1px solid var(--muted); }
+.places-table tbody tr:nth-child(odd) { background: var(--db-other-places); }    /* the Bulletin's gray bands on rows 1 and 3 */
+.places-table td.rate { font-weight: 700; color: var(--db-callout-text); }
+.places-table tbody tr { cursor: pointer; transition: background-color 0.3s ease; }
+.places-table tbody tr.lit { background: var(--db-highlight); }
+.places-table tbody tr:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: -2px; }
+
+/* --- Words placed on a chart at a point (3.4): a word above the point and, under it, the value with its unit.
+   charts.js puts each in place, centered on its point. Each sits on a patch of the color behind it: white on the
+   chart, the band's color on the shaded years ("on-band"), so no line runs through the words and no box shows. --- */
+.point-label, .point-word, .band-words { width: max-content; }             /* as wide as their words, wherever on the chart they are put */
+.point-label { text-align: center; line-height: 1.15; }
+.point-label strong { display: block; font-size: 16px; font-weight: 700; color: var(--ink); }
+.point-label small { display: block; font-size: 12px; font-weight: 600; color: var(--ink); }
+.point-label > span { display: inline-block; background: var(--white); padding: 0 4px; }
+.point-word { font-size: 13px; line-height: 1.2; color: var(--ink); text-align: center; }
+.point-word > span { background: var(--white); padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.chart-note.on-band > span { background: var(--db-pandemic); }
+.chart-area > .legend[hidden] { display: none; }                           /* 3.10, 3.16: the key shows only where the names don't fit on the chart */
+.chart-box.narrow .point-label small { display: none; }                     /* a narrow chart (3.4): the rates alone */
+.band-words { font-size: 13px; line-height: 1.3; color: var(--ink); text-align: center; }
+
+/* A small table placed on a chart, in a part the line leaves empty (3.4) */
+.on-chart-table { border-collapse: collapse; background: var(--white); border: 1px solid var(--muted); font-size: 13px; color: var(--ink); }
+.on-chart-table caption { caption-side: top; padding: 6px 10px 5px; background: var(--white); border: 1px solid var(--muted); border-bottom: 0;
+  font-size: 13px; font-weight: 700; line-height: 1.25; text-align: center; }
+.on-chart-table th { padding: 3px 12px; background: var(--db-callout); color: var(--white); font-weight: 700; }
+.on-chart-table th + th, .on-chart-table td + td { border-left: 1px solid var(--muted); }
+.on-chart-table td { padding: 3px 12px; text-align: center; font-variant-numeric: tabular-nums; }
+.on-chart-table.under { position: static; visibility: visible; margin: 10px auto 0; }   /* no room on the chart: under it */
+
+/* --- A rust box with a point on top, right under a chart, aimed up at one place on it (3.4 a year, 3.11 a part of a
+   bar). --at (set by charts.js) is where the point sits, in pixels from the box's left edge. The boxes stay inside
+   the width of the chart they point at. --- */
+.pointer-row { position: relative; display: flex; justify-content: space-between; gap: 16px; margin-top: 12px; }
+.pointer-box { position: relative; margin: 0; padding: 7px 14px 8px; font-size: 14px; line-height: 1.35; }
+.pointer-box::before {
+  content: ""; position: absolute; bottom: 100%; left: var(--at, 50%); width: 22px; height: 11px; margin-left: -11px;
+  background: var(--db-callout); clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.pointer-box > strong { display: block; font-size: 15px; font-weight: 700; }
+.pointer-box > span { display: block; margin-top: 1px; font-size: 13px; font-weight: 400; }
+.pointer-row.single { justify-content: flex-start; }
+.pointer-row.single .pointer-box { text-align: center; }
+
+/* --- Circles that report a rise (3.9, 3.10): the circle of 2.3 in the line's own color. Their sentence is longer
+   than 2.3's, so charts.js keeps them large enough for words of at least 12 pixels. --- */
+.stat-circle.abuse { --hue: var(--db-abuse); }
+.stat-circle.partner { --hue: var(--db-partner); }
+.stat-circle.arrow-up small { font-size: 0.96em; font-weight: 700; line-height: 1.18; color: var(--hue); }
+.stat-circle.arrow-up.wordy > * { max-width: 58.5%; }
+.stat-circle.wordy.chart-note.above { --circle: 196px; }                         /* above its chart (no room on it): still large enough for its words */
+/* A circle with a colored edge and colored words on white (3.12), and a solid one that gives a phone number */
+.stat-circle.outline { background: var(--white); color: var(--db-callout-text); border: 2.5px solid var(--db-ages-focus); padding: 10px; }
+.stat-circle.outline strong { font-size: 36px; line-height: 1.05; }
+.stat-circle.outline span { font-size: 13.5px; font-weight: 700; line-height: 1.25; max-width: 15.5ch; }
+.stat-circle.help { background: var(--db-ages-focus); color: var(--white); padding: 12px; }
+.stat-circle.help span { font-size: 13.5px; font-weight: 700; line-height: 1.3; max-width: 13ch; }
+
+/* --- A gray box with an arrow, naming a change on a line chart (3.9) --- */
+.event-note {
+  display: flex; align-items: center; width: max-content; max-width: 210px; margin: 0;
+  font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--white);
+}
+.event-note > span { background: var(--db-falling); padding: 6px 2px 6px 10px; }
+.event-note::after { content: ""; flex: 0 0 auto; align-self: stretch; width: 20px; background: var(--db-falling); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+
+/* --- A chart with a column beside it for a circle and a short list (3.10). The column is as wide as the circle
+   (the size chapter 1 gives a circle beside a chart); the list is a boxed note like page 1.3's, with a dot in each
+   line's color. --- */
+.side-row { --side: 208px; display: grid; grid-template-columns: minmax(0, 1fr) var(--side); gap: 14px; align-items: stretch; }
+.side-row > .chart-box { height: auto; min-height: 330px; }
+.side-col { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.side-col .stat-circle { --circle: var(--side); }
+.change-box { margin: 0; padding: 9px 12px 10px; border: 1.5px solid var(--db-partner); border-radius: 4px; font-size: 14px; line-height: 1.35; color: var(--ink); }
+.change-box strong { display: block; margin-bottom: 4px; font-weight: 700; }
+.change-box ul { list-style: none; margin: 0; padding: 0; }
+.change-box li { position: relative; padding-left: 18px; }
+.change-box li + li { margin-top: 3px; }
+.change-box li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 10px; height: 10px; border-radius: 50%; background: var(--hue, var(--ink)); }
+.change-box li.partner { --hue: var(--db-partner); }
+.change-box li.family { --hue: var(--db-family); }
+.line-name .sub { font-weight: 400; color: var(--fine); }
+
+/* --- The names over a row of 100% bars, in place of a key (3.11): charts.js puts each right above its part of the
+   first bar. --hue is the part's color. --- */
+.seg-head { width: max-content; max-width: 30%; font-size: 14px; font-weight: 700; line-height: 1.2; text-align: center; color: var(--hue); }
+.seg-head[data-key="relative"] { --hue: var(--db-relative); }
+.seg-head[data-key="foster"] { --hue: var(--db-foster); }
+.seg-head[data-key="congregate"] { --hue: var(--db-congregate); }
+
+/* --- Bars that run sideways, as plain HTML (3.12, 3.17, 3.18) ---
+   A row is a name, then a bar with its value inside its end (in white or dark words, whichever reads on the bar's
+   color), as on pages 1.7 and 2.11. Only a bar too short to hold its value has it just past its end, on a white
+   patch ("out"). --hue is the bar's color, --v its value and --max the top of the scale, so the bar's length is
+   --v / --max of the row.
+   --label is the width of the names, --bar how thick a bar is, --top the room kept above the rows (for the
+   dashed line's words, or a small heading). Gray lines behind the bars (one at each step of the scale), the
+   scale's numbers under them and a dashed line for a reference value are drawn by charts.js.
+   When the year changes the bars grow or shrink to the new values, and rows that change places slide to them. --- */
+.hbars { --label: 184px; --gap: 10px; --end: 6px; --bar: 32px; --max: 100; --top: 0px;
+         position: relative; isolation: isolate; display: flex; flex-direction: column; padding-top: var(--top); }
+.hb-rows { position: relative; display: flex; flex-direction: column; flex: 1 0 auto; }
+.hb-row { display: grid; grid-template-columns: var(--label) minmax(0, 1fr); gap: var(--gap); align-items: center; flex: 1 0 auto; min-height: calc(var(--bar) + 6px); }
+.hb-label { font-size: 13px; font-weight: 600; line-height: 1.2; color: var(--ink); text-align: right; }
+.hb-track { position: relative; height: var(--bar); margin-right: var(--end); }
+.hb-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--v) / var(--max) * 100%); min-width: 2px;
+  background: var(--hue); border-radius: 0 4px 4px 0; transition: width 0.55s ease;
+  display: flex; align-items: center; justify-content: flex-end;
+}
+.hb-value {                                                                 /* on a patch of the bar's own color: the dashed line passes behind the digits */
+  position: relative; z-index: 3; padding: 2px 7px; background: var(--hue); border-radius: 0 4px 4px 0;
+  font-size: 13px; font-weight: 700; line-height: 1.2; white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.hb-row.out .hb-value {                                                     /* a bar too short for its value: just past its end, on a white patch */
+  position: absolute; left: 100%; margin-left: var(--shift, 4px); padding: 1px 4px; border-radius: 2px;   /* --shift (charts.js): further, where the dashed line is in the way */
+  background: var(--white); color: var(--ink); transition: margin-left 0.55s ease;
+}
+.hb-grid, .hb-ref { position: absolute; top: 0; bottom: 0; left: calc(var(--label) + var(--gap)); right: var(--end); pointer-events: none; }   /* inside .hb-rows: as tall as the rows */
+.hb-grid { z-index: -1; }                                                   /* the gray lines behind the bars; the dashed line over them */
+.hb-grid span { position: absolute; top: 0; bottom: 0; width: 1px; margin-left: -0.5px; background: var(--db-grid); }
+.hb-grid span:last-child { margin-left: -1px; }                             /* the last line stays inside the chart's right edge */
+.hb-ref { z-index: 2; }
+.hb-ref i { position: absolute; top: 0; bottom: 0; left: 0; border-left: 2px dashed var(--db-callout); margin-left: -1px; transition: left 0.55s ease; }
+.hb-ref b {                                                                 /* the dashed line's words, in the room kept above the rows */
+  position: absolute; top: calc(-1 * var(--top)); left: 0; transform: translateX(-50%); white-space: nowrap; line-height: 18px;
+  font-size: 13px; font-weight: 700; color: var(--db-callout-text); transition: left 0.55s ease;
+}
+.hbars.has-ref { --top: 22px; }                                             /* room above the bars for the dashed line's words */
+.hb-axis { position: relative; flex: 0 0 auto; height: 22px; margin-left: calc(var(--label) + var(--gap)); margin-right: var(--end); }
+.hb-axis span { position: absolute; top: 5px; transform: translateX(-50%); font-size: 12px; color: var(--fine); white-space: nowrap; }
+.hb-axis span:first-child { transform: none; }
+.hb-axis span:last-child { transform: translateX(-100%); }
+@media (prefers-reduced-motion: reduce) { .hb-bar, .hb-ref i, .hb-ref b, .hb-row.out .hb-value { transition: none; } }
+/* Each bar's color. The three student groups share one teal: they are not steps of anything. */
+.hb-row[data-key="econ"], .hb-row[data-key="disability"], .hb-row[data-key="ell"] { --hue: var(--db-teal); }
+.hb-row[data-key="asian"]       { --hue: var(--db-asian); }
+.hb-row[data-key="black"]       { --hue: var(--db-black); }
+.hb-row[data-key="hispanic"]    { --hue: var(--db-hispanic); }
+.hb-row[data-key="multiracial"] { --hue: var(--db-multiracial); }
+.hb-row[data-key="white"]       { --hue: var(--db-white); }
+.hb-row.district                { --hue: var(--db-district-bar); }
+.hb-row.district.gray           { --hue: var(--db-district-gray); }
+/* Page 3.12: ages. A narrow column of names under the small heading "AGES"; the age group the card is about is rust. */
+.hbars.ages { --label: 50px; --bar: 26px; --top: 16px; }
+.hbars.ages .hb-row { --hue: var(--db-ages-other); min-height: 31px; }
+.hbars.ages .hb-row.focus { --hue: var(--db-ages-focus); }
+.hbars.ages .hb-row.focus .hb-value { font-size: 15px; }
+.hb-heading { position: absolute; top: 0; left: 0; width: var(--label); margin: 0; text-align: right;
+  font-size: 10px; font-weight: 700; line-height: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); }
+.hbars .stat-circle.chart-note { position: absolute; z-index: 3; }
+.hbars.circles-under { flex-flow: row wrap; justify-content: center; align-content: flex-start; gap: 10px 14px; }
+.hbars.circles-under > .hb-rows, .hbars.circles-under > .hb-axis { flex: 1 0 100%; }
+.hbars.circles-under > .hb-axis { margin-left: calc(var(--label) + var(--gap)); flex-basis: calc(100% - var(--label) - var(--gap) - var(--end)); }
+.hbars.circles-under .stat-circle.chart-note { position: relative; order: 2; visibility: visible; --circle: 158px; margin-top: 8px; left: auto !important; top: auto !important; }
+.hbars.circles-under .hb-pointer { display: none; }
+.hb-pointer { position: absolute; z-index: 2; width: 2px; background: var(--db-ages-focus); pointer-events: none; }
+/* Pages 3.17, 3.18: chronic absence and suspensions */
+.hbars.absence { --label: 192px; }                                          /* the longest name on one line */
+/* Thick bars with larger values inside them, as on page 2.11 (3.18). The rows share the height of their chart, up
+   to 68 pixels each; a bar is as thick as its row, less 5 pixels above and below. */
+.hbars.thick { --label: 118px; }
+.hbars.thick .hb-rows { justify-content: space-around; }
+.hbars.thick .hb-row { flex: 1 1 0; min-height: 46px; max-height: 68px; align-items: stretch; }
+.hbars.thick .hb-label { align-self: center; font-size: 14px; font-weight: 700; }
+.hbars.thick .hb-track { height: auto; margin-top: 5px; margin-bottom: 5px; }
+.hbars.thick .hb-value { font-size: 15px; }
+/* The year buttons of a card sit at the left, right above the chart they change (as on pages 2.4 and 2.17). Their
+   label is kept for screen readers. */
+.year-row { margin: 0 0 12px; }
+.chart-area > .year-row + h3:not(:first-child) { margin-top: 0; }
+.year-row .year-switch { vertical-align: top; }
+/* Seven years do not fit in one row above a chart half the card wide (3.18): two rows of four cells, as wide as the
+   chart, the first cell saying what the buttons are. */
+.year-switch.seven { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
+.year-switch.seven button { min-width: 0; padding: 6px 0; font-size: 14px; white-space: nowrap; border-left: 1px solid var(--wca-blue-100); }
+.year-switch.seven button:nth-of-type(4) { border-left: 0; }                        /* the first cell of the second row */
+.year-switch.seven button:nth-of-type(n+4) { border-top: 1px solid var(--wca-blue-100); }
+.ys-label { display: flex; align-items: center; justify-content: center; background: var(--wca-blue-tint); font-size: 13px; font-weight: 600; color: var(--fine); }
+
+/* --- Two upright bars on a scale of 0 to 100% (3.7): the share of all students and of homeless students who
+   graduated. --names is the room under the bars for their names, --scale the room at the left for the scale. --- */
+.two-bars { --names: 44px; --scale: 40px; position: relative; display: flex; justify-content: center; gap: 12%; min-height: 250px; padding: 8px 0 0 var(--scale); }
+.tb-grid { position: absolute; left: var(--scale); right: 0; top: 8px; bottom: var(--names); pointer-events: none; }
+.tb-grid span { position: absolute; left: 0; right: 0; height: 1px; background: var(--db-grid); }
+.tb-grid span:first-child { background: var(--muted); }                              /* the line the bars stand on */
+.tb-grid b { position: absolute; right: 100%; margin-right: 8px; transform: translateY(50%); font-size: 12px; font-weight: 400; color: var(--fine); white-space: nowrap; }
+.tb-col { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: min(30%, 96px); }
+.tb-track { flex: 1 0 auto; width: 100%; display: flex; flex-direction: column; }
+.tb-track::before { content: ""; flex: calc(100 - var(--v)) 1 0px; }               /* the part of the scale above the bar */
+.tb-bar { flex: var(--v) 1 0px; min-height: 0; width: 100%; background: var(--hue); border-radius: 4px 4px 0 0; display: flex; justify-content: center; align-items: flex-start; }
+.tb-bar strong { margin-top: 7px; font-size: 24px; font-weight: 700; line-height: 1.1; color: var(--white); }
+.tb-name { flex: 0 0 var(--names); width: max-content; padding-top: 7px; font-size: 14px; font-weight: 700; line-height: 1.25; text-align: center; color: var(--ink); }
+.tb-col[data-key="all"] { --hue: var(--db-all-students); }
+.tb-col[data-key="homeless"] { --hue: var(--db-four-places); }
+/* 3.7's map: beside the bars it takes the height the titles leave and is as wide as that height allows */
+.county-map.with-counts { margin: 0 auto; }
+
+/* --- Scores against economic status (3.15): a row per district, two bars on a gray 100% track each, and a
+   slim solid wedge on the right from the most to the least disadvantaged. The two measures' names are written on
+   the first district's tracks, in place of a key. A district added from the menu gets a pale row and a button to
+   take it away again; the rows then tighten to make room, so the chart keeps its height.
+   --who is the width of the names, --wedge of the wedge and its words, --row the height of a row. --- */
+.score-chart { --who: 142px; --wedge: 100px; --row: 76px; display: grid; grid-template-columns: var(--who) minmax(0, 1fr) var(--wedge); grid-template-rows: auto 1fr; column-gap: 0; }
+.sc-scale { grid-column: 2; display: flex; justify-content: space-between; padding: 0 1px 2px; font-size: 12px; color: var(--fine); }
+.sc-rows { grid-column: 1 / 3; display: flex; flex-direction: column; position: relative; min-height: calc(5 * var(--row)); }
+.sc-rows::before { content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--who) - 1px); width: 1.5px; background: var(--muted); }   /* the line the bars start from */
+.sc-row { display: grid; grid-template-columns: var(--who) minmax(0, 1fr); align-items: stretch; flex: 1 1 0; min-height: 46px; overflow: hidden; }
+.sc-row.keyed { min-height: var(--row); }                                  /* the row that carries the two measures' names keeps its height: they take two lines */
+.sc-row.added { flex: 0 0 auto; min-height: 72px; background: var(--db-panel); }   /* as tall as its name, its share and its button need */
+.sc-row.flash { background: var(--db-highlight); transition: background-color 0.3s ease; }
+.sc-who { align-self: center; padding: 2px 10px 2px 0; line-height: 1.25; color: var(--ink); }
+.sc-row.added .sc-who { padding: 4px 4px 4px 8px; }
+.sc-who strong { display: block; font-size: 15px; font-weight: 700; }
+.sc-who span { font-size: 13px; }
+.sc-who button { display: block; margin-top: 3px; padding: 0 8px; font: inherit; font-size: 12px; line-height: 18px; color: var(--db-title); background: var(--white);
+  border: 1px solid var(--wca-blue-100); border-radius: 999px; cursor: pointer; }
+.sc-bars { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 7px 0; min-height: 0; }
+.sc-track { position: relative; display: flex; align-items: center; flex: 1 1 0; min-height: 16px; max-height: 28px; background: var(--db-score-track); }
+.sc-bar { height: 100%; width: calc(var(--v) * 1%); background: var(--hue); display: flex; justify-content: flex-end; align-items: center; flex: none; }
+.sc-bar b { padding-right: 6px; font-size: 13px; font-weight: 700; color: var(--white); }
+.sc-track.ela { --hue: var(--db-ela); }
+.sc-track.ap { --hue: var(--db-ap); }
+.sc-key { flex: 1 1 0; min-width: 0; padding: 0 6px 0 9px; font-size: 12px; font-weight: 700; line-height: 1.1; color: var(--ink); }
+.sc-wedge { grid-column: 3; grid-row: 2; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 0 0 10px; }
+.sc-wedge span { font-size: 12px; line-height: 1.2; text-align: center; color: var(--fine); }
+.sc-wedge i { flex: 1 0 auto; width: 34px; background: var(--db-wedge); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.sc-add { display: grid; grid-template-columns: var(--who, 142px) minmax(0, max-content); align-items: center; margin-top: 12px; font-size: 13px; line-height: 1.25; color: var(--fine); }
+.sc-add label { padding-right: 10px; }
+.sc-add select { font: inherit; font-size: 14px; padding: 4px 8px; border: 1px solid var(--wca-blue-100); border-radius: 6px; color: var(--ink); background: var(--white); max-width: 100%; }
+
+/* --- The gap between two lines (3.16): each group's name beside its line's first point, a rust box in the gap --- */
+.gap-name { width: max-content; font-size: 14px; text-align: right; }
+.gap-box { width: max-content; padding: 4px 9px 5px; font-size: 12px; line-height: 1.25; text-align: center; }
+.gap-box strong { display: block; font-size: 15px; }
+
+/* --- The living-situations table (3.5): the Bulletin's blue heading row; the rows whose count rose are cream, with
+   rust words and an arrow up; the rows whose count fell have a gray arrow down; the totals row is gray and, as in
+   the Bulletin, ends after the two years (nothing is drawn around the two cells it leaves empty). --- */
+.living-table { font-size: 16px; }
+.living-table thead th { padding: 10px 14px; background: var(--db-title); color: var(--white); font-size: 15px; font-weight: 700; text-align: right; vertical-align: middle; white-space: nowrap; border: 1px solid var(--db-title); }
+.living-table thead th:first-child { text-align: left; }
+.living-table tbody th { padding: 9px 14px; font-weight: 400; vertical-align: middle; }
+.living-table tbody th small { margin-top: 1px; font-size: 13px; line-height: 1.3; color: inherit; }
+.living-table tbody td { padding: 9px 14px; text-align: right; vertical-align: middle; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.living-table tbody th, .living-table tbody td { border: 1px solid var(--muted); }
+.living-table tr.rising { background: var(--db-rising-row); }
+.living-table tr.rising > * { color: var(--db-callout-text); font-weight: 700; }
+.living-table tr.rising th small { font-weight: 400; }
+.living-table tr.falling .js-change, .living-table tr.falling .js-change-pct { color: var(--db-falling); }
+.living-table tr.totals { background: var(--rule); }
+.living-table tr.totals th { font-weight: 700; }
+.living-table tr.totals td.blank { background: var(--white); border: 0; }
+.pct-cell { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.living-table .arrow { flex: 0 0 auto; width: 22px; height: 24px; background: var(--db-change-up); clip-path: polygon(50% 0, 100% 52%, 70% 52%, 70% 100%, 30% 100%, 30% 52%, 0 52%); }
+.living-table tr.falling .arrow { background: var(--db-falling); transform: rotate(180deg); }
+
+/* --- The key placed on a scatter (3.13) --- */
+.scatter-key { padding: 7px 12px; background: var(--white); border: 1px solid var(--db-grid); border-radius: 4px; font-size: 13px; line-height: 1.55; color: var(--ink); }
+.scatter-key p { display: flex; align-items: center; gap: 8px; margin: 0; }
+.scatter-key i { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--db-district-dot); }
+.scatter-key i.ends { background: var(--db-district-ends); }
+.scatter-key i.fit { width: 16px; height: 0; border-radius: 0; background: none; border-top: 3px dotted var(--db-quiet); }
+.scatter-key.above { position: static; visibility: visible; width: max-content; max-width: 100%; margin: 0 0 8px auto; }
+.chart-box.scatter { height: 470px; }                                                  /* the scatter needs height for its 19 names */
+
+
+/* ==== Chapter 4 pieces (added 2026-11-20). Named for what they are. Chapter 4 keeps the Bulletin's content and the
+   graphics that carry its message (the tiles one inside the other, the three rent tiles, the words on the pies) and
+   is drawn with the habits chapters 1 and 2 share: numbers and names on a chart are 12 to 15 pixels (large type is
+   kept for a card's featured numbers), a value sits inside its bar, words on a color are white or dark, whichever
+   reads, and a button sits at the left, right above the chart it changes. ==== */
+
+/* --- Buttons with words on them (4.5, 4.8, 4.10): the year switch of pages 1.10, 2.4 and 2.17, at the left, right
+   above the chart it changes. Pressing one never changes the card's size or the chart's scale. --- */
+.switch-row { margin: 0 0 12px; }
+.switch-row .year-switch { vertical-align: top; }
+.year-switch.views button { padding: 7px 14px; font-size: 14px; line-height: 1.25; }
+#legend-jobless[hidden], #legend-disconnected[hidden] { display: none; }           /* a key that shows only where the bars are too narrow to carry their period */
+
+/* --- Tiles one inside the other (4.3): the Bulletin's picture of three rates. Each inner tile starts part of the way
+   across and down the tile that holds it and runs to that tile's right and bottom edges, with a thin white gap
+   where two tiles touch. The shares (31.5% across and 28.7% down; then 14.7% across and 72.8% down) are the PDF's
+   own, measured on its page 4.3; a tile is never smaller than its words need. The tiles are a picture, not a
+   measurement: their sizes are not in proportion to the rates. Each rate is its tile's featured number. --- */
+.nested-tiles { display: flex; min-height: 356px; }
+.nt-tile { display: grid; min-width: 0; color: var(--white); }
+.nt-tile.youth {
+  flex: 1 1 auto; background: var(--db-young-adults);
+  grid-template-columns: 31.5% minmax(0, 1fr); grid-template-rows: minmax(min-content, 287fr) minmax(min-content, 713fr);
+}
+.nt-tile .nt-tile { grid-column: 2; grid-row: 2; border-left: 2px solid var(--white); border-top: 2px solid var(--white); }
+.nt-tile.state {
+  background: var(--db-state-youth);
+  grid-template-columns: 14.7% minmax(0, 1fr); grid-template-rows: minmax(min-content, 728fr) minmax(min-content, 272fr);
+}
+.nt-tile.older { background: var(--db-other-ages); align-content: center; }
+.nt-lead { grid-column: 1 / -1; grid-row: 1; align-self: start; display: flex; align-items: center; gap: 16px; margin: 0; padding: 20px 22px; }
+.nt-lead strong { flex: 0 0 auto; font-weight: 700; line-height: 1; }
+.nt-lead span { font-weight: 700; line-height: 1.25; max-width: 24ch; }
+.nt-tile.youth > .nt-lead strong { font-size: 46px; }
+.nt-tile.youth > .nt-lead span { font-size: 21px; }
+.nt-tile.state > .nt-lead { gap: 14px; padding: 18px 20px; }
+.nt-tile.state > .nt-lead strong { font-size: 36px; }
+.nt-tile.state > .nt-lead span { font-size: 17px; }
+.nt-tile.older > .nt-lead { align-self: center; gap: 12px; padding: 12px 18px; }
+.nt-tile.older > .nt-lead strong { font-size: 26px; }
+.nt-tile.older > .nt-lead span { font-size: 15px; max-width: 28ch; }
+.nt-compare { grid-column: 1; grid-row: 2; margin: 0; padding: 22px 14px 0 22px; font-size: 17px; line-height: 1.3; }
+
+/* --- Solid tiles in a row, each with a picture and one amount (4.5): the Bulletin's three tiles. The amount is the
+   tile's featured number. The pictures are icon files painted white through a mask, as the silhouettes are. --- */
+.rent-tiles { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; }
+.rt-tile {                                                            /* a tile's three pieces sit on three rows that all the tiles share ("subgrid"), so the pictures and the amounts line up from tile to tile */
+  grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 6px; justify-items: center; align-items: center; padding: 13px 12px 14px;
+  color: var(--white); text-align: center;
+}
+.rt-tile.studio { background: var(--db-rent-studio); }
+.rt-tile.one-bedroom { background: var(--db-rent-one-bedroom); }
+.rt-tile.affordable { background: var(--db-rent-affordable); }
+.rt-what { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.3; }
+.rt-what strong { display: block; font-size: 15px; font-weight: 700; text-transform: uppercase; }
+.rt-tile .figure { flex: 0 0 auto; width: 56px; height: 56px; }
+.rt-tile.affordable .figure { width: 52px; height: 52px; }
+.rt-amount { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.2; }
+.rt-amount strong { display: block; font-size: 30px; font-weight: 700; line-height: 1.12; }
+.rt-tile.affordable .rt-what { max-width: 25ch; font-size: 15px; font-weight: 700; text-wrap: balance; }
+.rt-tile.affordable .rt-amount strong { font-size: 38px; line-height: 1.05; }
+
+/* --- Sideways bars whose rows come and go (4.5), built from the pieces of the page's other sideways HTML bars (a
+   name, a bar with its value inside its end, gray lines, a scale, a dashed line with its words above the rows).
+   Every row is in the chart all the time: --shown is how many are on show and --slot a row's place among them, so
+   a row's height and place follow from two numbers, and the browser slides the rows when a button changes them.
+   A row that is not on show ("away") has no height and waits between its neighbors. With many rows on show
+   ("many") the bars are thinner and their values smaller. --- */
+.hbars.slots { --label: 122px; --shown: 3; --pad: 5px; --value-size: 15px; }
+.hbars.slots .hb-rows { flex: 1 1 auto; min-height: 204px; }
+.hbars.slots .hb-row {
+  position: absolute; left: 0; right: 0; top: calc(var(--slot, 0) * 100% / var(--shown)); height: calc(100% / var(--shown)); min-height: 0;
+  align-items: stretch; overflow: hidden; transition: top 0.55s ease, height 0.55s ease, opacity 0.4s ease;
+}
+.hbars.slots .hb-row.away { height: 0; opacity: 0; pointer-events: none; }
+.hbars.slots .hb-label { align-self: center; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.hbars.slots .hb-track { height: auto; margin-top: var(--pad); margin-bottom: var(--pad); transition: margin 0.55s ease; }
+.hbars.slots .hb-value { font-size: var(--value-size); transition: font-size 0.55s ease; }
+.hbars.slots.many { --pad: 2.5px; --value-size: 13px; }
+.hb-row.young-adults { --hue: var(--db-young-adults); }
+.hb-row.other-ages { --hue: var(--db-other-ages); }
+@media (prefers-reduced-motion: reduce) { .hbars.slots .hb-row, .hbars.slots .hb-track, .hbars.slots .hb-value { transition: none; } }
+
+/* --- Two pies side by side, each under its title (4.7), with the words on the slices as on pages 1.3 and 2.17. A pie
+   is as large as its column and the height beside the text box allow (its box is measured by the browser, as
+   3.7's map is). A slice too thin for words carries its share only, near the rim; its name is under the pie,
+   joined to the slice by a short line (charts.js turns each pie so that this slice is at the bottom). --pie-under
+   is the height kept for that name. --- */
+.degree-pies .chart-subtitle { margin: -6px 0 8px; font-size: 14px; }
+.chart-trio.degree-pies { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }   /* side by side wherever each pie has 200 pixels; one under the other where it has not */
+.pie-fit { --pie-under: 52px; flex: 1 1 auto; height: 262px; min-height: 262px; container-type: size; display: grid; place-items: center; }   /* a measured box has no height of its own: it is given one, and grows from it beside a tall text box */
+.pie.share-pie { width: min(100cqw, calc(100cqh - var(--pie-under)), 330px); margin: 0 auto; }
+.share-pie .pie-label { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.share-pie .pie-label strong { display: block; margin-bottom: 3px; font-size: 25px; font-weight: 700; line-height: 1.1; }
+.share-pie .pie-label.on-wedge strong { margin: 0; font-size: 15px; }
+.pie-under { position: relative; height: var(--pie-under); margin: 0; padding-top: 15px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+.pie-under::before { content: ""; position: absolute; left: 50%; top: 1px; height: 11px; margin-left: -1px; border-left: 2px solid var(--ink); }
+@container (max-width: 236px) {                                       /* a pie less than 236 pixels across: smaller words on it */
+  .share-pie .pie-label { font-size: 12px; line-height: 1.2; }
+  .share-pie .pie-label strong { margin-bottom: 2px; font-size: 20px; }
+  .share-pie .pie-label.on-wedge strong { font-size: 13px; }
+}
+
+/* --- Two thick sideways bars with long names (4.9). Each value is its chart's featured number, written large inside
+   its bar's end as on page 2.11. --names is the width of the names, shared with the line under the second chart,
+   which starts where the bars start. --- */
+.share-charts { --names: 284px; --names-gap: 12px; }
+.hbars.shares { --label: var(--names); --gap: var(--names-gap); }
+.hbars.shares .hb-rows { justify-content: space-around; }
+.hbars.shares .hb-row { flex: 1 0 auto; min-height: 56px; }                        /* a row is never lower than its name needs; a bar is as thick as its row, less 4 pixels above and below, up to 68 */
+.hbars.shares .hb-label { padding: 3px 0; font-size: 14px; font-weight: 600; line-height: 1.25; text-wrap: balance; }
+.hbars.shares .hb-track { height: calc(100% - 8px); max-height: 68px; }
+.hbars.shares .hb-value { padding: 2px 12px; font-size: 21px; }
+.hb-row.adults       { --hue: var(--db-young-adults-light); }
+.hb-row.arrests      { --hue: var(--db-young-adults); }
+.hb-row.young-people { --hue: var(--db-black-or-hispanic-light); }
+.hb-row.custody      { --hue: var(--db-black-or-hispanic); }
+.bars-footnote { margin: 2px 0 0 calc(var(--names) + var(--names-gap)); font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--ink); }
 
 
 /* --------------------------------------------------------------------------
@@ -919,11 +1756,20 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   /* (Page 1.10's rings need nothing here: a ring is as large as its third of the row allows, the yellow
      panel runs the row's whole height, and spare height is shared above and below the rings.) */
 
+  /* Page 2.17: the trend's chart keeps one height (it sits in a row with the circle, not beside a text box) */
+  .chart-area .prek-trend .chart-box.short { height: 210px; min-height: 210px; }
+
   /* Three charts in one card (page 1.13): both columns end level, each chart taking its share of the height */
   .chart-trio.fills { align-items: stretch; }
   .chart-trio.fills > div { display: flex; flex-direction: column; }
   .chart-trio.fills .chart-box { flex: 1 0 auto; }
   .chart-trio.fills .chart-box.food { min-height: 440px; }
+
+  /* Chapter 3: the pieces that stretch to the text box's height */
+  .side-row.fills > .chart-box { max-height: none; }
+  .chart-area > .hbars.fills { flex-basis: auto; }
+  .chart-area .chart-box.scatter { min-height: 500px; }
+  .chart-trio.fills .hbars, .chart-trio.fills .two-bars { flex: 1 0 auto; }      /* 701 to 900 pixels, where the two charts sit one under the other */
 }
 
 /* On a tablet (701 to 900 pixels) the text box is narrow, so it is much taller than a chart. A chart
@@ -932,6 +1778,26 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .chart-area .chart-box { max-height: 400px; }
   .with-circle.fills { max-height: 250px; }
   .chart-trio.fills .chart-box.food { min-height: 366px; }
+}
+
+/* Two charts side by side whose titles and rows line up (pages 3.7, 3.18), from 901 pixels up (narrower than
+   that the two charts sit one under the other). The two charts' pieces share one grid: the titles are on its
+   first row, ending on one level, so the rule under the shorter title lines up with the rule under the longer
+   one; what sits between a title and its chart (year buttons, a note) is on the second row; the charts are on
+   the third and take the height that is left, so both end level with the text box. */
+@media (min-width: 901px) {
+  .chart-trio.level { grid-template-rows: auto auto minmax(0, 1fr); align-items: stretch; row-gap: 0; }
+  .chart-trio.level > div { display: contents; }
+  .chart-trio.level > div:nth-child(1) > * { grid-column: 1; }
+  .chart-trio.level > div:nth-child(2) > * { grid-column: 2; }
+  .chart-trio.level h3 { grid-row: 1; align-self: end; }
+  .chart-trio.level .row-2 { grid-row: 2; align-self: start; }
+  .chart-trio.level .row-3 { grid-row: 3; min-width: 0; }
+  /* 3.7's map takes the height its row has and is as wide as that height allows (never more than 86% of its
+     column, which leaves room for the words at its sides). Its box is measured by the browser ("container"), and
+     the map inside it is fitted to that box. */
+  .chart-trio.level .county-map.with-counts { container-type: size; display: grid; place-items: center; min-height: 330px; }
+  .chart-trio.level .with-counts .map-fit { width: min(86cqw, calc(100cqh * var(--ratio, 0.65))); }
 }
 
 
@@ -972,6 +1838,36 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 
 @media (max-width: 900px) {
   .tiles { grid-template-columns: repeat(2, 1fr); }
+  .card-body.stack-early { grid-template-columns: minmax(0, 1fr); }   /* a card whose chart needs the whole width sooner (the five-column table of page 2.12): its text box goes above the chart already on a tablet */
+  /* Pre-K page on a tablet (2.17): a smaller pie and circle; the note goes under the circle and the trend */
+  .prek-page { --pie: 216px; --tuck: 0px; column-gap: 20px; grid-template-areas: "lead lead pie" "circle trend trend" "note note note"; }
+  .pie.prek-pie { margin-bottom: 18px; }
+  .prek-pie .pie-label { font-size: 13px; }
+  .prek-pie .pie-label strong { font-size: 28px; }
+  .prek-sentence { font-size: 19px; }
+  .year-switch.five button { padding: 6px 8px; font-size: 14px; }
+  .prek-circle { padding: 18px 16px 14px; gap: 6px; }
+  .prek-circle p { max-width: 168px; font-size: 14px; }
+  .prek-circle p strong { font-size: 19px; }
+  .pc-figures .figure { height: 52px; }
+  .pc-figures .figure:last-child { height: 49px; }
+  .prek-note { padding: 12px 0 0; }
+
+  /* Share bars on a tablet (page 2.4): a narrower cell for the family, so the bars keep their length */
+  .share-bars { --who: 172px; }
+  .shb-top { display: block; }                               /* the year buttons above the two headings, which stay over the bars */
+  .shb-top .year-switch { margin-bottom: 10px; }
+  .shb-headings { margin-left: var(--who); }
+  .shb-who { gap: 8px; padding: 6px 8px 6px 10px; }
+  .shb-who .figure { width: 40px; height: 54px; }
+  .shb-who p { font-size: 13px; }
+  .shb-who strong { font-size: 14px; }
+
+  /* Family example cards on a tablet or a phone (page 2.7): the words and the figure on the tinted panel, the sums under it */
+  .fc-body { grid-template-columns: minmax(0, 1fr); }
+  .fc-who { padding: 14px 112px 14px 14px; min-height: 132px; }
+  .family-card .figure { top: 8px; bottom: auto; left: auto; right: 6px; width: 100px; height: 116px; margin-left: 0; }
+  .fc-sums { padding: 12px; }
   .cover-art { width: 170px; height: 170px; }
   .hero { grid-template-columns: minmax(0, 1fr) 150px; }
   .hero-art { width: 150px; height: 150px; }
@@ -1013,6 +1909,22 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .fb-who .figure { width: 32px; height: 44px; }
   .fb-callout .db-callout { width: 100%; margin-left: 0; text-align: left; }
   .fb-axis span:nth-child(even) { display: none; }         /* every other label on the scale, so they don't touch */
+  /* Share bars on a phone (page 2.4): each family's cell sits above its bar, and each bar has its own piece of the dashed line */
+  .share-bars { --who: 0px; }
+  .shb-row { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .shb-who { padding: 6px 10px; }
+  .shb-who .figure { width: 30px; height: 40px; }
+  .shb-who br { display: none; }
+  .shb-who .js-income { display: inline; }
+  .shb-bar { height: 62px; }
+  .shb-value { font-size: 22px; padding: 2px 8px 8px; }
+  .shb-benchmark { display: none; }
+  .shb-bar::after {
+    content: ""; position: absolute; z-index: 1; top: -5px; bottom: -5px; left: calc(100% * var(--at)); margin-left: -1px;
+    border-left: 2px dashed var(--db-callout); pointer-events: none;
+  }
+  .shb-callout { padding-left: 0; }
+  .shb-callout .db-callout { text-align: left; }
   .stack-chart { --row: 42px; --fat: 124px; }                 /* taller rows: a group's name can take three lines on a phone */
   .sb-row { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
   .sb-label { font-size: 12px; line-height: 1.15; }
@@ -1023,6 +1935,55 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .rise-arrow span { font-size: 11px; }
   .rise-arrow strong { font-size: 24px; }
   .donut-trio { grid-template-columns: minmax(0, 1fr); gap: 22px; }   /* the rings come one under the other */
+
+  /* Tables of words on a phone (pages 2.5, 2.6, 2.12): every row is a card. The headings are kept for screen
+     readers but not shown; each cell shows its column's heading above it instead. */
+  .word-table thead, .word-table tr.heads { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .word-table, .word-table tbody, .word-table tbody tr, .word-table tbody th, .word-table tbody td { display: block; width: auto; }
+  .word-table tbody tr { margin-bottom: 16px; }
+  .word-table tbody tr:last-child { margin-bottom: 0; }
+  .word-table td::before {
+    content: attr(data-label); display: block; margin-bottom: 2px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--fine);
+  }
+  .credits tbody th { display: flex; align-items: center; justify-content: center; gap: 14px; border-top: 0; border-bottom: 2px solid var(--db-title-rule); }
+  .credits tbody tr:last-child > * { border-bottom: 0; }
+  .credits tbody tr:last-child > th { border-bottom: 2px solid var(--db-title-rule); }
+  .credits tbody td { border: 0; text-align: left; }
+  .credits td.child { border-left: 0; }
+  .credits td.child::before { color: var(--db-title); }
+  .credits td.care::before { color: var(--wca-green); }
+  .credits .where { margin: 0; }
+  .credits .figure { width: 70px; height: 44px; margin: 0; }
+  .programs tbody th[scope="row"] { color: var(--white); background: var(--hue); padding-bottom: 11px; font-size: 16px; }
+  .programs tbody tr:not(.heads) > * { padding-bottom: 6px; }
+  .programs tbody tr:not(.heads) > * + * { border-left: 0; }
+  .programs tbody tr:not(.heads) > td:last-child { padding-bottom: 14px; }
+  .programs tbody tr:not(.heads) { border: 1px solid var(--rule); border-top: 0; }
+  .before-k { border-spacing: 0; width: 100%; margin: 0; }
+  .before-k tbody th, .before-k td.ages { width: auto; }
+  .before-k tbody th { font-size: 16px; }
+  .before-k tbody td { padding-top: 6px; padding-bottom: 6px; }
+  .before-k tbody td:last-child { padding-bottom: 12px; }
+
+  #income-limits-status { min-height: 4.2em; }                /* page 2.8: on a phone the sentence under the chart takes three lines */
+
+  /* Pre-K page on a phone (2.17): one piece under the other */
+  .prek-page { --pie: 230px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "lead" "pie" "circle" "trend" "note"; justify-items: center; }
+  .prek-lead, .prek-trend, .prek-note { justify-self: stretch; }
+  .prek-sentence { font-size: 18px; }
+  .prek-circle { margin-bottom: 18px; }
+  .area-words { font-size: 18px; }
+  .year-switch.five { display: flex; }
+  .year-switch.five button { flex: 1 1 0; padding: 7px 2px; font-size: 13px; }
+
+  /* District bars on a phone (page 2.11): each subject's name above its two bars; smaller words in the bars */
+  .district-bars { --full: 100%; padding-top: 0; }
+  .dsb-figures { display: none; }
+  .dsb-group { grid-template-columns: minmax(0, 1fr); row-gap: 4px; max-height: none; }
+  .dsb-subject { text-align: left; font-size: 15px; }
+  .dsb-bar { font-size: 16px; padding: 0 10px; }
+  .district-note::before { flex-basis: 22px; }
 
   /* The table's rows become cards: the name, then the five figures in two columns, each under its heading */
   .cost-table thead { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }   /* kept for screen readers */
@@ -1041,8 +2002,8 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .hero-art { display: none; }                             /* the picture goes; the sentence and its number stay */
   .with-circle, .with-circle.circle-first { grid-template-columns: minmax(0, 1fr); justify-items: center; }
   .with-circle > :not(.stat-circle) { width: 100%; }
-  .stat-circle:not(.arrow-down) { width: 150px; }
-  .stat-circle:not(.arrow-down) strong { font-size: 30px; }
+  .stat-circle:not(.arrow-down):not(.arrow-up) { width: 150px; }
+  .stat-circle:not(.arrow-down):not(.arrow-up) strong { font-size: 30px; }
   .picto-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }      /* the year and the number sit above their row of figures */
   .picto-year, .picto-value { display: inline; }
   .picto-year::after { content: " · "; font-weight: 400; }
@@ -1054,4 +2015,115 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .tile .value { font-size: 34px; }
   .chart-pair { grid-template-columns: 1fr; }
   .chart-box { height: 260px; }
+}
+
+/* Chapter 3 on narrower windows. The page is built desktop first; how it should look on a phone is still to be
+   decided with the user, so these rules only keep every piece inside the window and readable. */
+@media (max-width: 1000px) {
+  .living-table thead th { white-space: normal; }
+  .living-table thead th, .living-table tbody th, .living-table tbody td { padding: 9px; }
+  .places-table thead th { padding: 9px 8px; }
+  .places-table tbody th, .places-table tbody td { padding: 10px 8px; }
+  .poverty-lead { font-size: 21px; }
+}
+@media (max-width: 900px) {
+  .poverty-page { grid-template-columns: minmax(0, 1fr); }
+  .poverty-map { width: 100%; max-width: 420px; margin: 0 auto; }
+  .places-table { height: auto; }
+  .side-row { grid-template-columns: minmax(0, 1fr); }
+  .side-col { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; }
+  .side-col .change-box { flex: 0 1 220px; }
+  /* 3.7 and 3.18: the two charts sit one under the other. The upright bars and the map get a size of their own. */
+  .two-bars { height: 300px; }
+  .county-map.with-counts { width: min(86%, 300px); }
+  .hbars.thick .hb-row { flex: 1 0 auto; min-height: 56px; }
+}
+@media (max-width: 700px) {
+  .places-circle { --circle: 150px; padding: 12px; }
+  .places-circle strong { font-size: 27px; }
+  .places-circle span { font-size: 12.5px; }
+  .poverty-lead { font-size: 19px; }
+  .poverty-sentence { font-size: 15px; }
+  .places-table { font-size: 14px; }
+  .places-table thead th { font-size: 12px; padding: 8px 5px; }
+  .places-table tbody th, .places-table tbody td { padding: 9px 5px; }
+  .places-table tbody th { white-space: normal; }
+  .map-label { font-size: 13px; }
+  /* the living-situations table as cards (the base rules for tables of words do the rest) */
+  .living-table tbody tr { border: 1px solid var(--muted); }
+  .living-table tbody th, .living-table tbody td { border: 0; }
+  .living-table tbody td { text-align: left; }
+  .living-table .pct-cell { justify-content: flex-start; }
+  .living-table tr.totals td.blank { display: none; }
+  .hb-axis span:nth-child(even) { display: none; }                           /* every other number on the scale, so they don't touch (as on page 1.7) */
+  .score-chart { --who: 104px; --wedge: 0px; }
+  .sc-wedge { display: none; }
+  .sc-who strong { font-size: 13.5px; }
+  .sc-who span { font-size: 12px; }
+  .sc-key { font-size: 11px; }
+  .sc-row.keyed { flex: 0 0 auto; }                                           /* the row with the two measures' names is as tall as the names need */
+  .sc-row.keyed .sc-track { flex: 0 0 auto; max-height: none; min-height: 26px; padding: 2px 0; }
+  .sc-row.keyed .sc-bar { align-self: stretch; height: auto; }
+  .sc-add { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .seg-head { font-size: 12px; }
+  .pointer-box { padding: 6px 10px 7px; }
+  .year-switch.seven button { font-size: 13px; }
+  .ys-label { font-size: 12px; }
+  #box-gap { height: 340px; }                                                /* 3.16: a taller chart, so the boxes fit in the gap */
+  .gap-box { padding: 3px 7px 4px; }
+  .gap-box strong { font-size: 14px; }
+}
+@media (max-width: 520px) {
+  .places-table thead th { font-size: 11px; }
+  .hbars { --gap: 8px; }
+  .hbars.absence { --label: 106px; }                                          /* names on two or three lines */
+  .hbars.thick { --label: 92px; }
+  .hbars.thick .hb-label { font-size: 13px; }
+  .hbars.ages { --label: 44px; }
+}
+
+/* Chapter 4 on narrower windows. As for chapter 3, the page is built desktop first, and how it should look on a phone
+   is still to be decided with the user: these rules only keep every piece inside the window and readable. */
+@media (max-width: 900px) {
+  .share-charts { --names: 216px; --names-gap: 10px; }                        /* 4.9 on a tablet: narrower names, so the bars keep their length */
+  .rt-what { font-size: 13px; }
+  .rt-what strong { font-size: 14px; }
+  .rt-amount strong { font-size: 27px; }
+  .rt-tile.affordable .rt-what { font-size: 14px; }
+  .rt-tile.affordable .rt-amount strong { font-size: 34px; }
+}
+@media (max-width: 600px) {
+  /* 4.3: the tiles keep their order, one inside the other; the insets are smaller, "Compare that percentage with…"
+     has a line of its own under the first sentence, and the type is smaller */
+  .nested-tiles { min-height: 0; }
+  .nt-tile.youth { grid-template-columns: 8% minmax(0, 1fr); grid-template-rows: auto auto auto; }
+  .nt-tile.youth > .nt-tile { grid-row: 3; }
+  .nt-tile.state { grid-template-columns: 9% minmax(0, 1fr); grid-template-rows: auto auto; }
+  .nt-lead { gap: 12px; padding: 16px; }
+  .nt-lead br { display: none; }
+  .nt-tile.youth > .nt-lead strong { font-size: 34px; }
+  .nt-tile.youth > .nt-lead span { font-size: 16px; }
+  .nt-compare { grid-column: 1 / -1; grid-row: 2; padding: 0 16px 14px; font-size: 15px; }
+  .nt-tile.state > .nt-lead { gap: 12px; padding: 14px 14px 22px; }
+  .nt-tile.state > .nt-lead strong { font-size: 28px; }
+  .nt-tile.state > .nt-lead span { font-size: 14px; }
+  .nt-tile.older > .nt-lead { gap: 10px; padding: 12px 14px; }
+  .nt-tile.older > .nt-lead strong { font-size: 22px; }
+  .nt-tile.older > .nt-lead span { font-size: 13px; }
+  /* 4.5: the two rents side by side, the third tile under them, the whole width */
+  .rent-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .rt-tile.affordable { grid-column: 1 / -1; }
+  .rt-tile .figure { width: 44px; height: 44px; }
+  .hbars.slots { --label: 116px; }
+  .hbars.slots .hb-label { font-size: 13px; }
+  .year-switch.views { display: inline-flex; max-width: 100%; }               /* two buttons too wide for the row share it; their words then take two lines */
+  .year-switch.views button { flex: 0 1 auto; padding: 7px 10px; font-size: 13px; }
+  /* 4.9: each bar's name on its own line above the bar, the whole width for the bars */
+  .share-charts { --names: 0px; --names-gap: 0px; }
+  .share-charts h3 br { display: none; }
+  .hbars.shares .hb-row { grid-template-columns: minmax(0, 1fr); row-gap: 3px; padding: 5px 0; min-height: 0; }
+  .hbars.shares .hb-label { justify-self: start; padding: 0 6px 0 0; text-align: left; font-size: 13px; background: var(--white); }   /* on white, so the gray lines stop at the words */
+  .hbars.shares .hb-track { height: 44px; max-height: none; }
+  .hbars.shares .hb-value { font-size: 18px; }
+  .pie-fit { height: 280px; }                                                  /* 4.7: a pie alone in its row can be larger */
 }

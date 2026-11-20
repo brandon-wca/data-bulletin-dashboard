@@ -14,7 +14,8 @@
 <!--
   HOW THIS PAGE IS BUILT
   ======================
-  Every number on this page comes from data/data.json; nothing is typed in by hand.
+  Every number on this page comes from data/data.json, except the fixed facts listed further down (a few
+  program facts the tables do not carry, typed as the Bulletin prints them).
     * The headline tiles and the charts are drawn by charts.js.
     * Numbers inside sentences use <span data-fill="..."> and are filled in by charts.js,
       so the words can never disagree with the data. The path inside data-fill points
@@ -23,12 +24,22 @@
   The words themselves (titles, commentary, captions) live here and are edited here.
   Text marked [PLACEHOLDER] is a first draft for Brandon to rewrite.
 
-  WHERE THE BUILD STANDS (2026-11-19)
+  WHERE THE BUILD STANDS (2026-11-20)
     Layer 1, the page's frame: done. Banner, header, headline tiles, chapter tabs, chapter covers and
       parts, one card per Bulletin page, the quote cards.
-    Charts, chapter by chapter: chapter 1 (pages 1.3 to 1.16) is in, with the Bulletin's own text in
-      every side panel, and is in design review (each card is being brought closer to the PDF).
-      Chapters 2 to 4 still show a placeholder where each chart will go.
+    Charts, chapter by chapter: chapter 1 (pages 1.3 to 1.16), chapter 2 (pages 2.3 to 2.17) and chapter 3
+      (pages 3.3 to 3.18) are in, with the Bulletin's own text in every side panel. Chapters 1 and 2 are in
+      design review (each card is being brought closer to the PDF). Chapter 3 was built on 2026-11-19 and
+      redrawn on 2026-11-20 at the user's request: it had copied the PDF's pictures too closely, so its
+      cards now follow the habits of chapters 1 and 2 (small numbers and names on charts, values inside
+      their bars, words on the color behind them, buttons right above the chart they change, one-line
+      titles) and keep the PDF's content and message graphics. Chapter 3 is built for a computer screen
+      first: on a phone or a tablet its pieces only stack, shrink or move a key above a chart so that
+      everything fits and reads; how chapter 3 should look on a phone is still to be decided with the user.
+      Chapter 4 (pages 4.3 to 4.10) was built on 2026-11-20 and waits for the user's review. By his choice it
+      follows chapters 1 and 2 as built (not the redrawn chapter 3): the PDF's content, numbers and message
+      graphics, drawn with the habits those two chapters share. Like chapter 3 it is built for a computer screen
+      first; on a phone or a tablet its pieces only stack or shrink so that everything fits and reads.
     Layer 2 (to come): sticky-scroll stories for the selected charts.
     Layer 3 (to come): the community map (the "Map" tab).
 
@@ -54,6 +65,97 @@
     * What the measures mean, in the notes under the charts and in "About the data": low income (below
       twice the federal poverty level), the two definitions of homelessness, the ALICE budget, the
       benchmark premium, what each price is.
+    Chapter 2. Typed as the Bulletin prints them and NOT YET CHECKED against a source by the user
+    (he asked for this list on 2026-11-19, to check later). Nothing refills these:
+    * Page 2.5: the whole table. Each credit's name, its amounts ("Up to $2,200 per child", "Up to $1,500
+      for one child", "$3,000 for two or more", "Up to $1,000 per child under 4", "$500 per child ages
+      4-16", "Up to $1,155 for one child", "Up to ~$3,465 for five or more"), its tax year (2026, 2026,
+      2026, 2025), and the two lines under the column headings.
+    * Page 2.6: what each program is; "(~85% of Median Household Income)"; "from $16,415 to $358 in a
+      typical example"; "opened a waitlist for new applicants in January 2026" and the rest of both
+      "Right Now" cells; and the "2025" in the card's title. (The income ranges, the $13,080 and its
+      share of the cost of care ARE filled from data.json.)
+    * Page 2.7: "Two parents with one infant"; "They qualify for CCAP"; "Over the CCAP limit but they
+      qualify for Westchester Works". Family 2's income is EXAMPLE_FAMILY_2_INCOME in build_data.py
+      Settings; the script stops if it is not between the two programs' limits.
+    * Page 2.12: the whole table (ages, what each program is, who it is for, who runs it).
+    * Page 2.13: the ages in the two lines' names ("mostly ages 3-5", "under age 3"); "The state's needs
+      assessment links this to the spread of publicly funded pre-K"; "Funding and staffing are the limits."
+      (The needs assessment is named in the card's source line, typed there as the Bulletin prints it.)
+    Chapter 2, other fixed words:
+    * Page 2.3: what the cost is ("a month of care Monday through Friday, for one infant"). The years
+      whose cost is printed on the line are INFANT_CARE_MIDDLE_YEARS in charts.js Settings.
+    * Page 2.8: the names written on the chart (the bubble's are here; the other two are
+      INCOME_LIMIT_NAMES in charts.js Settings) and the sentence shown when a row is pressed
+      (INCOME_LIMIT_SENTENCE, a [PLACEHOLDER]).
+    * Page 2.11: the two districts are DISTRICT_PAIR in build_data.py Settings.
+    * Page 2.15: "Most work part-time."  Page 2.16: "the federal 60-day evaluation deadline".
+    * Page 2.17: "Districts Offered a State-Funded PK Program"; "UPK" is used, as in the Bulletin, for
+      every state-funded pre-K program (Universal Pre-K alone is a smaller count).
+    Chapter 3. Typed as the Bulletin prints them and NOT YET CHECKED against a source by the user (he
+    asked for the same as chapter 2 on 2026-11-19). Nothing refills these:
+    * Page 3.3: the Federal Poverty Level for a family of 4 in 2024, "$31,200".
+    * Page 3.4: the pandemic period's dates, "March 11, 2020 – May 5, 2023" (the shaded years are
+      PANDEMIC_YEARS in charts.js Settings); "January 15, 2022: New York's eviction moratorium ended" (its
+      year, where the box points, is MORATORIUM_YEAR in charts.js Settings; the same date is in the source
+      lines of 3.4 and 3.5, typed in build_data.py).
+    * Page 3.5: "Not counted as homeless by the Federal Government" under "Doubled up"; the source line's
+      "Doubled up means sharing housing with another household for economic reasons".
+    * Page 3.7: "The FY27 Foundation Aid weight of 0.12 is a start."
+    * Page 3.9: "New York raised the evidence standard in 2022" and the gray box "2022: the evidence standard
+      was raised"; the law sections in the source line (412 and 427-A).
+    * Page 3.10: what each line counts, in its name ("i.e., current or former spouse or dating partner",
+      "i.e., a child, sibling, grandparent, in-law or other relative"); the source line's note on the
+      State Police's 2024 change.
+    * Page 3.11: "New York has pushed to keep children connected to family"; "New York State Family First
+      implementation materials" in the source line.
+    * Page 3.12: EVERY NUMBER on the card. The visits by age are SELF_HARM_VISITS in build_data.py Settings,
+      typed from the Bulletin because the warehouse has no table for them yet (the script prints a CHECK
+      line about it on every run); the 494, 208 and 42% are worked out from them. Also "988", "Healthy
+      Minds Healthy Kids", "Mental Health Roundtable every Spring" and "left out of the NYS Budget for FY27".
+    * Page 3.17: "about 18 days a year"; the Solutions Not Suspensions Act sentence; "four special act school
+      districts" in the source line.
+    * Page 3.18: "These figures exist only because WCA requested them; the state publishes no subgroup
+      breakdown", and "obtained by Westchester Children's Association under Freedom of Information Law" in
+      the source line (the warehouse's catalog says the request's data was "shared by a partner"). The
+      requests' numbers (FL-EM-25/1398 here, FL-EM-25/637 on 3.5 and 3.6) are typed in build_data.py.
+    Chapter 3, other fixed words and choices:
+    * Pages 3.3 and 3.7: the map is drawn from data/Geography.json (made by build_data.py from STG-0050);
+      where each place's name sits is MAP_NAME_SPOTS in charts.js Settings.
+    * Page 3.3: the card's title is a short one ("School-aged children in poverty in four Westchester
+      communities, 2024"); the Bulletin's own page title is the large sentence inside the card.
+    * Page 3.6: the card's title is shortened to one line ("... by race and ethnicity, Westchester, ...").
+    * Page 3.13: the side each district's name sits on is SCATTER_NAME_SIDES in charts.js Settings, and
+      the exact place of the names where districts crowd is SCATTER_NAME_SPOTS.
+    * Page 3.18: the line about the two gray bars is a [PLACEHOLDER] for the user to write.
+    * Page 3.15: the five districts are SCORE_DISTRICTS in build_data.py Settings (the Bulletin's own).
+    * Page 3.16: the three measures' names are GAP_MEASURE_NAMES in charts.js Settings.
+    * Page 3.18: the five districts on the right are SUSPENSION_DISTRICTS in build_data.py Settings, as
+      printed (two in gray); the script prints a CHECK line for each higher district they leave out
+      (Pocantico Hills).
+    Chapter 4. Typed as the Bulletin prints them and NOT YET CHECKED against a source by the user (he chose
+    "type and list" on 2026-11-20, as for chapters 2 and 3). Nothing refills these:
+    * Page 4.7: "84%" of 18- to 20-year-olds with a diploma, "42.5%" with no college degree and so "6.8%" with an
+      associate degree ("4 in 10" follows from the 42.5%). All are in build_data.py Settings
+      (DIPLOMA_AGES_18_20_PCT, NO_COLLEGE_DEGREE_PCT); the warehouse holds only the bachelor's share.
+    * Page 4.8: "Only a quarter of students finish on time"; the source line's "Years shown are the years with
+      data" (the table holds every fall from 2010 to 2024; the second button shows them).
+    * Page 4.9: the 1,925 arrests of 18- to 24-year-olds in 2025 (ARRESTS_AGES_18_24 in build_data.py Settings,
+      read on the state's dashboard on 2026-10-29), from which the 15.2% is worked out. The Bulletin's bar prints
+      23.3% and its page 4.6 "nearly one in four"; the user chose 15.2% and "more than one in seven" in both
+      texts. Also "Raise the Age protects 16- and 17-year-olds. At 18, those protections stop."
+    * Page 4.10: the Multiracial pair, 12.9% and 12.2% (DISCONNECTED_MULTIRACIAL in build_data.py Settings).
+    Chapter 4, other fixed words and choices:
+    * Page 4.5: the earnings by age are the warehouse's ($1,923, $3,635, $8,680; the Bulletin prints $1,809,
+      $3,529 and $10,106, which match no source), and the one-bedroom rent is HUD's $2,655 (the Bulletin prints
+      $2,665): the user's choices of 2026-11-20. "1-Bedroom" is written out (the Bulletin: "1 BDRM"). The source
+      line names the Census Bureau's Quarterly Workforce Indicators, which the Bulletin's does not. The words
+      over the dashed line are the chart's data-ref-words; the buttons' words are in charts.js Settings.
+    * Page 4.9: the share of all 18- to 24-year-olds who are Black or Hispanic is 46% (the Bulletin prints 47%,
+      which the warehouse cannot reproduce): the user's choice. The second chart's title says "2024" for a
+      2020-2024 figure, as printed. The bars' names are JUSTICE_BAR_NAMES in charts.js Settings.
+    * Pages 4.3, 4.4: "ages 20 to 24" is written in words where the Bulletin prints "20-24"; 4.4's note says
+      "page 4.3" (the Bulletin: "slide 4.3").
   Everything else that is a number comes from data.json.
 
   CLAIMS TO RE-CHECK AFTER EVERY DATA UPDATE. The numbers refill themselves; these words don't.
@@ -74,8 +176,64 @@
     * 1.14: "a rise back to the usual levels"; "thousands of children"
     * 1.16: "increased" and "increase" (the box and its arrow, which points UP), "Increasing" (the text).
       build_data.py prints a CHECK line if the balance stops rising.
+    * 2.3: "the steepest increases in 2023 and 2024" (build_data.py prints a CHECK line: in the table the
+      two largest one-year rises are 2012 and 2024); "rivals the cost of college tuition"; "rose" and the
+      arrow in the circle, which points UP.
+    * 2.4: "both above the federal 7% affordability benchmark" (true in each of the three years the
+      buttons show); "Westchester families spend far more".
+    * 2.5: every amount and tax year (typed; see the list above).
+    * 2.6: "about" before each range; "over capacity"; "January 2026"; "$16,415 to $358"; the title's "2025"
+      (the ranges in the table took effect in June 2026).
+    * 2.7: "nearly all"; "they no longer qualify"; "nearly" before the added cost.
+    * 2.8: "the green CCAP limit" (the color of the bars in styles.css, --db-ccap); "fills the gap".
+    * 2.11: "the county's highest-income school district"; "one of its lowest"; "Lowest" and "Highest" in
+      the two boxed statements (build_data.py prints two CHECK lines: Yonkers is lowest by a margin
+      smaller than the survey's error, and Scarsdale is one of several districts at the Census
+      Bureau's "$250,000 or more" ceiling).
+    * 2.13: "has halved"; "grew until"; "has been flat since".
+    * 2.14: "About half" (heading and text); "In ten years"; "only a few points".
+    * 2.15: "is shrinking"; "down about"; "below the $90.00 paid in 1994".
+    * 2.16: "Decline" (title); "Fewer" (heading); "fell from"; "has never met"; the card stops at
+      PRESCHOOL_LAST_YEAR in build_data.py Settings (a CHECK line says what the next year holds).
+    * 2.17: "only" before the share enrolled (the words after it, "about half" or "about 4 in 10", come from
+      the data); "Up" on the trend comes from the data (build_data.py prints a CHECK line if the count is
+      not up).
+    * 3.3: "nearly two-thirds" (title; a CHECK line if the share is no longer near two-thirds).
+    * 3.4: "Progress Erased"; "Above Pre-Pandemic Levels"; "fell ... then climbed"; "close to the" (2017's
+      count); "back to Pre-Pandemic level" on the chart (CHECK lines for the fall, the climb and the return).
+    * 3.5: "The Largest Group"; "doubled up ... rose"; "Shelter and transitional housing counts fell" (CHECK
+      lines for both); the arrows and colors of each row come from the data.
+    * 3.6: "54x" refills, "More Likely" does not; "The gap has grown since 2020" (a CHECK line).
+    * 3.7: "Three quarters" (a CHECK line); "the Same Four Communities".
+    * 3.9: "After a Decade of Decline"; "Rising"; "a low of ... in 2022"; "stayed above its 2022 low for three
+      straight years" (CHECK lines for the low, the years above it and the rise).
+    * 3.10: "Up"; "risen sharply"; "driven mostly by incidents involving intimate partners" (CHECK lines).
+    * 3.11: "Relatives Are Now the Largest Source" (a CHECK line); the two boxes' "more" and "drop" (a CHECK
+      line).
+    * 3.12: every number (typed; see the list above).
+    * 3.13: "a clear upward pattern" (a CHECK line if the line of best fit stops rising).
+    * 3.15: "As economic disadvantage rises, English proficiency and AP results fall"; "Westchester-wide" (a
+      CHECK line if the Bulletin's own rule would now pick other districts than SCORE_DISTRICTS).
+    * 3.16: "but by only" before the graduation gap (a CHECK line if graduation's gap is not the smallest).
+    * 3.17: "Every group above the countywide average" (a CHECK line). The text box speaks of the latest
+      year; the year buttons change only the charts and their titles (the source line names every year).
+    * 3.18: "thousands of"; "more than twice the countywide rate" (a CHECK line); "Asian and White students
+      had the lowest rates". The text box speaks of the latest year; the year buttons change only the chart
+      on the left and its title (the source line names every year).
+    * 4.3: "3x More Likely" and "more than three times" (a CHECK line); "higher than the statewide youth rate"
+      (a CHECK line). Part 1's text: "most of the recent rise came from young men".
+    * 4.4: "rose", "The most striking increase is evident in young men", "held steady near" (CHECK lines).
+    * 4.5: "below" the extremely-low-income limit (a CHECK line); "Priced Out"; "HUD calls".
+    * 4.7: "Most"; "half" (a CHECK line); "well above the state's" (a CHECK line); every typed number above.
+    * 4.8: "has lost" (a CHECK line); "Only a quarter of students finish on time"; Part 2's "has fallen".
+    * 4.9: "one in nine" and "more than one in seven", here and in Part 2's text (CHECK lines).
+    * 4.10: "One in eight" (heading and text; a CHECK line); "highest for Black and Hispanic youth, at nearly
+      15%" (a CHECK line); "has risen slightly" and "still climbs after high school" (CHECK lines). The text
+      box speaks of the Bulletin's chart; the buttons change only the chart and the card's title.
     * About the data: "no estimates for 2020"; "October 2025 was never published"; "January 2015 stands
-      in for 2014" (build_data.py prints a CHECK line while that is so).
+      in for 2014" (build_data.py prints a CHECK line while that is so). Chapter 2's list there: "85% of
+      the state median income"; "four times the federal poverty guideline"; "starts at $70,000";
+      "starts at 11,500".
     * Headline tiles are numbers only; nothing to re-check.
 
   PAGE SECTIONS, top to bottom
@@ -806,42 +964,137 @@
          lighten the load, before following children into early education.</p>
     </div>
 
+    <!-- Page 2.3. One line drawn by charts.js (drawInfantCareCost) from "s2_3_infant_care_cost". The words that
+         sit on the chart are here: the Bulletin's red circle with a white arrow pointing up, and the note
+         about the year with no figure. charts.js puts the circle under the line at the right, as large as
+         fits there, and the note at the foot of the dotted stretch. On a screen too small for the circle,
+         it goes above the chart. -->
     <article class="card" id="card-2-3">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
         <span class="page-tag" data-page="2.3">Bulletin page 2.3</span>
       </div>
-      <h2 class="db-title">Average monthly cost of center-based infant care in Westchester, 2010 to 2026</h2>
+      <h2 class="db-title">Average monthly cost of center-based infant care in Westchester,
+        <span data-fill="charts.s2_3_infant_care_cost.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s2_3_infant_care_cost.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Infant Care Now Costs More Than $25K a Year</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <h3>Infant Care Now Costs More Than
+            <span data-fill="charts.s2_3_infant_care_cost.last.annual_more_than_text" data-format="raw"></span> a Year</h3>
+          <p><strong>What We See:</strong> Monthly infant care costs
+             <strong>rose <span data-fill="charts.s2_3_infant_care_cost.rise_pct_whole" data-format="pct0"></span>,</strong> from
+             <span data-fill="charts.s2_3_infant_care_cost.first.value" data-format="dollars"></span> in
+             <span data-fill="charts.s2_3_infant_care_cost.first.year" data-format="raw"></span> to
+             <span data-fill="charts.s2_3_infant_care_cost.last.value" data-format="dollars"></span> in
+             <span data-fill="charts.s2_3_infant_care_cost.last.year" data-format="raw"></span>, with the steepest increases
+             in 2023 and 2024.</p>
+          <p><strong>Takeaway:</strong> At <strong>more than
+             <span data-fill="charts.s2_3_infant_care_cost.last.annual_more_than" data-format="dollars"></span> a year,</strong>
+             infant care now rivals the cost of college tuition.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.3</strong>Line with value labels and a rust callout for the increase (P7 + P3)</div></div>
+          <p class="chart-subtitle">Cost shown is in nominal dollars for a month of care Monday through Friday, for one infant</p>
+          <div class="chart-box">
+            <canvas id="chart-infant-care"></canvas>
+            <p class="chart-note gap-note" id="note-infant-care-gap"><span>(<span data-fill="charts.s2_3_infant_care_cost.missing_years.0" data-format="raw"></span>
+              data is unavailable)</span></p>
+            <p class="stat-circle arrow-up rise chart-note" id="circle-infant-care">
+              <span>The<br>cost of Infant<br>care rose</span>
+              <strong data-fill="charts.s2_3_infant_care_cost.rise_pct_whole" data-format="pct0"></strong>
+              <span>from<br><span data-fill="charts.s2_3_infant_care_cost.first.year" data-format="raw"></span> to
+                <span data-fill="charts.s2_3_infant_care_cost.last.year" data-format="raw"></span></span>
+            </p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_3_infant_care_cost.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.4. Three split bars drawn by charts.js (drawInfantCareShare) from "s2_4_infant_care_share":
+         the part of a family's median income that a year of infant care takes (full color) and what is left
+         (the lighter step). The words are here: each family's name, the two headings above the bars (they
+         stand in for a key) and the rust box under the dashed line. The year buttons show the same picture
+         for an earlier year: the bars slide, and every number on this card that is filled from "latest"
+         (the title's year, the line under it, the text box) changes to the year chosen. -->
     <article class="card" id="card-2-4">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
         <span class="page-tag" data-page="2.4">Bulletin page 2.4</span>
       </div>
-      <h2 class="db-title">Percentage of income spent on infant care by family type, 2024</h2>
+      <h2 class="db-title">Percentage of income spent on infant care by family type,
+        <span data-fill="charts.s2_4_infant_care_share.latest.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Cost relative to family income</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Infant care consumes
+             <strong><span data-fill="charts.s2_4_infant_care_share.latest.married.spent_whole" data-format="pct0"></span> of median income for married
+             couples and <span data-fill="charts.s2_4_infant_care_share.latest.mother.spent_whole" data-format="pct0"></span> for single mothers</strong>
+             — both above the federal <span data-fill="charts.s2_4_infant_care_share.benchmark_pct" data-format="pct0"></span> affordability
+             benchmark.</p>
+          <p><strong>Takeaway:</strong> For every $1 a single mother makes,
+             <span data-fill="charts.s2_4_infant_care_share.latest.mother.cents_per_dollar" data-format="raw"></span> is spent on child care.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.4</strong>Silhouette-labeled 100% bars with the 7% benchmark callout (P1 + P4 + P3)</div></div>
+          <p class="chart-subtitle">The typical cost of child care in Westchester County is
+            <span data-fill="charts.s2_4_infant_care_share.latest.all_spent_pct" data-format="pct"></span> of the median income
+            (<span data-fill="charts.s2_4_infant_care_share.latest.all_income" data-format="dollars"></span>).</p>
+          <div class="share-bars fills" id="chart-care-share">
+            <div class="shb-top">
+              <div class="year-switch" id="care-share-years" role="group" aria-label="Choose the year to show"></div>
+              <div class="shb-headings" aria-hidden="true">
+                <span>% of Income for Infant Care</span>
+                <span>Remaining % of Income after Infant Care Expense</span>
+              </div>
+            </div>
+            <div class="shb-rows">
+            <div class="shb-row" data-family="mother">
+              <div class="shb-who">
+                <span class="figure" style="--figure: url(resources/silhouettes/family-single-mother.svg)" aria-hidden="true"></span>
+                <p><strong>Single mother <br>with children</strong> Median income <span class="js-income keep-together"></span></p>
+              </div>
+              <div class="shb-bar">
+                <div class="shb-part spent"><span class="shb-value"></span></div>
+                <div class="shb-part rest"><span class="shb-value"></span></div>
+              </div>
+            </div>
+            <div class="shb-row" data-family="father">
+              <div class="shb-who">
+                <span class="figure" style="--figure: url(resources/silhouettes/family-single-father.svg)" aria-hidden="true"></span>
+                <p><strong>Single father <br>with children</strong> Median income <span class="js-income keep-together"></span></p>
+              </div>
+              <div class="shb-bar">
+                <div class="shb-part spent"><span class="shb-value"></span></div>
+                <div class="shb-part rest"><span class="shb-value"></span></div>
+              </div>
+            </div>
+            <div class="shb-row" data-family="married">
+              <div class="shb-who">
+                <span class="figure" style="--figure: url(resources/silhouettes/family-married-couple.svg)" aria-hidden="true"></span>
+                <p><strong>Married couple <br>with children</strong> Median income <span class="js-income keep-together"></span></p>
+              </div>
+              <div class="shb-bar">
+                <div class="shb-part spent"><span class="shb-value"></span></div>
+                <div class="shb-part rest"><span class="shb-value"></span></div>
+              </div>
+            </div>
+              <div class="shb-benchmark" aria-hidden="true"></div>
+            </div>
+            <div class="shb-callout">
+              <p class="db-callout">The federal affordability benchmark is
+                <span data-fill="charts.s2_4_infant_care_share.benchmark_pct" data-format="pct0"></span> of annual income. Westchester families spend
+                far more.</p>
+            </div>
+          </div>
+          <p class="visually-hidden" id="care-share-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_4_infant_care_share.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.5. A table of words, typed as the Bulletin prints it: the credits' names, amounts and tax years
+         are fixed facts (see the comment at the top), not numbers from data.json. charts.js
+         (drawTaxCredits) only copies each column's heading onto its cells for the phone layout, where each
+         row becomes a card. The two outline maps are picture files, colored here. -->
     <article class="card" id="card-2-5">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
@@ -851,15 +1104,55 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Tax credits for families</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> State and federal tax credits provide broad support to families with children
+             but cover only a fraction of child care costs.</p>
+          <p><strong>Takeaway:</strong> Child care specific programs like CCAP (next page) offer far more help. Tax
+             credits alone cover only a small share of what it costs to raise a child.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Table 2.5</strong>Federal and New York State credits, with the US and NY outline maps as row labels (P10b)</div></div>
+          <div class="table-frame fills">
+            <table class="word-table credits" id="table-credits">
+              <thead>
+                <tr>
+                  <td></td>
+                  <th scope="col" class="child"><span class="col-name">"Child" Credit</span>
+                    <small>Nearly every family with children qualifies</small></th>
+                  <th scope="col" class="care"><span class="col-name">"Care" Credit</span>
+                    <small>Only granted if care is necessary so that head of household can work</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><span class="where">Federal</span>
+                    <span class="figure" style="--figure: url(resources/silhouettes/united-states.svg)" aria-hidden="true"></span></th>
+                  <td class="child"><strong>Child Tax Credit</strong> Up to $2,200<br>per child
+                    <small>(Tax year 2026)</small></td>
+                  <td class="care"><strong>Child &amp; Dependent Care Credit</strong> Up to $1,500 for one child<br>$3,000 for two or more
+                    <small>(Tax year 2026)</small></td>
+                </tr>
+                <tr>
+                  <th scope="row"><span class="where">NY State</span>
+                    <span class="figure" style="--figure: url(resources/silhouettes/new-york-state.svg)" aria-hidden="true"></span></th>
+                  <td class="child"><strong>Empire State Child Credit</strong> Up to $1,000<br>per child under 4<br>$500 per child ages 4-16
+                    <small>(Tax year 2026)</small></td>
+                  <td class="care"><strong>NYS Child &amp; Dependent Care Credit</strong> Up to $1,155 for one child<br>Up to ~$3,465 for five or more
+                    <small>(Tax year 2025)</small></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: Internal Revenue Service (Child Tax Credit; Child and Dependent Care Credit, Form 2441); New York
+        State Department of Taxation and Finance (Empire State Child Credit; Child and Dependent Care Credit, Form IT-216);
+        federal One Big Beautiful Bill Act (2025). Amounts shown are maximums; tax year noted per credit.</p>
     </article>
 
+    <!-- Page 2.6. A table of words in two blocks, one per program, each under its own colored heading row
+         (CCAP green, Westchester Works purple: the same two colors on pages 2.7 and 2.8). The income ranges,
+         the scholarship's yearly amount and its share of the cost of care are filled from
+         "s2_6_program_comparison"; the rest is typed as the Bulletin prints it (see the comment at the top).
+         charts.js (drawProgramComparison) copies each heading onto its cells for the phone layout. -->
     <article class="card" id="card-2-6">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
@@ -868,50 +1161,167 @@
       <h2 class="db-title">Comparing child care supportive programs, 2025</h2>
       <div class="card-body full">
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Table 2.6</strong>CCAP and the Westchester Works Scholarship: what each is, who qualifies, what it's worth, where it stands</div></div>
+          <table class="word-table programs" id="table-programs">
+            <tbody class="ccap">
+              <tr class="heads">
+                <th scope="col">Program</th><th scope="col">What It Is</th><th scope="col">Who Qualifies</th>
+                <th scope="col">What It's Worth</th><th scope="col">Right Now…</th>
+              </tr>
+              <tr>
+                <th scope="row">Child Care Assistance Program (CCAP)</th>
+                <td>A government subsidy that covers most of the cost of care at participating providers; families pay
+                    a small share.</td>
+                <td>Working families earning between about
+                    <span class="keep-together"><span data-fill="charts.s2_6_program_comparison.ccap.about_low" data-format="dollars"></span>-<span data-fill="charts.s2_6_program_comparison.ccap.about_high" data-format="dollars"></span></span>
+                    depending on Family size (~85% of Median Household Income)</td>
+                <td>The program can cut a family's yearly child care bill from $16,415 to $358 in a typical example.</td>
+                <td class="now">In Westchester, CCAP is over capacity and opened a waitlist for new applicants in January 2026.
+                    Families who qualify are going without help.</td>
+              </tr>
+            </tbody>
+            <tbody class="works">
+              <tr class="heads">
+                <th scope="col">Program</th><th scope="col">What It Is</th><th scope="col">Who Qualifies</th>
+                <th scope="col">What It's Worth</th><th scope="col">Right Now…</th>
+              </tr>
+              <tr>
+                <th scope="row">Westchester Works Scholarship</th>
+                <td>A local scholarship for families who earn slightly too much to qualify for CCAP.</td>
+                <td>Households earning between about
+                    <span class="keep-together"><span data-fill="charts.s2_6_program_comparison.works.about_low" data-format="dollars"></span>-<span data-fill="charts.s2_6_program_comparison.works.about_high" data-format="dollars"></span></span>
+                    depending on Family size</td>
+                <td>The program can contribute up to
+                    <span data-fill="charts.s2_6_program_comparison.works.award_annual" data-format="dollars"></span> a year toward care, about
+                    <span data-fill="charts.s2_6_program_comparison.works.award_share_pct" data-format="pct0"></span> of the average cost of
+                    center-based infant care.</td>
+                <td class="now">Currently serving families on the CCAP waitlist, in addition to families exceeding the income
+                    threshold.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_6_program_comparison.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.7. Two family cards, plain HTML: nothing is drawn by charts.js. Every amount is filled from
+         "s2_7_two_families"; the words (who the family is, what each row is called) are here. Family 1 is in
+         CCAP's green and Family 2 in Westchester Works' purple, the same two colors as on pages 2.6 and 2.8.
+         The two walking families are picture files, colored here. -->
     <article class="card" id="card-2-7">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
         <span class="page-tag" data-page="2.7">Bulletin page 2.7</span>
       </div>
-      <h2 class="db-title">Two families, two child care programs: what each pays, 2026</h2>
+      <h2 class="db-title">Two families, two child care programs: what each pays,
+        <span data-fill="charts.s2_7_two_families.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>One family, two programs</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> At <span data-fill="charts.s2_7_two_families.families.0.income" data-format="dollars"></span>, CCAP
+             covers nearly all of a family's <span data-fill="charts.s2_7_two_families.cost_of_care" data-format="dollars"></span> infant care
+             bill, leaving a <span data-fill="charts.s2_7_two_families.families.0.pays" data-format="dollars"></span> co-pay. At
+             <span data-fill="charts.s2_7_two_families.families.1.income" data-format="dollars"></span>, they no longer qualify; Westchester
+             Works covers <span data-fill="charts.s2_7_two_families.families.1.covers_pct" data-format="pct0"></span>, leaving the family to pay
+             <span data-fill="charts.s2_7_two_families.families.1.pays" data-format="dollars"></span>.</p>
+          <p><strong>Takeaway:</strong> Earning <span data-fill="charts.s2_7_two_families.income_gap" data-format="dollars"></span> more pushes a
+             family past the CCAP cutoff—adding nearly
+             <span data-fill="charts.s2_7_two_families.extra_cost_about" data-format="dollars"></span> in annual child care costs for the same
+             care.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Cards 2.7</strong>Two family comparison cards with walking-family silhouettes (P13)</div></div>
+          <div class="family-cards fills" id="chart-two-families">
+            <div class="family-card ccap" role="group" aria-labelledby="family-1-name">
+              <h3 class="fc-tab" id="family-1-name">Family 1</h3>
+              <div class="fc-body">
+                <div class="fc-who">
+                  <p>Two parents<br>with one infant</p>
+                  <p>Income: <span data-fill="charts.s2_7_two_families.families.0.income" data-format="dollars"></span><br>They qualify for CCAP</p>
+                </div>
+                <div class="figure" style="--figure: url(resources/silhouettes/family-walking-parents-carrying-child.svg)" role="img" aria-label="Two parents walking, one carrying a child (silhouette)"></div>
+                <div class="fc-sums">
+                  <table class="fc-table">
+                    <caption>The Child Care Assistance Program</caption>
+                    <tbody>
+                      <tr><th scope="row">Cost of Care</th><td><span data-fill="charts.s2_7_two_families.cost_of_care" data-format="dollars"></span></td></tr>
+                      <tr><th scope="row">CCAP Covers</th><td><span data-fill="charts.s2_7_two_families.families.0.covers" data-format="dollars"></span></td></tr>
+                      <tr class="pays"><th scope="row">Family Pays</th><td><span data-fill="charts.s2_7_two_families.families.0.pays" data-format="dollars"></span></td></tr>
+                    </tbody>
+                  </table>
+                  <p class="fc-share">CCAP covers approx. <span data-fill="charts.s2_7_two_families.families.0.covers_pct" data-format="pct0"></span></p>
+                </div>
+              </div>
+            </div>
+            <div class="family-card works" role="group" aria-labelledby="family-2-name">
+              <h3 class="fc-tab" id="family-2-name">Family 2</h3>
+              <div class="fc-body">
+                <div class="fc-who">
+                  <p>Two parents<br>with one infant</p>
+                  <p>Income: <span data-fill="charts.s2_7_two_families.families.1.income" data-format="dollars"></span><br>Over the CCAP limit but they
+                     qualify for Westchester Works</p>
+                </div>
+                <div class="figure" style="--figure: url(resources/silhouettes/family-walking-parents-with-infant.svg)" role="img" aria-label="Two parents walking with an infant (silhouette)"></div>
+                <div class="fc-sums">
+                  <table class="fc-table">
+                    <caption>Westchester Works Scholarship</caption>
+                    <tbody>
+                      <tr><th scope="row">Cost of Care</th><td><span data-fill="charts.s2_7_two_families.cost_of_care" data-format="dollars"></span></td></tr>
+                      <tr><th scope="row">Scholarship Covers</th><td><span data-fill="charts.s2_7_two_families.families.1.covers" data-format="dollars"></span></td></tr>
+                      <tr class="pays"><th scope="row">Family Pays</th><td><span data-fill="charts.s2_7_two_families.families.1.pays" data-format="dollars"></span></td></tr>
+                    </tbody>
+                  </table>
+                  <p class="fc-share">Westchester Works covers approx. <span data-fill="charts.s2_7_two_families.families.1.covers_pct" data-format="pct0"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_7_two_families.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.8. One row per household size, drawn by charts.js (drawIncomeLimits) from "s2_8_income_limits":
+         a green bar to the CCAP limit, a pale band on to the Westchester Works limit, which ends in a dot,
+         and both amounts. Instead of a key, the names are written on the chart (the Bulletin's pointer
+         bubble is here; the other two names are in charts.js Settings). Each row is a button: pressing
+         one keeps it in color, turns the others pale and writes its two limits in the line under the
+         chart; pressing it again brings every row back. On a screen too narrow for the amounts to fit in
+         the bars, each row has its names and amounts written under it instead. -->
     <article class="card" id="card-2-8">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Child Care</div>
         <span class="page-tag" data-page="2.8">Bulletin page 2.8</span>
       </div>
-      <h2 class="db-title">Income eligibility limits for child care programs in Westchester, 2026</h2>
+      <h2 class="db-title">Income eligibility limits for child care programs in Westchester,
+        <span data-fill="charts.s2_8_income_limits.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Westchester Works Scholarship</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> The Westchester Works scholarship <strong>fills the gap for families</strong> who
+             earn over the maximum limit for the Child Care Assistance Program (CCAP).</p>
+          <p><strong>Takeaway:</strong> Families just above the green CCAP limit can still qualify; the Westchester Works
+             bands top out between <span data-fill="charts.s2_8_income_limits.works_lowest" data-format="dollars"></span> and
+             <span data-fill="charts.s2_8_income_limits.works_highest" data-format="dollars"></span>, by household size.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.8</strong>Income bands by household size: the CCAP limit and the Westchester Works range</div></div>
+          <div class="range-bars fills" id="chart-income-limits">
+            <div class="rb-top">
+              <p class="rb-heading">Household <span>size</span></p>
+              <p class="rb-bubble">Income range eligible for Westchester Works</p>
+            </div>
+            <div class="rb-rows"></div>
+            <div class="rb-axis" aria-hidden="true"></div>
+          </div>
+          <p class="view-hint placeholder" id="income-limits-status" aria-live="polite">[PLACEHOLDER] Click a household size to read its two limits. Click it again to see all four.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_8_income_limits.source" data-format="raw"></span></p>
     </article>
 
-    <!-- Page 2.9: a quotation (a fixed fact; see the comment at the top) -->
-    <aside class="quote-card" id="card-2-9" aria-label="Quotation, Bulletin page 2.9">
+    <!-- Page 2.9: a quotation (a fixed fact; see the comment at the top). "centered" sets the words in the
+         middle of the bubble, with a dash before the speaker's name and her role on a line of its own, as
+         on this page of the Bulletin. -->
+    <aside class="quote-card centered" id="card-2-9" aria-label="Quotation, Bulletin page 2.9">
       <div class="figure" style="--figure: url(resources/silhouettes/parent-holding-child.svg)" role="img" aria-label="Parent holding a young child (silhouette)"></div>
       <div class="bubble">
         <h3>A Parent's Perspective</h3>
@@ -930,126 +1340,317 @@
          Early Intervention and Universal Pre-K — to consider where these earlier investments will bring the most benefit.</p>
     </div>
 
+    <!-- Page 2.11. Four sideways bars drawn by charts.js (drawThirdGrade) from "s2_11_third_grade": the share
+         of third graders proficient in each subject, in two districts. Each district's name is written in
+         its bars. The two boxed statements under the chart are here; they carry the two colors, so they
+         are the key and no other is shown. The three student figures behind the bars are picture files
+         (the first is the right-hand figure of a file that holds two), in a quiet solid gray. -->
     <article class="card" id="card-2-11">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.11">Bulletin page 2.11</span>
       </div>
-      <h2 class="db-title">Comparing third grade proficiency in two school districts, 2025</h2>
+      <h2 class="db-title">Comparing third grade proficiency in two school districts,
+        <span data-fill="charts.s2_11_third_grade.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Language Arts &amp; Math Proficiency: A Tale of Two Districts</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Scarsdale is the county's highest-income school district; Yonkers is one of its
+             lowest. In Scarsdale, about <span data-fill="charts.s2_11_third_grade.districts.1.both_pct" data-format="pct0"></span> of third
+             graders are proficient in reading and math. In Yonkers, about
+             <span data-fill="charts.s2_11_third_grade.districts.0.both_pct" data-format="pct0"></span> are.</p>
+          <p><strong>Takeaway:</strong> That is a gap of <span data-fill="charts.s2_11_third_grade.gaps.0" data-format="raw"></span> points in
+             reading and <span data-fill="charts.s2_11_third_grade.gaps.1" data-format="raw"></span> in math, already in place by third grade — so
+             the causes start well before it.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.11</strong>Yonkers vs Scarsdale bars with student figures and the district income notes</div></div>
+          <div class="district-bars fills" id="chart-third-grade">
+            <div class="dsb-figures" aria-hidden="true">
+              <span class="figure one" style="--figure: url(resources/silhouettes/student-standing-06.svg)"></span>
+              <span class="figure two" style="--figure: url(resources/silhouettes/student-standing-11.svg)"></span>
+            </div>
+            <div class="dsb-groups"></div>
+          </div>
+          <div class="district-notes">
+            <p class="district-note low"><span><strong><span data-fill="charts.s2_11_third_grade.districts.0.full_name" data-format="raw"></span> –</strong>
+              Lowest median family income at approx.
+              <span class="keep-together"><span data-fill="charts.s2_11_third_grade.districts.0.income.about" data-format="dollars"></span>/year</span></span></p>
+            <p class="district-note high"><span><strong><span data-fill="charts.s2_11_third_grade.districts.1.full_name" data-format="raw"></span> –</strong>
+              Highest median family income at approx.
+              <span class="keep-together"><span data-fill="charts.s2_11_third_grade.districts.1.income.about" data-format="dollars"></span>/year</span></span></p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_11_third_grade.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.12. A table of words, typed as the Bulletin prints it (fixed facts: see the comment at the top).
+         The one number in the text box, the gap in math, is filled from page 2.11's block. charts.js
+         (drawProgramsBeforeKindergarten) copies each heading onto its cells for the phone layout. -->
     <article class="card" id="card-2-12">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.12">Bulletin page 2.12</span>
       </div>
       <h2 class="db-title">Early childhood programs before kindergarten</h2>
-      <div class="card-body">
+      <div class="card-body stack-early">
         <aside class="db-panel">
           <h3>Closing the gap starts before third grade</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Three programs reach children before they start school. Each one serves a
+             different age and a different group of families.</p>
+          <p><strong>Takeaway:</strong> If the gap is already
+             <span data-fill="charts.s2_11_third_grade.gaps.1" data-format="raw"></span> points wide by third grade, these
+             are the programs where earlier action can change the outcome.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Table 2.12</strong>Head Start, Early Intervention and Universal Pre-K: ages, what each is, who it's for, who runs it (P6)</div></div>
+          <div class="table-frame fills">
+            <table class="word-table before-k" id="table-before-k">
+              <thead>
+                <tr>
+                  <th scope="col">Program</th><th scope="col">Ages</th><th scope="col">What It Is</th>
+                  <th scope="col">Who It's For</th><th scope="col">Who Runs It</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="early">
+                  <th scope="row">Head Start &amp; Early Head Start</th>
+                  <td class="ages">Birth-3 and 3-5</td>
+                  <td>Free early learning combined with health, nutrition and family support</td>
+                  <td>Families with low income, at or below the federal poverty guidelines. Early Head Start serves birth
+                      to 3; Head Start serves 3 to 5</td>
+                  <td>Federally funded, with grants going straight to local providers</td>
+                </tr>
+                <tr class="ei">
+                  <th scope="row">Early Intervention (EI)</th>
+                  <td class="ages">Birth-3</td>
+                  <td>Free therapy — speech, physical, occupational — and special instruction for developmental delays</td>
+                  <td>Any child with a confirmed delay or qualifying diagnosis. No income test</td>
+                  <td>New York State Department of Health, delivered county by county</td>
+                </tr>
+                <tr class="prek">
+                  <th scope="row">Universal <span class="keep-together">Pre-K</span> (UPK)</th>
+                  <td class="ages">Mainly 4</td>
+                  <td>Free prekindergarten in school and community classrooms</td>
+                  <td>Any child in a district that offers it. No income test, but seats are limited and often awarded by
+                      lottery</td>
+                  <td>New York State Education Department, run by school districts and community partners</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: U.S. Department of Health &amp; Human Services, Office of Head Start, program eligibility and
+        ages served; New York State Department of Health, Bureau of Early Intervention (Individuals with Disabilities
+        Education Act, Part C); New York State Education Department, Universal Prekindergarten program and family
+        guidance.</p>
     </article>
 
+    <!-- Page 2.13. Two lines drawn by charts.js (drawHeadStart) from "s2_13_head_start". The words that sit on
+         the chart are here: each line's name, as the Bulletin prints it, and the note about the year with
+         no figure. charts.js puts each name just above its line at the left, and the note at the foot of
+         the dotted stretch. There is no key. -->
     <article class="card" id="card-2-13">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.13">Bulletin page 2.13</span>
       </div>
-      <h2 class="db-title">Head Start enrollment in New York State, 2014 to 2025</h2>
+      <h2 class="db-title">Head Start enrollment in New York State,
+        <span data-fill="charts.s2_13_head_start.series.0.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s2_13_head_start.series.0.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Head Start reaches fewer children each year</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> New York's Head Start enrollment has halved since
+             <span data-fill="charts.s2_13_head_start.series.0.first.year" data-format="raw"></span>, from about
+             <span data-fill="charts.s2_13_head_start.series.0.first.about"></span> children to
+             <span data-fill="charts.s2_13_head_start.series.0.last.about"></span>. The state's needs assessment links this to the spread of
+             publicly funded <span class="keep-together">pre-K</span>.</p>
+          <p><strong>Takeaway:</strong> Early Head Start, for infants and toddlers, grew until
+             <span data-fill="charts.s2_13_head_start.series.1.peak.year" data-format="raw"></span> and has been flat since at about
+             <span data-fill="charts.s2_13_head_start.series.1.last.about"></span>. Funding and staffing are the limits.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.13</strong>Two lines (Head Start, Early Head Start) with end labels and the 2020 gap marked (P7)</div></div>
+          <p class="chart-subtitle">Children enrolled in Head Start and Early Head Start across New York State,
+            <span class="keep-together"><span data-fill="charts.s2_13_head_start.series.0.first.year" data-format="raw"></span>-<span data-fill="charts.s2_13_head_start.series.0.last.year" data-format="raw"></span></span></p>
+          <div class="chart-box">
+            <canvas id="chart-head-start"></canvas>
+            <span class="line-name" data-series="hs"><span>Head Start (mostly ages <span class="keep-together">3-5</span>)</span></span>
+            <span class="line-name" data-series="ehs"><span>Early Head Start (under age 3)</span></span>
+            <p class="chart-note gap-note one-line" id="note-head-start-gap"><span>(<span data-fill="charts.s2_13_head_start.missing_years.0" data-format="raw"></span>
+              data is not available)</span></p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_13_head_start.source" data-format="raw"></span> New York State
+        Council on Children and Families, New York State Head Start Collaboration Project State Needs Assessment (2023),
+        on prekindergarten expansion and the conversion of seats to Early Head Start.</p>
     </article>
 
+    <!-- Pages 2.14 and 2.16 are the same picture, drawn by one function in charts.js (drawOutcomeLines) from
+         "s2_14_early_intervention_exits" and "s2_16_preschool_exits": three lines, one per outcome, in the
+         same three colors on both cards, each with its first and its latest value written beside it. The
+         key sits on the chart, top right, as in the Bulletin, and its three entries are buttons: pressing
+         one keeps that line in color with every year's value written on it and turns the other two gray;
+         pressing it again brings all three back. (On a narrow screen the key sits above the chart.) -->
     <article class="card" id="card-2-14">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.14">Bulletin page 2.14</span>
       </div>
-      <h2 class="db-title">Early Intervention exits at age-typical levels in Westchester County, 2015 to 2024</h2>
+      <h2 class="db-title">Early Intervention exits at age-typical levels in Westchester County,
+        <span data-fill="charts.s2_14_early_intervention_exits.first_year" data-format="raw"></span> to
+        <span data-fill="charts.s2_14_early_intervention_exits.last_year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>About half of Westchester's Early Intervention children exit at age-typical levels</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> About half of Westchester children who leave Early Intervention are meeting age
+             expectations. In ten years that share has moved only a few points.</p>
+          <p><strong>Takeaway:</strong> If we want more children ready for school, this is one of the numbers that has to
+             move.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.14</strong>Three outcome lines with first and last values (P7)</div></div>
+          <p class="chart-subtitle">Federal indicator measuring percentage of children exiting Early Intervention at age typical levels</p>
+          <div class="chart-box">
+            <canvas id="chart-ei-exits"></canvas>
+            <div class="chart-key chart-note" id="key-ei-exits" role="group" aria-label="Choose one outcome to follow"></div>
+          </div>
+          <p class="view-hint placeholder">[PLACEHOLDER] Click an outcome in the key to follow it year by year. Click it again to see all three.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_14_early_intervention_exits.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.15. Bars drawn by charts.js (drawTherapists) from "s2_15_therapists", in the Bulletin's purple,
+         every bar with its count above it. The scale is the Bulletin's: it starts well above zero (at
+         11,500), so the bars show the change from year to year, not the size of the workforce. -->
     <article class="card" id="card-2-15">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.15">Bulletin page 2.15</span>
       </div>
-      <h2 class="db-title">Early Intervention therapists in New York State, 2018 to 2025</h2>
+      <h2 class="db-title">Early Intervention therapists in New York State,
+        <span data-fill="charts.s2_15_therapists.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s2_15_therapists.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Low pay is shrinking the Early Intervention workforce, and families wait longer for care</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <h3>Low pay is shrinking the Early Intervention workforce, and families wait longer for care.</h3>
+          <p><strong>What We See:</strong> The number of Early Intervention therapists statewide is down about
+             <span data-fill="charts.s2_15_therapists.decline_pct_whole" data-format="pct0"></span> since
+             <span data-fill="charts.s2_15_therapists.first.year" data-format="raw"></span>, from
+             <span data-fill="charts.s2_15_therapists.first.value"></span> to <span data-fill="charts.s2_15_therapists.last.value"></span>. Pay is a big reason:
+             the base rate is <span data-fill="charts.s2_15_therapists.rate.now.text" data-format="raw"></span> today, below the
+             <span data-fill="charts.s2_15_therapists.rate.then.text" data-format="raw"></span> paid in
+             <span data-fill="charts.s2_15_therapists.rate.then.year" data-format="raw"></span>.</p>
+          <p><strong>Takeaway:</strong> Fewer therapists means fewer visits and longer waits. Children get less help, and
+             later.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.15</strong>Blue bars by year with value labels</div></div>
+          <p class="chart-subtitle">Statewide count of therapists providing Early Intervention services. Most work
+            part-time.</p>
+          <div class="chart-box"><canvas id="chart-therapists"></canvas></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_15_therapists.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.16: the same picture as page 2.14 (see the note above that card). It starts in the first year
+         the warehouse holds; the two ranges in the text box are filled from the block. -->
     <article class="card" id="card-2-16">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.16">Bulletin page 2.16</span>
       </div>
-      <h2 class="db-title">Decline in age-typical levels for special education preschoolers in New York State, 2015 to 2023</h2>
+      <h2 class="db-title">Decline in age-typical levels for special education preschoolers in New York State,
+        <span data-fill="charts.s2_16_preschool_exits.first_year" data-format="raw"></span> to
+        <span data-fill="charts.s2_16_preschool_exits.last_year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Fewer Preschoolers Exit Special Education at Age Typical Levels</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Preschool special education picks up where Early Intervention ends, at age 3.
+             Statewide, the share leaving at age-typical levels fell from about
+             <span class="keep-together"><span data-fill="charts.s2_16_preschool_exits.first_spread.low" data-format="raw"></span>-<span data-fill="charts.s2_16_preschool_exits.first_spread.high" data-format="pct0"></span></span>
+             in <span data-fill="charts.s2_16_preschool_exits.first_spread.year" data-format="raw"></span> to
+             <span class="keep-together"><span data-fill="charts.s2_16_preschool_exits.last_spread.low" data-format="raw"></span>-<span data-fill="charts.s2_16_preschool_exits.last_spread.high" data-format="pct0"></span></span>
+             in <span data-fill="charts.s2_16_preschool_exits.last_spread.year" data-format="raw"></span>.</p>
+          <p><strong>Takeaway:</strong> Access is part of the problem. New York has never met the federal 60-day evaluation
+             deadline — <span data-fill="charts.s2_16_preschool_exits.evaluated_on_time.whole" data-format="pct0"></span> in
+             <span data-fill="charts.s2_16_preschool_exits.evaluated_on_time.year" data-format="raw"></span> — with too few approved evaluators and
+             long scheduling delays.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 2.16</strong>Three outcome lines with first and last values (P7)</div></div>
+          <p class="chart-subtitle">State indicator measuring percentage of preschoolers exiting at age-typical levels</p>
+          <div class="chart-box">
+            <canvas id="chart-preschool-exits"></canvas>
+            <div class="chart-key chart-note" id="key-preschool-exits" role="group" aria-label="Choose one outcome to follow"></div>
+          </div>
+          <p class="view-hint placeholder">[PLACEHOLDER] Click an outcome in the key to follow it year by year. Click it again to see all three.</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_16_preschool_exits.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 2.17, full width with no text box, as in the Bulletin: a lead sentence, a two-slice pie, a circle
+         with children's figures, and the filled trend with its words. charts.js (drawUniversalPreK) draws
+         the pie and the trend from "s2_17_universal_pre_k". The year buttons (written by charts.js, one per
+         school year in the data) show the same picture for an earlier year: the pie turns, the trend marks
+         that year, and every number here that is filled from "latest" (the lead sentence, the pie's two
+         shares, the circle, the note) changes to the year chosen. Nothing changes size or place. -->
     <article class="card" id="card-2-17">
       <div class="card-head">
         <div class="kicker">Chapter 2 · Early Education</div>
         <span class="page-tag" data-page="2.17">Bulletin page 2.17</span>
       </div>
-      <h2 class="db-title">Universal Pre-K in Westchester County, 2020 through 2025</h2>
+      <h2 class="db-title">Universal Pre-K in Westchester County,
+        <span data-fill="charts.s2_17_universal_pre_k.school_years.0" data-format="raw"></span> through
+        <span data-fill="charts.s2_17_universal_pre_k.last.school_year" data-format="raw"></span></h2>
       <div class="card-body full">
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 2.17</strong>Hero sentence, enrolled / not enrolled split bar (P4), the "25 of 40 districts" stat circle (P11) and the enrollment trend</div></div>
+          <div class="prek-page" id="chart-prek">
+            <div class="prek-lead">
+              <div class="year-switch five" id="prek-years" role="group" aria-label="Choose the school year to show"></div>
+              <p class="prek-sentence">New York State estimates
+                <span data-fill="charts.s2_17_universal_pre_k.latest.eligible_four_year_olds"></span> Westchester four-year-olds were eligible for
+                state-funded <span class="keep-together">pre-K</span> in
+                <span class="keep-together" data-fill="charts.s2_17_universal_pre_k.latest.school_year" data-format="raw"></span>.</p>
+              <p class="prek-sentence"><strong>However, only
+                <span data-fill="charts.s2_17_universal_pre_k.latest.served_in_words" data-format="raw"></span>
+                (<span data-fill="charts.s2_17_universal_pre_k.latest.four_year_olds_served"></span>) were enrolled in UPK.</strong></p>
+            </div>
+            <div class="pie prek-pie" id="pie-prek">
+              <!-- charts.js draws the two slices and puts these labels on them -->
+              <span class="pie-label" data-slice="enrolled"><strong data-fill="charts.s2_17_universal_pre_k.latest.served_whole" data-format="pct0"></strong>Were<br>enrolled<br>in Pre-K</span>
+              <span class="pie-label" data-slice="not"><strong data-fill="charts.s2_17_universal_pre_k.latest.not_served_whole" data-format="pct0"></strong>Were not<br>enrolled<br>in Pre-K</span>
+            </div>
+            <div class="prek-circle">
+              <p><strong><span data-fill="charts.s2_17_universal_pre_k.latest.districts_offering"></span> of
+                <span data-fill="charts.s2_17_universal_pre_k.districts"></span></strong> Districts Offered a State-Funded PK Program</p>
+              <div class="pc-figures" aria-hidden="true">
+                <span class="figure" style="--figure: url(resources/silhouettes/children-playing-ball.svg)"></span>
+                <span class="figure" style="--figure: url(resources/silhouettes/children-stroller.svg)"></span>
+              </div>
+              <p><em><span data-fill="charts.s2_17_universal_pre_k.latest.districts_without"></span> districts had 0 seats in
+                <span class="keep-together" data-fill="charts.s2_17_universal_pre_k.latest.school_year_in_full" data-format="raw"></span></em></p>
+            </div>
+            <div class="prek-trend">
+              <h3>UPK Enrollment in Westchester County,
+                <span class="keep-together" data-fill="charts.s2_17_universal_pre_k.school_years.0" data-format="raw"></span> to
+                <span class="keep-together" data-fill="charts.s2_17_universal_pre_k.last.school_year" data-format="raw"></span></h3>
+              <div class="chart-box short">
+                <canvas id="chart-prek-trend"></canvas>
+                <p class="chart-note area-words" id="note-prek-trend"><span class="cap" data-fill="charts.s2_17_universal_pre_k.change_pct" data-format="direction"></span>
+                  over <span data-fill="charts.s2_17_universal_pre_k.span_years" data-format="raw"></span> years</p>
+              </div>
+            </div>
+            <p class="prek-note">Note: Enrollment counts include both three- and four-year-olds served in any state-funded
+              <span class="keep-together">pre-K</span> program. Of the <span data-fill="charts.s2_17_universal_pre_k.latest.children_served"></span>
+              children enrolled in <span class="keep-together" data-fill="charts.s2_17_universal_pre_k.latest.school_year" data-format="raw"></span>,
+              <span data-fill="charts.s2_17_universal_pre_k.latest.four_year_olds_served"></span> were four-year-olds.</p>
+          </div>
+          <p class="visually-hidden" id="prek-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s2_17_universal_pre_k.source" data-format="raw"></span></p>
     </article>
 
     <div class="continue"><a class="btn-continue" href="#chapter-3">Continue to Chapter 3 →</a></div>
@@ -1087,90 +1688,245 @@
          lives below the federal poverty line, and nearly two thirds of them live in just four communities.</p>
     </div>
 
+    <!-- Page 3.3. No text box, as on the Bulletin's page. Left: a map of Westchester (charts.js draws it from
+         data/Geography.json) with the four communities in teal and named, and the orange circle over it. Right:
+         the Bulletin's headline sentence (its page title), the sentence about the poverty level and the table.
+         Pointing at a community on the map, or at its row in the table, lights up both. The poverty level
+         ("$31,200") is typed as the Bulletin prints it (see the list at the top). The card's own title is a
+         short one, like every other card's; the Bulletin's sentence sits inside the card, as on pages 1.3 and
+         2.17. -->
     <article class="card" id="card-3-3">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
         <span class="page-tag" data-page="3.3">Bulletin page 3.3</span>
       </div>
-      <h2 class="db-title">Four communities are home to nearly two-thirds of the school-aged children in poverty, 2024</h2>
+      <h2 class="db-title">School-aged children in poverty in
+        <span data-fill="charts.s3_3_four_communities.count_in_words" data-format="raw"></span> Westchester communities,
+        <span data-fill="charts.s3_3_four_communities.year" data-format="raw"></span></h2>
       <div class="card-body full">
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Map and table 3.3</strong>Westchester outline with the four communities highlighted and a stat circle (P10 + P11), beside the table</div></div>
+          <div class="poverty-page" id="chart-four-places">
+            <div class="poverty-map">
+              <div class="county-map" id="map-four-places"></div>
+              <p class="stat-circle places-circle" id="circle-four-places">
+                <strong data-fill="charts.s3_3_four_communities.share_in_four" data-format="pct"></strong>
+                <span>of Westchester's school-aged children in poverty live in these
+                  <span data-fill="charts.s3_3_four_communities.count_in_words" data-format="raw"></span> communities</span>
+              </p>
+            </div>
+            <div class="poverty-words">
+              <p class="poverty-lead">In <span data-fill="charts.s3_3_four_communities.year" data-format="raw"></span>,
+                <span data-fill="charts.s3_3_four_communities.count_in_words" data-format="raw"></span> Westchester communities
+                were home to nearly two-thirds of the school-aged children considered living in poverty.</p>
+              <p class="poverty-sentence">In <span data-fill="charts.s3_3_four_communities.year" data-format="raw"></span>, the
+                Federal Poverty Level for a family of 4 was $31,200 — and
+                <span data-fill="charts.s3_3_four_communities.county.in_poverty"></span> Westchester children ages 5-17 were
+                living at that poverty level.</p>
+              <div class="table-frame">
+                <table class="places-table" id="table-four-places">
+                  <thead><tr><th scope="col">Community</th><th scope="col">Children <span class="keep-together">5-17</span></th><th scope="col">Number in Poverty</th><th scope="col">Poverty Rate</th></tr></thead>
+                  <tbody><!-- charts.js writes one row per community, from data.json --></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_3_four_communities.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.4. One line drawn by charts.js (drawHomelessRate) from "s3_4_homeless_rate". The words on the chart
+         are here: the three points' words, the pandemic years' dates (typed; see the list at the top), the small
+         table, and the orange box right under the years. charts.js puts each in place, each point's words
+         centered on its point. -->
     <article class="card" id="card-3-4">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
         <span class="page-tag" data-page="3.4">Bulletin page 3.4</span>
       </div>
-      <h2 class="db-title">Homeless students per 1,000 enrolled in Westchester schools, 2016 to 2025</h2>
+      <h2 class="db-title">Homeless students per 1,000 enrolled in Westchester schools,
+        <span data-fill="charts.s3_4_homeless_rate.first_year" data-format="raw"></span> to
+        <span data-fill="charts.s3_4_homeless_rate.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Progress Erased: Homelessness Above Pre-Pandemic Levels</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> The rate fell from
+             <span data-fill="charts.s3_4_homeless_rate.before.rate_text" data-format="raw"></span> per 1,000 enrolled in
+             <span data-fill="charts.s3_4_homeless_rate.before.year" data-format="raw"></span> to
+             <span data-fill="charts.s3_4_homeless_rate.low.rate_text" data-format="raw"></span> in
+             <span data-fill="charts.s3_4_homeless_rate.low.year" data-format="raw"></span>, then climbed to
+             <span data-fill="charts.s3_4_homeless_rate.last.rate_text" data-format="raw"></span> in
+             <span data-fill="charts.s3_4_homeless_rate.last.year" data-format="raw"></span>. That is
+             <span data-fill="charts.s3_4_homeless_rate.last.count"></span> students, close to the
+             <span data-fill="charts.s3_4_homeless_rate.before.count"></span> counted in
+             <span data-fill="charts.s3_4_homeless_rate.before.year" data-format="raw"></span>. The increase begins as New
+             York's eviction moratorium ends.</p>
+          <p><strong>Takeaway:</strong> The dip reflected temporary protections, not lasting progress. Durable housing
+             supports will bend this trend.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.4</strong>Line with the pandemic period shaded and the moratorium callout (P7 + P3)</div></div>
+          <div class="chart-box tall" id="box-homeless-rate">
+            <canvas id="chart-homeless-rate"></canvas>
+            <p class="chart-note band-words" id="note-pandemic">COVID-19 Pandemic Period<br>March 11, 2020 – May 5, 2023</p>
+            <p class="chart-note point-word" data-point="before"><span>Pre-Pandemic</span></p>
+            <p class="chart-note point-word" data-point="low"><span>Pandemic<br>low</span></p>
+            <p class="chart-note point-word" data-point="last"><span>back to<br>Pre-Pandemic level</span></p>
+            <p class="chart-note point-label" data-point="before"><span><strong data-fill="charts.s3_4_homeless_rate.before.rate_text" data-format="raw"></strong><small>per 1,000 students</small></span></p>
+            <p class="chart-note point-label" data-point="low"><span><strong data-fill="charts.s3_4_homeless_rate.low.rate_text" data-format="raw"></strong><small>per 1,000 students</small></span></p>
+            <p class="chart-note point-label" data-point="last"><span><strong data-fill="charts.s3_4_homeless_rate.last.rate_text" data-format="raw"></strong><small>per 1,000 students</small></span></p>
+            <table class="chart-note on-chart-table" id="table-homeless-counts">
+              <caption>Westchester Students<br>Who are Homeless</caption>
+              <thead><tr>
+                <th scope="col" data-fill="charts.s3_4_homeless_rate.before.year" data-format="raw"></th>
+                <th scope="col" data-fill="charts.s3_4_homeless_rate.low.year" data-format="raw"></th>
+                <th scope="col" data-fill="charts.s3_4_homeless_rate.last.year" data-format="raw"></th>
+              </tr></thead>
+              <tbody><tr>
+                <td data-fill="charts.s3_4_homeless_rate.before.count"></td>
+                <td data-fill="charts.s3_4_homeless_rate.low.count"></td>
+                <td data-fill="charts.s3_4_homeless_rate.last.count"></td>
+              </tr></tbody>
+            </table>
+          </div>
+          <div class="pointer-row single"><p class="db-callout pointer-box" id="note-moratorium">January 15, 2022: New York's eviction moratorium ended</p></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_4_homeless_rate.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.5. The Bulletin's table. Its rows and words are here; the numbers are filled from
+         "s3_5_living_situations", and charts.js (drawLivingSituations) writes the two change columns and marks the
+         rows whose count rose (cream, rust words, an arrow up) and fell (a gray arrow down). The words under
+         "Doubled up" are typed (see the list at the top). As in the Bulletin, the totals row ends after the two
+         years. -->
     <article class="card" id="card-3-5">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
         <span class="page-tag" data-page="3.5">Bulletin page 3.5</span>
       </div>
-      <h2 class="db-title">Homeless Westchester students by type of living situation, 2020 to 2024</h2>
+      <h2 class="db-title">Homeless Westchester students by type of living situation,
+        <span data-fill="charts.s3_5_living_situations.years.0" data-format="raw"></span> to
+        <span data-fill="charts.s3_5_living_situations.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>The Largest Group Isn't Counted as Homeless</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> From <span data-fill="charts.s3_5_living_situations.years.0" data-format="raw"></span>
+             to <span data-fill="charts.s3_5_living_situations.years.1" data-format="raw"></span>, students doubled up — sharing
+             housing with friends or relatives for lack of stable housing — rose
+             <span data-fill="charts.s3_5_living_situations.doubled_up.change_pct" data-format="pct"></span>, from
+             <span data-fill="charts.s3_5_living_situations.doubled_up.first"></span> to
+             <span data-fill="charts.s3_5_living_situations.doubled_up.last"></span>. Shelter and transitional housing counts
+             fell.</p>
+          <p><strong>Takeaway:</strong> The federal definition does not count doubled-up students as homeless, so
+             Westchester's largest group of homeless students is invisible in federal data — and in federal funding.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Table 3.5</strong>Living situations with counts and change, the rising rows highlighted (P6)</div></div>
+          <div class="table-frame fills">
+            <table class="word-table living-table" id="table-living">
+              <thead><tr>
+                <th scope="col">Living Situations</th>
+                <th scope="col" data-fill="charts.s3_5_living_situations.years.0" data-format="raw"></th>
+                <th scope="col" data-fill="charts.s3_5_living_situations.years.1" data-format="raw"></th>
+                <th scope="col"># Change</th>
+                <th scope="col">% Change</th>
+              </tr></thead>
+              <tbody>
+                <tr data-key="doubled_up"><th scope="row">Doubled up<small>Not counted as homeless by the Federal Government</small></th>
+                  <td data-fill="charts.s3_5_living_situations.situations.0.first"></td><td data-fill="charts.s3_5_living_situations.situations.0.last"></td><td class="js-change"></td><td class="js-change-pct"></td></tr>
+                <tr data-key="hotels"><th scope="row">Hotels/Motels</th>
+                  <td data-fill="charts.s3_5_living_situations.situations.1.first"></td><td data-fill="charts.s3_5_living_situations.situations.1.last"></td><td class="js-change"></td><td class="js-change-pct"></td></tr>
+                <tr data-key="unsheltered"><th scope="row">Unsheltered</th>
+                  <td data-fill="charts.s3_5_living_situations.situations.2.first"></td><td data-fill="charts.s3_5_living_situations.situations.2.last"></td><td class="js-change"></td><td class="js-change-pct"></td></tr>
+                <tr data-key="shelters"><th scope="row">In Shelters</th>
+                  <td data-fill="charts.s3_5_living_situations.situations.3.first"></td><td data-fill="charts.s3_5_living_situations.situations.3.last"></td><td class="js-change"></td><td class="js-change-pct"></td></tr>
+                <tr data-key="transitional"><th scope="row">Transitional Housing</th>
+                  <td data-fill="charts.s3_5_living_situations.situations.4.first"></td><td data-fill="charts.s3_5_living_situations.situations.4.last"></td><td class="js-change"></td><td class="js-change-pct"></td></tr>
+                <tr class="totals"><th scope="row">TOTALS</th>
+                  <td data-fill="charts.s3_5_living_situations.totals.first"></td><td data-fill="charts.s3_5_living_situations.totals.last"></td><td class="blank"></td><td class="blank"></td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_5_living_situations.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.6. Pairs of bars drawn by charts.js (drawHomelessByRace) from "s3_6_homeless_by_race", in the manner
+         of page 1.4: the earlier year pale, the latest in full color, the value above each bar. Three of the five
+         pairs are too short to hold their years, so the two years are written under every pair instead. Above each
+         pair, the change under a small solid triangle (rust for a rise, gray for a fall). The card's title is the
+         Bulletin's, shortened to one line. -->
     <article class="card" id="card-3-6">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
         <span class="page-tag" data-page="3.6">Bulletin page 3.6</span>
       </div>
-      <h2 class="db-title">Homeless students per 1,000 enrolled by race and ethnicity, 2020 vs 2024</h2>
+      <h2 class="db-title">Homeless students per 1,000 enrolled by race and ethnicity, Westchester,
+        <span data-fill="charts.s3_6_homeless_by_race.years.0" data-format="raw"></span> vs
+        <span data-fill="charts.s3_6_homeless_by_race.years.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Black Students are 54x More Likely to Be Homeless than White Students</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <h3>Black Students are <span data-fill="charts.s3_6_homeless_by_race.times_black_to_white" data-format="raw"></span>x
+            More Likely to Be Homeless than White Students</h3>
+          <p><strong>What We See:</strong> <span data-fill="charts.s3_6_homeless_by_race.black_whole"></span> of every 1,000
+             Black students experience homelessness, compared with
+             <span data-fill="charts.s3_6_homeless_by_race.white_whole"></span> of every 1,000 White students. The gap has
+             grown since <span data-fill="charts.s3_6_homeless_by_race.years.0" data-format="raw"></span>.</p>
+          <p><strong>Takeaway:</strong> A response to child homelessness that does not reach Black and Hispanic students in
+             these districts will not move this number.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.6</strong>Paired bars by race group with the change above each pair (P2)</div></div>
+          <div class="chart-box" id="box-homeless-race"><canvas id="chart-homeless-race"></canvas></div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_6_homeless_by_race.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.7. Two charts whose titles end on one level. Left: two upright bars on a scale of 0 to 100% (plain
+         HTML; drawGraduationAndCities sets their heights and writes the gray lines). Right: the map of page 3.3
+         with each community's count of homeless students under its name, the names in the same places as on 3.3.
+         Pointing at a community lights up its place and its name. As the Bulletin prints it, both titles carry the
+         map's year (the graduation numbers are for the class that finished in the year after: see the source
+         line). -->
     <article class="card" id="card-3-7">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Poverty &amp; Housing</div>
         <span class="page-tag" data-page="3.7">Bulletin page 3.7</span>
       </div>
-      <h2 class="db-title">Graduation for students experiencing homelessness, and where those students live, 2024</h2>
+      <h2 class="db-title">Graduation for students experiencing homelessness, and where those students live,
+        <span data-fill="charts.s3_7_graduation_and_cities.cities_year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Homelessness Follows the Same Four Communities</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Three quarters of students identified as homeless live in four communities. The
+             graduation rate for homeless students is
+             <span data-fill="charts.s3_7_graduation_and_cities.graduation.homeless_whole" data-format="pct0"></span> vs.
+             <span data-fill="charts.s3_7_graduation_and_cities.graduation.all_whole" data-format="pct0"></span> for all
+             students.</p>
+          <p><strong>Takeaway:</strong> A stable place to sleep, study and get to class is part of educational opportunity.
+             Housing support, transportation and early identification keep students connected. The FY27 Foundation Aid
+             weight of 0.12 is a start.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 3.7</strong>Two bars (all students vs experiencing homelessness) and the four-communities map with values (P10)</div></div>
+          <div class="chart-trio level fills" id="charts-grad-cities">
+            <div>
+              <h3>Percentage of Students Graduating in 4 Years: All Students vs. Those Experiencing Homelessness,
+                <span data-fill="charts.s3_7_graduation_and_cities.cities_year" data-format="raw"></span></h3>
+              <div class="two-bars row-3" id="bars-graduation">
+                <div class="tb-grid" aria-hidden="true"></div>
+                <div class="tb-col" data-key="all"><div class="tb-track"><div class="tb-bar"><strong data-fill="charts.s3_7_graduation_and_cities.graduation.all_whole" data-format="pct0"></strong></div></div><span class="tb-name">All<br>Students</span></div>
+                <div class="tb-col" data-key="homeless"><div class="tb-track"><div class="tb-bar"><strong data-fill="charts.s3_7_graduation_and_cities.graduation.homeless_whole" data-format="pct0"></strong></div></div><span class="tb-name">Experiencing<br>Homelessness</span></div>
+              </div>
+            </div>
+            <div>
+              <h3>Number of Students Experiencing Homelessness in Four Key Communities,
+                <span data-fill="charts.s3_7_graduation_and_cities.cities_year" data-format="raw"></span></h3>
+              <div class="county-map with-counts row-3" id="map-homeless-cities"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_7_graduation_and_cities.source" data-format="raw"></span></p>
     </article>
 
     <!-- Part 2 -->
@@ -1183,94 +1939,234 @@
          that we present each trend twice, first to show the change and then to show the impact.</p>
     </div>
 
+    <!-- Page 3.9. One line drawn by charts.js (drawAbuseFindings) from "s3_9_abuse_findings": pale before the year
+         the evidence standard changed, full color after it, with those years shaded. The circle and the gray box
+         are here; charts.js puts them on the chart, the circle in the empty space just left of the shaded years.
+         "2022: the evidence standard was raised" is typed (see the list at the top). -->
     <article class="card" id="card-3-9">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
         <span class="page-tag" data-page="3.9">Bulletin page 3.9</span>
       </div>
-      <h2 class="db-title">Percentage of child abuse reports substantiated, Westchester, 2005 to 2025</h2>
+      <h2 class="db-title">Percentage of child abuse reports substantiated, Westchester,
+        <span data-fill="charts.s3_9_abuse_findings.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s3_9_abuse_findings.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>After a Decade of Decline, Abuse Findings Are Rising</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Indicated findings of child abuse fell from
+             <span data-fill="charts.s3_9_abuse_findings.peak.indicated"></span> in
+             <span data-fill="charts.s3_9_abuse_findings.peak.year" data-format="raw"></span> to a low of
+             <span data-fill="charts.s3_9_abuse_findings.standard.indicated"></span> in
+             <span data-fill="charts.s3_9_abuse_findings.standard.year" data-format="raw"></span>. The indication rate then
+             rose from <span data-fill="charts.s3_9_abuse_findings.standard.rate" data-format="pct"></span> to
+             <span data-fill="charts.s3_9_abuse_findings.last.rate" data-format="pct"></span> in
+             <span data-fill="charts.s3_9_abuse_findings.last.year" data-format="raw"></span>, a
+             <span data-fill="charts.s3_9_abuse_findings.rise_pct_whole" data-format="pct0"></span> increase.</p>
+          <p><strong>Takeaway:</strong> New York raised the evidence standard in
+             <span data-fill="charts.s3_9_abuse_findings.standard.year" data-format="raw"></span>. Despite that higher bar,
+             the rate has stayed above its <span data-fill="charts.s3_9_abuse_findings.standard.year" data-format="raw"></span>
+             low for <span data-fill="charts.s3_9_abuse_findings.years_above_low_in_words" data-format="raw"></span> straight
+             years. Westchester should keep monitoring this trend.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.9</strong>Line with the 2022 standard change marked and a stat circle for the rise (P7 + P11)</div></div>
+          <div class="chart-box tall" id="box-abuse">
+            <canvas id="chart-abuse"></canvas>
+            <p class="stat-circle arrow-up wordy abuse chart-note" id="circle-abuse">
+              <strong data-fill="charts.s3_9_abuse_findings.rise_pct_whole" data-format="pct0"></strong>
+              <small>Rise in substantiated Child Abuse reports from
+                <span data-fill="charts.s3_9_abuse_findings.standard.year" data-format="raw"></span> to
+                <span data-fill="charts.s3_9_abuse_findings.last.year" data-format="raw"></span></small>
+            </p>
+            <p class="chart-note event-note" id="note-standard"><span><span data-fill="charts.s3_9_abuse_findings.standard.year" data-format="raw"></span>:
+              the evidence standard was raised</span></p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_9_abuse_findings.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.10. Two lines drawn by charts.js (drawDomesticViolence) from "s3_10_domestic_violence", each named on
+         the chart in the Bulletin's words (the names are here; charts.js puts each above its line, or shows the key
+         "legend-dv" above the chart instead where the chart is too narrow for the names). The years since the rise
+         began are shaded. The circle and the short list sit in a column to the right of the chart; each line of the
+         list carries a dot in its line's color. -->
     <article class="card" id="card-3-10">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
         <span class="page-tag" data-page="3.10">Bulletin page 3.10</span>
       </div>
-      <h2 class="db-title">Domestic violence reports by relationship, Westchester County, 2012 to 2024</h2>
+      <h2 class="db-title">Domestic violence reports by relationship, Westchester County,
+        <span data-fill="charts.s3_10_domestic_violence.years.0" data-format="raw"></span> to
+        <span data-fill="charts.s3_10_domestic_violence.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Domestic Violence Reports Are Up 53% Since 2022</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <h3>Domestic Violence Reports Are Up <span data-fill="charts.s3_10_domestic_violence.rise_pct_whole" data-format="pct0"></span>
+            Since <span data-fill="charts.s3_10_domestic_violence.from_year" data-format="raw"></span></h3>
+          <p><strong>What We See:</strong> Reports have risen sharply since
+             <span data-fill="charts.s3_10_domestic_violence.from_year" data-format="raw"></span>, driven mostly by incidents
+             involving intimate partners.</p>
+          <p><strong>Takeaway:</strong> These records do not show whether children were present, witnessed harm, or received
+             support. Westchester Children's Association advocates the county reports whether children are in the
+             household.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.10</strong>Two lines (intimate partner, other family) with end labels and a stat circle (P7 + P11)</div></div>
+          <div class="legend" id="legend-dv" hidden></div>
+          <div class="side-row fills">
+            <div class="chart-box" id="box-dv">
+              <canvas id="chart-dv"></canvas>
+              <span class="line-name" data-series="partner"><span>Reports involving an Intimate Partner</span><br><span class="sub">(i.e., current or former spouse or dating partner)</span></span>
+              <span class="line-name" data-series="family"><span>Reports involving Other Family</span><br><span class="sub">(i.e., a child, sibling, grandparent, in-law or other relative)</span></span>
+            </div>
+            <div class="side-col">
+              <p class="stat-circle arrow-up wordy partner" id="circle-dv">
+                <strong data-fill="charts.s3_10_domestic_violence.rise_pct_whole" data-format="pct0"></strong>
+                <small>Rise in all reported Domestic Violence incidents from
+                  <span data-fill="charts.s3_10_domestic_violence.from_year" data-format="raw"></span> to
+                  <span data-fill="charts.s3_10_domestic_violence.last.year" data-format="raw"></span></small>
+              </p>
+              <div class="change-box">
+                <strong>From <span data-fill="charts.s3_10_domestic_violence.from_year" data-format="raw"></span> to
+                  <span data-fill="charts.s3_10_domestic_violence.last.year" data-format="raw"></span>...</strong>
+                <ul>
+                  <li class="partner">+<span data-fill="charts.s3_10_domestic_violence.partner_change"></span> Intimate Partner Reports</li>
+                  <li class="family">+<span data-fill="charts.s3_10_domestic_violence.family_change"></span> Other Family Reports</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_10_domestic_violence.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.11. Three bars of 100% drawn by charts.js (drawFosterCare) from "s3_11_foster_care", the share written
+         in each part and a thin white gap between the parts. The three names stand in for a key: charts.js puts
+         each right above its part of the first bar. The two orange boxes under the bars, no wider than the bars,
+         point up at the parts of the latest bar they are about. -->
     <article class="card" id="card-3-11">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
         <span class="page-tag" data-page="3.11">Bulletin page 3.11</span>
       </div>
-      <h2 class="db-title">Share of foster care days by placement setting, Westchester County, 2018, 2021 and 2025</h2>
+      <h2 class="db-title">Share of foster care days by placement setting, Westchester County,
+        <span data-fill="charts.s3_11_foster_care.years.0" data-format="raw"></span>,
+        <span data-fill="charts.s3_11_foster_care.years.1" data-format="raw"></span> and
+        <span data-fill="charts.s3_11_foster_care.years.2" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Relatives Are Now the Largest Source of Foster Care</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> By <span data-fill="charts.s3_11_foster_care.years.2" data-format="raw"></span>,
+             relatives provided the largest share of foster care placements, rather than foster homes or group
+             settings.</p>
+          <p><strong>Takeaway:</strong> New York has pushed to keep children connected to family. As more relatives take on
+             this role, they need financial and support services to succeed.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.11</strong>100% stacked bars for three years with two rust callouts (P3)</div></div>
+          <div class="chart-box" id="box-foster">
+            <canvas id="chart-foster"></canvas>
+            <span class="chart-note seg-head" data-key="relative">Approved-<br>relative<br>Homes</span>
+            <span class="chart-note seg-head" data-key="foster">Foster Boarding<br>or Adoptive<br>Homes</span>
+            <span class="chart-note seg-head" data-key="congregate">Congregate<br>and Other<br>Settings</span>
+          </div>
+          <div class="pointer-row" id="notes-foster">
+            <p class="db-callout pointer-box" data-key="relative">
+              <strong><span data-fill="charts.s3_11_foster_care.relative_times" data-format="raw"></span>x more Care Days
+                with Relatives</strong>
+              <span><span data-fill="charts.s3_11_foster_care.settings.0.days.0"></span> in
+                <span data-fill="charts.s3_11_foster_care.years.0" data-format="raw"></span>,
+                <span data-fill="charts.s3_11_foster_care.settings.0.days.2"></span> in
+                <span data-fill="charts.s3_11_foster_care.years.2" data-format="raw"></span></span>
+            </p>
+            <p class="db-callout pointer-box" data-key="congregate">
+              <strong><span data-fill="charts.s3_11_foster_care.congregate_drop_pct_whole" data-format="pct0"></span> drop in
+                Congregate Care Days</strong>
+              <span><span data-fill="charts.s3_11_foster_care.settings.2.days.0"></span> in
+                <span data-fill="charts.s3_11_foster_care.years.0" data-format="raw"></span>,
+                <span data-fill="charts.s3_11_foster_care.settings.2.days.2"></span> in
+                <span data-fill="charts.s3_11_foster_care.years.2" data-format="raw"></span></span>
+            </p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_11_foster_care.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.12. Bars that run sideways (plain HTML, drawSelfHarm), one per age group, from "s3_12_self_harm",
+         each value inside its bar's end, on gray lines with a scale under them. THE NUMBERS ARE TYPED from the
+         Bulletin in build_data.py Settings (SELF_HARM_VISITS), not read from the warehouse: NYSDOH's own table is
+         not in it yet (see the list at the top). The small heading "AGES" and the two circles are here; charts.js
+         puts the circles in the empty part of the chart, clear of each other's words, and joins the first to its
+         bar with a line (under the bars where the chart is too narrow). "call or text 988" is typed. -->
     <article class="card" id="card-3-12">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
         <span class="page-tag" data-page="3.12">Bulletin page 3.12</span>
       </div>
-      <h2 class="db-title">Emergency department visits for self-harm by age, Westchester County, 2022</h2>
+      <h2 class="db-title">Emergency department visits for self-harm by age, Westchester County,
+        <span data-fill="charts.s3_12_self_harm.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
-          <h3>Ages 10 to 19 Account for 42% of Self-Harm Visits</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart. The source table is not in the warehouse yet (MISSING_DATA item 9).</p>
+          <h3>Ages 10 to 19 Account for <span data-fill="charts.s3_12_self_harm.focus.share_whole" data-format="pct0"></span>
+            of Self-Harm Visits</h3>
+          <p><strong>What We See:</strong> Of <span data-fill="charts.s3_12_self_harm.total"></span> emergency department
+             visits for self-harm recorded in Westchester in <span data-fill="charts.s3_12_self_harm.year" data-format="raw"></span>,
+             <span data-fill="charts.s3_12_self_harm.focus.visits"></span>
+             (<span data-fill="charts.s3_12_self_harm.focus.share_whole" data-format="pct0"></span>) were by 10 to
+             19-year-olds.</p>
+          <p><strong>Takeaway:</strong> WCA participates in a statewide coalition <em>Healthy Minds Healthy Kids</em> and
+             hosts a <em>Mental Health Roundtable</em> every Spring. Unfortunately, behavioral health workforce funding was
+             left out of the NYS Budget for FY27. WCA will continue to advocate for these funds in the budget.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.12</strong>Horizontal bars by age group, ages 10-19 in rust, with the 988 support line (P9)</div></div>
+          <p class="chart-subtitle">Chart shows recorded visits, not unique people or confirmed suicide attempts.</p>
+          <div class="hbars ages fills" id="bars-self-harm">
+            <p class="hb-heading">Ages</p>
+            <p class="stat-circle outline chart-note" id="circle-self-harm">
+              <strong data-fill="charts.s3_12_self_harm.focus.share_whole" data-format="pct0"></strong>
+              <span>of all recorded self-harm visits to ER were by ages
+                <span data-fill="charts.s3_12_self_harm.focus.label" data-format="raw"></span></span>
+            </p>
+            <p class="stat-circle help chart-note" id="circle-988"><span>If you or someone you know needs support, call or
+              text 988.</span></p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_12_self_harm.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.13. A scatter drawn by charts.js (drawWeightAndDisadvantage) from "s3_13_weight_and_disadvantage": one
+         dot per school district in the dashboard's blue, each named on a white patch, the lowest and highest in
+         magenta, and the line of best fit. Pointing at a dot shows its district's two numbers; the other dots step
+         back. The key is here; charts.js puts it on the chart, or above the chart where the chart is too narrow to
+         hold both the key and the names. -->
     <article class="card" id="card-3-13">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Child Health &amp; Welfare</div>
         <span class="page-tag" data-page="3.13">Bulletin page 3.13</span>
       </div>
-      <h2 class="db-title">Students classified as overweight or obese, by school district, Westchester County, 2024-2025</h2>
+      <h2 class="db-title">Students classified as overweight or obese, by school district, Westchester County,
+        <span data-fill="charts.s3_13_weight_and_disadvantage.window" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Where Hardship Rises, So Does Childhood Weight</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Across the districts that reported, the points form a clear upward pattern,
+             pointing to food access, safe places to play, transportation, stress and health care.</p>
+          <p><strong>Takeaway:</strong> Children's health is shaped by the conditions around them. These results should
+             prompt investment in healthy community conditions and access to care, not stigma.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.13</strong>Scatter of districts against economic disadvantage, with a trend line</div></div>
+          <div class="chart-box scatter" id="box-weight" data-x-title="Students classified as economically disadvantaged" data-y-title="Percentage of students classified as overweight or obese">
+            <canvas id="chart-weight"></canvas>
+            <div class="scatter-key chart-note" id="key-weight">
+              <p><i></i>Westchester school district</p>
+              <p><i class="ends"></i>Lowest and highest among the districts shown</p>
+              <p><i class="fit"></i>Line of best fit</p>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_13_weight_and_disadvantage.source" data-format="raw"></span></p>
     </article>
 
     <!-- Part 3 -->
@@ -1281,6 +2177,11 @@
          the diploma is the most forgiving of them.</p>
     </div>
 
+    <!-- Page 3.15. Plain HTML bars (drawScoresByDistrict) from "s3_15_scores_by_district": the Bulletin's five
+         districts, each with its English and AP bars on a gray 100% track, and a slim solid wedge from the most to
+         the least disadvantaged. The two measure names are written on the first district's tracks (the Bulletin's
+         key); they are here. The menu under the chart, lined up with the bars, adds one more district, in its place
+         by economic disadvantage; the rows tighten to make room for it, so the card keeps its height. -->
     <article class="card" id="card-3-15">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
@@ -1290,51 +2191,119 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Achievement Tracks Economic Status Across Westchester</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> As economic disadvantage rises, English proficiency and AP results fall. Across
+             all <span data-fill="charts.s3_15_scores_by_district.district_count"></span> districts the correlation is
+             <span data-fill="charts.s3_15_scores_by_district.r_ela_text" data-format="raw"></span> for English and
+             <span data-fill="charts.s3_15_scores_by_district.r_ap_text" data-format="raw"></span> for AP.</p>
+          <p><strong>Takeaway:</strong> The link is Westchester-wide, not local to these five districts. It compares
+             districts, not individual children.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.15</strong>Five districts, two bars each (English proficiency, AP scores), ordered by economic disadvantage</div></div>
+          <div class="score-chart fills" id="chart-scores">
+            <div class="sc-scale"><span>0%</span><span>100%</span></div>
+            <div class="sc-rows" id="score-rows"></div>
+            <div class="sc-wedge" aria-hidden="true"><span>Most<br>Economically<br>Disadvantaged</span><i></i><span>Least<br>Economically<br>Disadvantaged</span></div>
+            <span class="sc-key" data-measure="ela" hidden>% Grades 3-8 Students Proficient in English</span>
+            <span class="sc-key" data-measure="ap" hidden>% Students Scoring 3 or Higher on AP Exams</span>
+          </div>
+          <div class="sc-add">
+            <label for="score-add">Add a district to compare:</label>
+            <select id="score-add"><option value="">Choose a district</option></select>
+          </div>
+          <p class="visually-hidden" id="score-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_15_scores_by_district.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.16. Two lines across three measures, drawn by charts.js (drawTestGap) from "s3_16_test_gap", with the
+         space between them filled (behind both lines). The names of the two groups and the three orange boxes are
+         here; charts.js puts each name beside its line's first point (or shows the key "legend-gap" above the
+         chart instead where the chart is too narrow for them) and each box in the gap, clear of the points. -->
     <article class="card" id="card-3-16">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
         <span class="page-tag" data-page="3.16">Bulletin page 3.16</span>
       </div>
-      <h2 class="db-title">Grades 3-8 math, Regents and AP exams, Westchester school districts, 2025</h2>
+      <h2 class="db-title">Grades 3-8 math, Regents and AP exams, Westchester school districts,
+        <span data-fill="charts.s3_16_test_gap.measures.0.period" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>The Tests Show a Gap the Diploma Hides</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Economically disadvantaged students trail their peers by
+             <span data-fill="charts.s3_16_test_gap.measures.0.gap_text" data-format="raw"></span> points in Grades 3-8 math,
+             <span data-fill="charts.s3_16_test_gap.measures.1.gap_text" data-format="raw"></span> on Regents and
+             <span data-fill="charts.s3_16_test_gap.measures.2.gap_text" data-format="raw"></span> in Advanced Placement — but
+             by only <span data-fill="charts.s3_16_test_gap.graduation.gap_text" data-format="raw"></span> at graduation.</p>
+          <p><strong>Takeaway:</strong> Invest early — in instruction, tutoring, disability and language services — not at the
+             end.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 3.16</strong>Two lines with the gap shaded and a rust "difference" box at each point (P8)</div></div>
+          <p class="chart-subtitle">This chart compares two economic groups' percentage of students scoring as proficient,
+            using three measures.</p>
+          <div class="legend" id="legend-gap" hidden></div>
+          <div class="chart-box" id="box-gap">
+            <canvas id="chart-gap"></canvas>
+            <span class="line-name gap-name" data-series="secure"><span>Economically<br>secure</span></span>
+            <span class="line-name gap-name" data-series="disadvantaged"><span>Economically<br>disadvantaged</span></span>
+            <p class="db-callout chart-note gap-box" data-index="0"><strong><span data-fill="charts.s3_16_test_gap.measures.0.gap_text" data-format="raw"></span>%</strong>Difference</p>
+            <p class="db-callout chart-note gap-box" data-index="1"><strong><span data-fill="charts.s3_16_test_gap.measures.1.gap_text" data-format="raw"></span>%</strong>Difference</p>
+            <p class="db-callout chart-note gap-box" data-index="2"><strong><span data-fill="charts.s3_16_test_gap.measures.2.gap_text" data-format="raw"></span>%</strong>Difference</p>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_16_test_gap.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.17. Two sets of bars that run sideways (plain HTML, drawChronicAbsence), from "s3_17_chronic_absence",
+         each with the dashed "All students" line and each value inside its bar's end. The year buttons sit at the
+         left, right above the charts they change. They show another school year: the bars grow or shrink to it on
+         ONE scale that holds every year, and change places if their order changes; the titles' year changes with
+         them. The text box stays on the latest year, the year the Bulletin's words describe. "about 18 days a year"
+         is typed. -->
     <article class="card" id="card-3-17">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
         <span class="page-tag" data-page="3.17">Bulletin page 3.17</span>
       </div>
-      <h2 class="db-title">Chronic absenteeism by student group and by race and ethnicity, Westchester County, 2024-2025</h2>
+      <h2 class="db-title">Chronic absenteeism by student group and by race and ethnicity, Westchester County,
+        <span class="js-year" data-fill="charts.s3_17_chronic_absence.latest.school_year_in_long" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Chronic Absence Tracks Barriers, Not Rule-Breaking</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Every group above the countywide average of
+             <span data-fill="charts.s3_17_chronic_absence.latest.all" data-format="pct"></span> already faces barriers.
+             Missing one day in ten can mean losing instruction, meals, counseling and trusted relationships.</p>
+          <p><strong>Takeaway:</strong> Treat absence as a signal of need. The <strong>Solutions Not Suspensions</strong> Act
+             would bar suspension for tardiness or unexcused absence. Transportation, housing and family support move this
+             number.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 3.17</strong>Two sets of horizontal bars with the "All students" reference line (P9)</div></div>
+          <div class="year-row">
+            <span class="visually-hidden" id="absence-years-label">School year</span>
+            <div class="year-switch five" id="absence-years" role="group" aria-labelledby="absence-years-label"></div>
+          </div>
+          <h3>Chronic Absenteeism by Status, Westchester County,
+            <span class="js-year" data-fill="charts.s3_17_chronic_absence.latest.school_year_in_long" data-format="raw"></span></h3>
+          <p class="chart-subtitle">Note: Chronically absent means missing at least 1 in 10 enrolled school days, about 18 days
+            a year.</p>
+          <div class="hbars absence fills has-ref" id="bars-absence-status" data-ref-words="All students: {value}"></div>
+          <h3>Chronic Absenteeism by Race/Ethnicity, Westchester County,
+            <span class="js-year" data-fill="charts.s3_17_chronic_absence.latest.school_year_in_long" data-format="raw"></span></h3>
+          <div class="hbars absence fills has-ref" id="bars-absence-race" data-ref-words="All students: {value}"></div>
+          <p class="visually-hidden" id="absence-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_17_chronic_absence.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 3.18. Two charts of thick bars that run sideways (plain HTML, drawSuspensions), from "s3_18_suspensions",
+         their titles and their rows on the same levels. Left, by race and ethnicity, with the dashed countywide
+         line; its year buttons, right under its title in two rows as wide as the chart (the first cell says what
+         they are), show another school year (the bars grow or shrink to it on ONE scale that holds every year, the
+         title's year changes with them; the text box stays on the latest year, the year the Bulletin's words
+         describe). Right, the five districts the Bulletin shows, in its blue and gray, with a line for the user to
+         write about what the gray bars stand for. -->
     <article class="card" id="card-3-18">
       <div class="card-head">
         <div class="kicker">Chapter 3 · Education &amp; Opportunity</div>
@@ -1344,13 +2313,37 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Students of Color are Suspended More Often Than Their Classmates</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Suspensions affected thousands of Westchester students in
+             <span data-fill="charts.s3_18_suspensions.race.latest.school_year_dash" data-format="raw"></span>, but not
+             equally. Black students were suspended at more than twice the countywide rate, while Asian and White students
+             had the lowest rates.</p>
+          <p><strong>Takeaway:</strong> A countywide average hides how unevenly suspension falls. These figures exist only
+             because WCA requested them; the state publishes no subgroup breakdown.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 3.18</strong>Race bars with the countywide reference line; district bars (P9)</div></div>
+          <div class="chart-trio level fills" id="charts-suspensions">
+            <div>
+              <h3>Westchester Student Suspensions by Race and Ethnicity,
+                <span class="js-year" data-fill="charts.s3_18_suspensions.race.latest.school_year" data-format="raw"></span></h3>
+              <div class="year-row row-2">
+                <div class="year-switch seven" id="suspension-years" role="group" aria-labelledby="suspension-years-label">
+                  <span class="ys-label" id="suspension-years-label">School year<span class="visually-hidden"> of the suspensions by race and ethnicity</span></span>
+                </div>
+              </div>
+              <div class="hbars thick suspensions has-ref row-3" id="bars-suspension-race" data-ref-words="Countywide {value}"></div>
+            </div>
+            <div>
+              <h3>Westchester School Districts with Highest Suspension Rates,
+                <span data-fill="charts.s3_18_suspensions.districts.school_year_in_long" data-format="raw"></span></h3>
+              <p class="note placeholder row-2" id="note-gray-districts">[PLACEHOLDER] Gray bars: what sets Elmsford Union Free and Greenburgh
+                Central apart from the three districts in blue.</p>
+              <div class="hbars thick districts has-ref row-3" id="bars-suspension-districts"></div>
+            </div>
+          </div>
+          <p class="visually-hidden" id="suspension-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s3_18_suspensions.source" data-format="raw"></span></p>
     </article>
 
     <div class="continue"><a class="btn-continue" href="#chapter-4">Continue to Chapter 4 →</a></div>
@@ -1384,48 +2377,100 @@
     <!-- Part 1 -->
     <div class="part" id="part-4-1">
       <div class="part-heading"><span class="kicker">Part 1</span><h3>Employment &amp; Earnings</h3></div>
-      <p class="part-text">Westchester's unemployment rate is <span data-fill="charts.youth_unemployment.westchester_25_plus_pct" data-format="pct"></span>
-         for residents 25 and older. For young adults ages 20 to 24, it is <span data-fill="charts.youth_unemployment.westchester_20_24_pct" data-format="pct"></span>,
+      <p class="part-text">Westchester's unemployment rate is <span data-fill="charts.s4_3_youth_unemployment.older.rate" data-format="pct"></span>
+         for residents 25 and older. For young adults ages 20 to 24, it is <span data-fill="charts.s4_3_youth_unemployment.youth.rate" data-format="pct"></span>,
          and most of the recent rise came from young men. This section asks who is working, what they earn, and whether a
          full-time paycheck covers the cost of living here.</p>
     </div>
 
+    <!-- Page 4.3. The Bulletin's three tiles, one inside the other: plain HTML, the words here, every number filled
+         from "s4_3_youth_unemployment". charts.js (drawYouthUnemployment) only gives each tile its hover box. The
+         tiles are a picture, not a measurement: their sizes are not in proportion to the three rates. -->
     <article class="card" id="card-4-3">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
         <span class="page-tag" data-page="4.3">Bulletin page 4.3</span>
       </div>
-      <h2 class="db-title">Westchester County youth unemployment rate, ages 20 to 24, 2024</h2>
+      <h2 class="db-title">Westchester County youth unemployment rate, ages 20 to 24,
+        <span data-fill="charts.s4_3_youth_unemployment.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>This Age Group is 3x More Likely to be Unemployed</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Westchester's overall unemployment rate is about
+             <span data-fill="charts.s4_3_youth_unemployment.older.rate" data-format="pct"></span> for residents ages 25 and
+             over. But for young adults ages 20 to 24, it is
+             <span data-fill="charts.s4_3_youth_unemployment.youth.rate" data-format="pct0"></span> — higher than the
+             statewide youth rate of <span data-fill="charts.s4_3_youth_unemployment.state.rate" data-format="pct"></span>,
+             and more than three times the rate for older residents.</p>
+          <p><strong>Takeaway:</strong> The county's headline employment numbers do not describe its young people.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 4.3</strong>Three nested tiles: Westchester 20-24, New York State 20-24, Westchester 25 and over (P12)</div></div>
+          <div class="nested-tiles fills" id="tiles-unemployment">
+            <div class="nt-tile youth" data-key="youth">
+              <p class="nt-lead"><strong data-fill="charts.s4_3_youth_unemployment.youth.rate" data-format="pct"></strong>
+                <span>of Westchester County's youth <br>ages 20 to 24 are unemployed</span></p>
+              <p class="nt-compare">Compare that percentage with…</p>
+              <div class="nt-tile state" data-key="state">
+                <p class="nt-lead"><strong data-fill="charts.s4_3_youth_unemployment.state.rate" data-format="pct"></strong>
+                  <span>of New York State's youth, <br>ages 20 to 24, are unemployed</span></p>
+                <div class="nt-tile older" data-key="older">
+                  <p class="nt-lead"><strong data-fill="charts.s4_3_youth_unemployment.older.rate" data-format="pct"></strong>
+                    <span>of Westchester residents, <br>ages 25 and over are unemployed</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_3_youth_unemployment.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 4.4. Three pairs of bars drawn by charts.js (drawUnemploymentByGender) from
+         "s4_4_unemployment_by_gender": the earlier period lighter, each bar's period in its foot and its rate
+         inside its top, as in the Bulletin. The key shows only where the bars are too narrow to hold their
+         period (a phone). The note under the chart is the Bulletin's. -->
     <article class="card" id="card-4-4">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
         <span class="page-tag" data-page="4.4">Bulletin page 4.4</span>
       </div>
-      <h2 class="db-title">Youth unemployment by gender, ages 20 to 24, 2015-2019 vs 2020-2024</h2>
+      <h2 class="db-title">Youth unemployment by gender, ages 20 to 24,
+        <span class="keep-together" data-fill="charts.s4_4_unemployment_by_gender.periods.0" data-format="raw"></span> vs
+        <span class="keep-together" data-fill="charts.s4_4_unemployment_by_gender.periods.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>Young Men Fall Furthest Behind</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Unemployment among 20- to 24-year-olds rose from
+             <span data-fill="charts.s4_4_unemployment_by_gender.text.all_earlier" data-format="raw"></span> to
+             <span data-fill="charts.s4_4_unemployment_by_gender.text.all_latest" data-format="pct"></span> between
+             <span class="keep-together" data-fill="charts.s4_4_unemployment_by_gender.periods.0" data-format="raw"></span> and
+             <span class="keep-together" data-fill="charts.s4_4_unemployment_by_gender.periods.1" data-format="raw"></span>. The most
+             striking increase is evident in young men, up from
+             <span data-fill="charts.s4_4_unemployment_by_gender.text.men_earlier" data-format="raw"></span> to
+             <span data-fill="charts.s4_4_unemployment_by_gender.text.men_latest" data-format="pct"></span>, while the rate for
+             young women held steady near
+             <span data-fill="charts.s4_4_unemployment_by_gender.text.women_latest_whole" data-format="pct0"></span>.</p>
+          <p><strong>Takeaway:</strong> Young adults are losing ground in the workforce, especially young men. Programs
+             should be designed with that gap in mind.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 4.4</strong>Paired bars (men, women, all), earlier period lighter, "All" in gray (P2)</div></div>
+          <div class="legend" id="legend-jobless" hidden></div>
+          <div class="chart-box"><canvas id="chart-jobless-gender"></canvas></div>
+          <p class="note">Note: Five-year estimates were used because one-year samples were too small to compare young men
+            and women reliably. The <span class="keep-together" data-fill="charts.s4_4_unemployment_by_gender.periods.1" data-format="raw"></span>
+            period includes the pandemic years; the <span data-fill="charts.s4_4_unemployment_by_gender.one_year.year" data-format="raw"></span>
+            one-year rate for all 20- to 24-year-olds is
+            <span data-fill="charts.s4_4_unemployment_by_gender.one_year.rate" data-format="pct"></span> (see also page 4.3).</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_4_unemployment_by_gender.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 4.5. The Bulletin's three solid tiles (words here, amounts filled from "s4_5_minimum_wage_and_rent"),
+         then its second chart: average monthly earnings by age group as sideways bars, drawn by charts.js
+         (drawMinimumWageAndRent), with a dashed line at the studio's rent. The two buttons show the Bulletin's three
+         age groups or every age group the Census Bureau reports: the bars slide to their places, the scale and the
+         card's size stay as they are. The words over the dashed line are the chart's "data-ref-words". -->
     <article class="card" id="card-4-5">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Employment &amp; Earnings</div>
@@ -1435,13 +2480,41 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Priced Out on a Full-Time Paycheck</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "WCA Advocates for" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Full-time work at Westchester's minimum wage pays
+             <span data-fill="charts.s4_5_minimum_wage_and_rent.wage.annual_pay" data-format="dollars"></span> a year, below the
+             <span data-fill="charts.s4_5_minimum_wage_and_rent.extremely_low_income" data-format="dollars"></span> that HUD calls
+             extremely low income here. That paycheck supports about
+             <span data-fill="charts.s4_5_minimum_wage_and_rent.wage.affordable_rent" data-format="dollars"></span> a month in rent,
+             while a studio costs <span data-fill="charts.s4_5_minimum_wage_and_rent.rents.studio" data-format="dollars"></span>.</p>
+          <p><strong>WCA Advocates for</strong> the <strong>Housing Access Voucher Program</strong>, with set-asides for young
+             adults and foster youth.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 4.5</strong>Three solid tiles (studio rent, one-bedroom rent, what minimum wage affords) and earnings-by-age bars with the rent line (P12 + P9)</div></div>
+          <div class="rent-tiles" id="tiles-rent">
+            <div class="rt-tile studio" data-key="studio">
+              <p class="rt-what">Fair Market Rent <span class="keep-together">for a</span> <strong>Studio Apartment</strong></p>
+              <span class="figure" style="--figure: url(resources/icons/apartment-building.svg)" aria-hidden="true"></span>
+              <p class="rt-amount"><strong data-fill="charts.s4_5_minimum_wage_and_rent.rents.studio" data-format="dollars"></strong> per month</p>
+            </div>
+            <div class="rt-tile one-bedroom" data-key="one_bedroom">
+              <p class="rt-what">Fair Market Rent <span class="keep-together">for a</span> <strong>1-Bedroom Apartment</strong></p>
+              <span class="figure" style="--figure: url(resources/icons/apartment-building.svg)" aria-hidden="true"></span>
+              <p class="rt-amount"><strong data-fill="charts.s4_5_minimum_wage_and_rent.rents.one_bedroom" data-format="dollars"></strong> per month</p>
+            </div>
+            <div class="rt-tile affordable" data-key="affordable">
+              <span class="figure" style="--figure: url(resources/icons/sad-face.svg)" aria-hidden="true"></span>
+              <p class="rt-what">Amount a full-time minimum-wage worker can afford per month for rent</p>
+              <p class="rt-amount"><strong data-fill="charts.s4_5_minimum_wage_and_rent.wage.affordable_rent" data-format="dollars"></strong></p>
+            </div>
+          </div>
+          <h3>Average Monthly Earnings by Age Groupings in Westchester County,
+            <span data-fill="charts.s4_5_minimum_wage_and_rent.earnings.year" data-format="raw"></span></h3>
+          <div class="switch-row"><div class="year-switch views" id="earnings-views" role="group" aria-label="Choose the age groups to show"></div></div>
+          <div class="hbars slots has-ref fills" id="chart-earnings" data-ref-words="Studio rent = {value}/month"></div>
+          <p class="visually-hidden" id="earnings-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_5_minimum_wage_and_rent.source" data-format="raw"></span></p>
     </article>
 
     <!-- Part 2 -->
@@ -1450,45 +2523,104 @@
       <p class="part-text">Post-high school educational attainment is not consistently tracked; however, in this section we
          attempt to follow young adults into their early 20s. We noticed community college enrollment has fallen, and there's
          a persistent number of disconnected youth who are neither working nor enrolled in higher education. Also noteworthy:
-         18- to 24-year-olds make up nearly one in seven adult arrests.</p>
+         18- to 24-year-olds make up more than one in seven adult arrests.</p>
     </div>
 
+    <!-- Page 4.7. Two pies drawn as plain SVG by charts.js (drawEducationalAttainment) from
+         "s4_7_educational_attainment". The words are here: charts.js puts each large slice's words on the slice,
+         and each small slice's share on the slice with its name under the pie, joined by a short line, as in the
+         Bulletin. -->
     <article class="card" id="card-4-7">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
         <span class="page-tag" data-page="4.7">Bulletin page 4.7</span>
       </div>
-      <h2 class="db-title">Educational achievement of Westchester County youth, 2020-2024</h2>
+      <h2 class="db-title">Educational achievement of Westchester County youth,
+        <span class="keep-together" data-fill="charts.s4_7_educational_attainment.period" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>The Credential Gap</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Most Westchester 18- to 20-year-olds have a high school diploma
+             (<span data-fill="charts.s4_7_educational_attainment.typed.diploma_ages_18_20_whole" data-format="pct0"></span>), and
+             most who don't are still in high school. By ages 22 to 24, half have a bachelor's degree, well above the state's
+             <span data-fill="charts.s4_7_educational_attainment.degrees.state_bachelors_whole" data-format="pct0"></span>. Still,
+             <span data-fill="charts.s4_7_educational_attainment.degrees.none.in_ten" data-format="raw"></span> in 10 have no
+             college degree.</p>
+          <p><strong>Takeaway:</strong> A
+             <span data-fill="charts.s4_7_educational_attainment.graduation.rate" data-format="pct"></span> graduation rate
+             describes the students schools keep. Attainment describes everyone.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 4.7</strong>High school diplomas (ages 18-22) and degrees (ages 22-24) as split bars or figure rows (P4 or P16)</div></div>
+          <div class="chart-trio fills degree-pies" id="pies-attainment">
+            <div>
+              <h3>High School Diplomas</h3>
+              <p class="chart-subtitle"><span data-fill="charts.s4_7_educational_attainment.diploma.people"></span> Westchester County Youth, Ages 18 to 22</p>
+              <div class="pie-fit">
+                <div>
+                  <div class="pie share-pie" id="pie-diploma">
+                    <!-- charts.js draws the slices and puts these words on them -->
+                    <span class="pie-label" data-slice="with"><strong data-fill="charts.s4_7_educational_attainment.diploma.with_whole" data-format="pct0"></strong>Have a<br>high school<br>diploma or GED</span>
+                    <span class="pie-label on-wedge" data-slice="without"><strong data-fill="charts.s4_7_educational_attainment.diploma.without_whole" data-format="pct0"></strong></span>
+                  </div>
+                  <p class="pie-under">Do not have a<br>high school diploma</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3>Higher Education: Degrees</h3>
+              <p class="chart-subtitle"><span data-fill="charts.s4_7_educational_attainment.degrees.people"></span> Westchester County Youth, Ages 22 to 24</p>
+              <div class="pie-fit">
+                <div>
+                  <div class="pie share-pie" id="pie-degrees">
+                    <span class="pie-label" data-slice="bachelors"><strong data-fill="charts.s4_7_educational_attainment.degrees.bachelors.share" data-format="pct"></strong>Have a<br>Bachelor's<br>degree<br>or higher</span>
+                    <span class="pie-label" data-slice="none"><strong data-fill="charts.s4_7_educational_attainment.degrees.none.share" data-format="pct"></strong>Do not<br>have a<br>college<br>degree</span>
+                    <span class="pie-label on-wedge" data-slice="associate"><strong data-fill="charts.s4_7_educational_attainment.degrees.associate.share" data-format="pct"></strong></span>
+                  </div>
+                  <p class="pie-under">Have an<br>Associate degree</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_7_educational_attainment.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 4.8. One line drawn by charts.js (drawCommunityCollege) from "s4_8_community_college": the Bulletin's
+         seven years on its scale, each year's enrollment at its point. The two buttons show the Bulletin's years or
+         every fall the table holds: the chart pulls back to the earlier years, the scale of students stays as it is,
+         and the first year in the card's title follows. The text box speaks of the Bulletin's years. -->
     <article class="card" id="card-4-8">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
         <span class="page-tag" data-page="4.8">Bulletin page 4.8</span>
       </div>
-      <h2 class="db-title">Fall enrollment, Westchester Community College, 2015 to 2024</h2>
+      <h2 class="db-title">Fall enrollment, Westchester Community College,
+        <span id="college-from" data-fill="charts.s4_8_community_college.first.year" data-format="raw"></span> to
+        <span data-fill="charts.s4_8_community_college.last.year" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>A Narrowing On-Ramp</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> The county's open-access college has lost
+             <span data-fill="charts.s4_8_community_college.lost"></span> students since
+             <span data-fill="charts.s4_8_community_college.first.year" data-format="raw"></span>, a decline of
+             <span data-fill="charts.s4_8_community_college.decline_pct" data-format="pct"></span>. Only a quarter of students
+             finish on time.</p>
+          <p><strong>Takeaway:</strong> Protect open-access capacity, and organize around completion, not only enrollment.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 4.8</strong>Line with every value written on it (P7)</div></div>
+          <div class="switch-row"><div class="year-switch views" id="college-views" role="group" aria-label="Choose the years to show"></div></div>
+          <div class="chart-box"><canvas id="chart-college"></canvas></div>
+          <p class="visually-hidden" id="college-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_8_community_college.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 4.9. The Bulletin's two small charts, one under the other, each two thick sideways bars drawn by
+         charts.js (drawYoungAdultsAndJustice) from "s4_9_young_adults_and_justice": the lighter bar is the share of
+         the population, the full-color bar the share of arrests or of those in state custody. The bars' names are
+         BAR_NAMES_4_9 in charts.js Settings (the Bulletin's own words). -->
     <article class="card" id="card-4-9">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
@@ -1498,31 +2630,67 @@
       <div class="card-body">
         <aside class="db-panel">
           <h3>Overrepresented at Every Stage</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> Young adults count as one in nine Westchester adults and more than one in seven
+             adult arrests. Raise the Age protects 16- and 17-year-olds. At 18, those protections stop.</p>
+          <p><strong>Takeaway:</strong> Extend age-appropriate justice responses past 18, and ask the state to publish
+             arrests by age and race together.</p>
         </aside>
-        <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Charts 4.9</strong>Two pairs of bars: population share (light step) against arrest share and custody share (full step)</div></div>
+        <div class="chart-area share-charts">
+          <h3>Westchester Young Adults, Ages 18 to 24: <br>Share of Adults
+            (<span data-fill="charts.s4_9_young_adults_and_justice.adults.year" data-format="raw"></span>) vs. Share of Adult Arrests
+            (<span data-fill="charts.s4_9_young_adults_and_justice.arrests.year" data-format="raw"></span>)</h3>
+          <div class="hbars shares fills" id="chart-adult-shares"></div>
+          <h3>Black or Hispanic Share of Westchester Youth, Ages 18 to 24: <br>All Youth
+            (<span data-fill="charts.s4_9_young_adults_and_justice.young_people.period_end" data-format="raw"></span>) vs. Incarcerated Youth
+            (<span data-fill="charts.s4_9_young_adults_and_justice.custody.year" data-format="raw"></span>)</h3>
+          <div class="hbars shares fills" id="chart-custody-shares"></div>
+          <p class="bars-footnote">(Incarcerated Westchester Black &amp; Hispanic =
+            <span data-fill="charts.s4_9_young_adults_and_justice.custody.black_or_hispanic"></span> out of
+            <span data-fill="charts.s4_9_young_adults_and_justice.custody.people"></span> people)</p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_9_young_adults_and_justice.source" data-format="raw"></span></p>
     </article>
 
+    <!-- Page 4.10. Pairs of bars drawn by charts.js (drawDisconnectedYouth) from "s4_10_disconnected_youth": the
+         earlier period lighter, each rate above its bar, the two periods written in the feet of the first pair, as
+         in the Bulletin. The two buttons show the rates by race and ethnicity (the Bulletin's chart) or by age (the
+         two age groups the text box quotes): the bars sink, the groups change and the new bars rise, on one scale
+         for both. The words "by race and ethnicity" in the title follow the button. -->
     <article class="card" id="card-4-10">
       <div class="card-head">
         <div class="kicker">Chapter 4 · Education &amp; Disconnected Youth</div>
         <span class="page-tag" data-page="4.10">Bulletin page 4.10</span>
       </div>
-      <h2 class="db-title">Westchester youth ages 16 to 24 who are disconnected, by race and ethnicity, 2015-2019 vs 2020-2024</h2>
+      <h2 class="db-title">Westchester youth ages 16 to 24 who are disconnected, <span id="disconnected-by">by race and ethnicity</span>,
+        <span class="keep-together" data-fill="charts.s4_10_disconnected_youth.periods.0" data-format="raw"></span> vs
+        <span class="keep-together" data-fill="charts.s4_10_disconnected_youth.periods.1" data-format="raw"></span></h2>
       <div class="card-body">
         <aside class="db-panel">
           <h3>One in Eight, Left on the Sidelines</h3>
-          <p class="placeholder">[PLACEHOLDER] "What We See" and "Takeaway" text, added with the chart.</p>
+          <p><strong>What We See:</strong> One in eight Westchester youth ages 16 to 24
+             (<span data-fill="charts.s4_10_disconnected_youth.latest.people"></span> young people) is neither working nor in
+             school. Rates are highest for Black and Hispanic youth, at nearly 15%.</p>
+          <p><strong>Takeaway:</strong> Since
+             <span class="keep-together" data-fill="charts.s4_10_disconnected_youth.periods.0" data-format="raw"></span>, the share of
+             Westchester youth who are disconnected has risen slightly, from
+             <span data-fill="charts.s4_10_disconnected_youth.all_text.0" data-format="raw"></span> to
+             <span data-fill="charts.s4_10_disconnected_youth.latest.rate" data-format="pct"></span>, or about
+             <span data-fill="charts.s4_10_disconnected_youth.about_more_people"></span> more young people. Disconnection still
+             climbs after high school, from
+             <span data-fill="charts.s4_10_disconnected_youth.ages_16_19_whole" data-format="pct0"></span> at ages 16 to 19 to
+             <span data-fill="charts.s4_10_disconnected_youth.ages_20_24_whole" data-format="pct0"></span> at ages 20 to 24.</p>
         </aside>
         <div class="chart-area">
-          <div class="chart-placeholder"><div><strong>Chart 4.10</strong>Paired bars by race group, earlier period lighter, "All" in gray (P2)</div></div>
+          <p class="chart-subtitle">"Disconnected youth" are young people who have not been enrolled in school in the last three
+            months and are not employed.</p>
+          <div class="switch-row"><div class="year-switch views" id="disconnected-views" role="group" aria-label="Choose how the young people are grouped"></div></div>
+          <div class="legend" id="legend-disconnected" hidden></div>
+          <div class="chart-box"><canvas id="chart-disconnected"></canvas></div>
+          <p class="visually-hidden" id="disconnected-status" aria-live="polite"></p>
         </div>
       </div>
-      <p class="source">Source: added with the chart.</p>
+      <p class="source">Source: <span data-fill="charts.s4_10_disconnected_youth.source" data-format="raw"></span></p>
     </article>
 
     <div class="continue"><a class="btn-continue" href="#map">Explore the community map →</a></div>
@@ -1612,6 +2780,50 @@
       <li><strong>Credit card debt (1.16).</strong> [PLACEHOLDER] The average credit card balance per person with a
         credit report in New York State, in the last quarter of each year, in that year's dollars (Federal Reserve Bank
         of New York).</li>
+    </ul>
+    <h3>Chapter 2, chart by chart</h3>
+    <ul class="placeholder">
+      <li><strong>Infant care (pages 2.3 and 2.4).</strong> [PLACEHOLDER] The Child Care Council of Westchester's
+        average monthly cost of care for one infant at a child care center, in each year's dollars (not adjusted for
+        inflation). The Council published no figure for
+        <span data-fill="charts.s2_3_infant_care_cost.missing_years.0" data-format="raw"></span>. Page 2.4 sets a year of
+        that care (twelve months) against the median income of families with their own children under 18. The
+        <span data-fill="charts.s2_4_infant_care_share.benchmark_pct" data-format="pct0"></span> benchmark is the share of
+        income the U.S. Department of Health and Human Services calls affordable.</li>
+      <li><strong>Tax credits (2.5).</strong> [PLACEHOLDER] Each amount is the most a family can receive, for the tax
+        year named. The amounts are the Bulletin's, from the sources named under the table; they are not in a data
+        table.</li>
+      <li><strong>Child care programs (2.6 to 2.8).</strong> [PLACEHOLDER] The Child Care Assistance Program's income
+        limit is 85% of the state median income for a household of that size, in effect
+        <span data-fill="charts.s2_8_income_limits.effective" data-format="raw"></span>. The Westchester Works limit is
+        four times the federal poverty guideline. Limits are cut to whole dollars, never rounded up. The two families
+        on page 2.7 are worked examples: two parents with one infant in care at a center, at the
+        <span data-fill="charts.s2_7_two_families.year" data-format="raw"></span> cost. Page 2.8's scale starts at
+        $70,000, not at $0, as the Bulletin's does.</li>
+      <li><strong>Third grade (2.11).</strong> [PLACEHOLDER] New York State's grade 3 tests in English language arts
+        and math, <span data-fill="charts.s2_11_third_grade.school_year" data-format="raw"></span>: the share of tested
+        students at level 3 or higher (proficient). Median family income is the American Community Survey's five-year
+        estimate (<span data-fill="charts.s2_11_third_grade.income_period" data-format="raw"></span>) for each school
+        district. The Census Bureau reports any median above $250,000 only as "$250,000 or more";
+        <span data-fill="charts.s2_11_third_grade.districts_at_the_ceiling" data-format="raw"></span> Westchester
+        districts are at that ceiling, Scarsdale among them.</li>
+      <li><strong>Head Start (2.13).</strong> [PLACEHOLDER] Children enrolled at any time in the program year, from the
+        federal Program Information Report, for programs based in New York State. The report has no figures for
+        <span data-fill="charts.s2_13_head_start.missing_years.0" data-format="raw"></span>.</li>
+      <li><strong>Early Intervention and preschool special education (2.14, 2.16).</strong> [PLACEHOLDER] Of the
+        children who left the program, the share functioning at the level expected for their age, in each of three
+        areas (federal indicators 3 and 7). Page 2.14 is Westchester County and page 2.16 is New York State; the years
+        are federal fiscal years. On page 2.16, the share evaluated on time is the share of children evaluated within
+        60 days of a parent's consent (indicator 11).</li>
+      <li><strong>Therapists (2.15).</strong> [PLACEHOLDER] The average number of therapists providing Early
+        Intervention services in New York State each year: a count of people, most of them part-time, read from the
+        charts in The Children's Agenda's fact sheet. The scale starts at 11,500, not at 0, as the Bulletin's does.</li>
+      <li><strong>Pre-K (2.17).</strong> [PLACEHOLDER] New York State Education Department counts for Westchester's
+        <span data-fill="charts.s2_17_universal_pre_k.districts" data-format="raw"></span> public school districts.
+        "Enrolled" four-year-olds are those served in any state-funded pre-K program (Universal Pre-K and the state's
+        other programs), each counted once. "Eligible" is the state's own estimate: 85% of kindergarten enrollment,
+        less the four-year-olds in full-day special education preschool. The trend counts three- and four-year-olds,
+        and its scale does not start at 0.</li>
     </ul>
     <p class="muted">
       Data file built <span data-fill="meta.generated" data-format="raw"></span>.

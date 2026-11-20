@@ -1,7 +1,7 @@
 {
   "meta": {
     "dashboard": "2026 Data Bulletin dashboard",
-    "generated": "2026-11-18 13:48 (local time)",
+    "generated": "2026-11-20 09:44 (local time)",
     "built_by": "build_data.py",
     "sources": {
       "CUR-0014": {
@@ -49,6 +49,11 @@
         "rows": 194,
         "md5": "dfdb25d8fc5f2a21293597ce0c2717e8"
       },
+      "CUR-0024": {
+        "file": "CUR-0024_child-care-income-limits-by-family-size_westchester.csv",
+        "rows": 186,
+        "md5": "f036a97be68b2c000fff2ee97a928672"
+      },
       "CUR-0026": {
         "file": "CUR-0026_alice-households-by-place-and-survival-budget_westchester.csv",
         "rows": 34,
@@ -64,15 +69,130 @@
         "rows": 1148,
         "md5": "06010e25b7e9467e8c9984e206f41853"
       },
+      "CUR-0033": {
+        "file": "CUR-0033_prek-enrollment-and-eligibility-by-district_westchester.csv",
+        "rows": 7475,
+        "md5": "4416eb3138c2e9e59480b95279303901"
+      },
       "CUR-0035": {
         "file": "CUR-0035_health-safety-and-insurance-series-by-year_westchester-ny-us.csv",
         "rows": 1373,
         "md5": "0f7e7ed2826f20fb999d7f6d753332ae"
       },
+      "CUR-0037": {
+        "file": "CUR-0037_early-intervention-outcomes-and-workforce_westchester-ny.csv",
+        "rows": 228,
+        "md5": "09ab189366f60d2a035988dcebd94772"
+      },
+      "CUR-0038": {
+        "file": "CUR-0038_preschool-special-education-outcomes-by-year_ny.csv",
+        "rows": 63,
+        "md5": "dd037545fea786c76aed7d3322f388c3"
+      },
+      "CUR-0042": {
+        "file": "CUR-0042_head-start-enrollment-by-program-and-year_ny-westchester.csv",
+        "rows": 289,
+        "md5": "e6eb2d5d4f860c48ab89bdbdd1ce5799"
+      },
       "CUR-0043": {
         "file": "CUR-0043_attainment-race-and-disconnected-youth-by-puma_westchester.csv",
         "rows": 238,
         "md5": "c9b44a6d7c5cec982c033a8b3e72071e"
+      },
+      "CUR-0049": {
+        "file": "CUR-0049_grade-3-8-results-by-grade-and-student-group_westchester.csv",
+        "rows": 108445,
+        "md5": "f386c120b19690c946c449e929463aa5"
+      },
+      "CUR-0004": {
+        "file": "CUR-0004_chronic-absence-by-student-group_westchester.csv",
+        "rows": 6664,
+        "md5": "f0c64b6832c02444ed71ee83751cd023"
+      },
+      "CUR-0005": {
+        "file": "CUR-0005_graduation-by-student-group_westchester.csv",
+        "rows": 8603,
+        "md5": "6b11eb8be3fc89fa4e21b5354dca26d6"
+      },
+      "CUR-0006": {
+        "file": "CUR-0006_grade-3-8-proficiency_westchester.csv",
+        "rows": 19416,
+        "md5": "7dfb417a67342a87011814dac994017a"
+      },
+      "CUR-0007": {
+        "file": "CUR-0007_ap-ib-results-by-student-group_westchester.csv",
+        "rows": 3207,
+        "md5": "d83c994bf6f812ab9370361b12ab823a"
+      },
+      "CUR-0008": {
+        "file": "CUR-0008_suspensions-and-attendance_westchester.csv",
+        "rows": 1016,
+        "md5": "ca12d0a59664d1a472ca382ed02867d9"
+      },
+      "CUR-0012": {
+        "file": "CUR-0012_suspension-rates-by-student-group_westchester-county-nys.csv",
+        "rows": 2212,
+        "md5": "9c31924fda7a1c64f3bc07b6e9b478ed"
+      },
+      "CUR-0034": {
+        "file": "CUR-0034_child-health-by-place_westchester.csv",
+        "rows": 44153,
+        "md5": "c383b12e9c48eaffb937a56ab82da3c1"
+      },
+      "CUR-0036": {
+        "file": "CUR-0036_child-welfare-measures-by-year_westchester.csv",
+        "rows": 124,
+        "md5": "128d0a0f7f905bb3b16f6a636e99b56e"
+      },
+      "CUR-0039": {
+        "file": "CUR-0039_domestic-violence-victims-by-relationship-and-agency_westchester.csv",
+        "rows": 2565,
+        "md5": "e1b9527aae758b60472b9159e62da930"
+      },
+      "CUR-0047": {
+        "file": "CUR-0047_enrollment-student-groups-and-school-lunch_westchester.csv",
+        "rows": 72560,
+        "md5": "8f941cec4d63ae050650155a7306ee7c"
+      },
+      "CUR-0048": {
+        "file": "CUR-0048_regents-results-by-exam-and-student-group_westchester.csv",
+        "rows": 66584,
+        "md5": "ae03f132baf824fad7b688683c1cb558"
+      },
+      "CUR-0017": {
+        "file": "CUR-0017_youth-unemployment-and-internet-access-by-race_westchester.csv",
+        "rows": 160,
+        "md5": "a55d5738f8faa322d542cb9363fe1f60"
+      },
+      "CUR-0025": {
+        "file": "CUR-0025_minimum-wage-vs-rent-and-income-guidelines_westchester.csv",
+        "rows": 145,
+        "md5": "9ea66f160d87a8917d2a054df72324dd"
+      },
+      "CUR-0027": {
+        "file": "CUR-0027_employment-and-earnings-by-age-and-sex_westchester.csv",
+        "rows": 5670,
+        "md5": "b4b41a734b35f40d0b009cac2c85e79b"
+      },
+      "CUR-0041": {
+        "file": "CUR-0041_young-adults-share-of-adults-and-custody_westchester.csv",
+        "rows": 16,
+        "md5": "6169014698cb4c237ff2123f992d7ad1"
+      },
+      "CUR-0045": {
+        "file": "CUR-0045_college-fall-enrollment-by-institution_westchester.csv",
+        "rows": 861,
+        "md5": "5fb77080487d4572acdc996bb3cdd366"
+      },
+      "CUR-0046": {
+        "file": "CUR-0046_adult-arrests-by-year-and-charge-type_westchester.csv",
+        "rows": 616,
+        "md5": "fc6e7092e711db382cb8c0385461fa27"
+      },
+      "STG-0050": {
+        "file": "STG-0050_municipal-boundaries-with-census-codes_westchester.geojson",
+        "rows": 45,
+        "md5": "ee5f64164c57eab90507101a33fd1d3a"
       }
     }
   },
@@ -2044,6 +2164,3273 @@
       "change_pct": 37.3,
       "source": "Federal Reserve Bank of New York, Consumer Credit Panel / Equifax: credit card balance per person in the fourth quarter of each year.",
       "tables": "CUR-0022 (ny_value: credit card, balance per capita, Q4)"
+    },
+    "s2_3_infant_care_cost": {
+      "page": "2.3",
+      "title": "Average monthly cost of center-based infant care in Westchester, 2010 to 2026",
+      "unit": "$",
+      "years": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "values": [
+        1338,
+        1368,
+        1568,
+        1649,
+        1649,
+        1663,
+        1663,
+        1709,
+        1734,
+        1786,
+        1864,
+        null,
+        1903,
+        2003,
+        2105,
+        2062,
+        2094
+      ],
+      "missing_years": [
+        2021
+      ],
+      "first": {
+        "year": 2010,
+        "value": 1338
+      },
+      "last": {
+        "year": 2026,
+        "value": 2094,
+        "annual": 25128,
+        "annual_more_than": 25000,
+        "annual_more_than_text": "$25K"
+      },
+      "rise_pct": 56.5,
+      "rise_pct_whole": 57,
+      "largest_rises": [
+        {
+          "year": 2012,
+          "amount": 200
+        },
+        {
+          "year": 2024,
+          "amount": 102
+        }
+      ],
+      "source": "Child Care Council of Westchester, average cost of care by setting and age, 2010 to 2026. The Council published no figure for 2021.",
+      "tables": "CUR-0023 (wca_monthly_average: infants at a child care center)"
+    },
+    "s2_4_infant_care_share": {
+      "page": "2.4",
+      "title": "Percentage of income spent on infant care by family type, 2024",
+      "unit": "%",
+      "years": [
+        2014,
+        2019,
+        2024
+      ],
+      "benchmark_pct": 7,
+      "annual_cost": [
+        19788,
+        21432,
+        25260
+      ],
+      "all_families": {
+        "income": [
+          107995,
+          131023,
+          155722
+        ],
+        "spent_pct": [
+          18.3,
+          16.4,
+          16.2
+        ]
+      },
+      "families": [
+        {
+          "key": "married",
+          "label": "Married couple with children",
+          "income": [
+            152777,
+            187482,
+            242313
+          ],
+          "spent_pct": [
+            13,
+            11.4,
+            10.4
+          ],
+          "remaining_pct": [
+            87.0,
+            88.6,
+            89.6
+          ],
+          "spent_whole": [
+            13,
+            11,
+            10
+          ],
+          "cents_per_dollar": [
+            "$.13",
+            "$.11",
+            "$.10"
+          ]
+        },
+        {
+          "key": "father",
+          "label": "Single father with children",
+          "income": [
+            46102,
+            65107,
+            88999
+          ],
+          "spent_pct": [
+            42.9,
+            32.9,
+            28.4
+          ],
+          "remaining_pct": [
+            57.1,
+            67.1,
+            71.6
+          ],
+          "spent_whole": [
+            43,
+            33,
+            28
+          ],
+          "cents_per_dollar": [
+            "$.43",
+            "$.33",
+            "$.28"
+          ]
+        },
+        {
+          "key": "mother",
+          "label": "Single mother with children",
+          "income": [
+            36828,
+            40360,
+            64502
+          ],
+          "spent_pct": [
+            53.7,
+            53.1,
+            39.2
+          ],
+          "remaining_pct": [
+            46.3,
+            46.9,
+            60.8
+          ],
+          "spent_whole": [
+            54,
+            53,
+            39
+          ],
+          "cents_per_dollar": [
+            "$.54",
+            "$.53",
+            "$.39"
+          ]
+        }
+      ],
+      "latest": {
+        "year": 2024,
+        "all_income": 155722,
+        "all_spent_pct": 16.2,
+        "married": {
+          "income": 242313,
+          "spent_pct": 10.4,
+          "remaining_pct": 89.6,
+          "spent_whole": 10,
+          "cents_per_dollar": "$.10"
+        },
+        "father": {
+          "income": 88999,
+          "spent_pct": 28.4,
+          "remaining_pct": 71.6,
+          "spent_whole": 28,
+          "cents_per_dollar": "$.28"
+        },
+        "mother": {
+          "income": 64502,
+          "spent_pct": 39.2,
+          "remaining_pct": 60.8,
+          "spent_whole": 39,
+          "cents_per_dollar": "$.39"
+        }
+      },
+      "source": "Child Care Council of Westchester (cost of infant care at a center); U.S. Census Bureau, American Community Survey 1-year estimates (median family income); U.S. Department of Health and Human Services (the 7% affordability benchmark).",
+      "tables": "CUR-0023 (infant_care_share_of_income_pct, median_family_income, wca_annual_cost, federal_affordability_benchmark_pct)"
+    },
+    "s2_6_program_comparison": {
+      "page": "2.6",
+      "title": "Comparing child care supportive programs",
+      "unit": "$",
+      "household_sizes": [
+        2,
+        5
+      ],
+      "limits_effective": "June 1, 2026 to May 31, 2027",
+      "ccap": {
+        "limit_low": 79214,
+        "limit_high": 135131,
+        "about_low": 79000,
+        "about_high": 135000
+      },
+      "works": {
+        "limit_low": 86560,
+        "limit_high": 154720,
+        "about_low": 86000,
+        "about_high": 154000,
+        "award_monthly": 1090,
+        "award_annual": 13080,
+        "award_sheet_year": 2025,
+        "cost_of_care": 25128,
+        "cost_year": 2026,
+        "award_share_pct": 52
+      },
+      "source": "New York State Office of Children and Family Services (Child Care Assistance Program income limits); Child Care Council of Westchester (Westchester Works Scholarship; cost of care).",
+      "tables": "CUR-0024 (value: CCAP income limit, Westchester Works income band, Westchester Works award); CUR-0023 (wca_monthly_average)"
+    },
+    "s2_7_two_families": {
+      "page": "2.7",
+      "title": "Two families, two child care programs: what each pays, 2026",
+      "unit": "$",
+      "year": 2026,
+      "family_size": 3,
+      "cost_of_care": 25128,
+      "families": [
+        {
+          "key": "ccap",
+          "program": "Child Care Assistance Program (CCAP)",
+          "income": 62400,
+          "covers": 24777,
+          "pays": 351,
+          "covers_pct": 99,
+          "income_limit": 97853
+        },
+        {
+          "key": "works",
+          "program": "Westchester Works Scholarship",
+          "income": 105000,
+          "covers": 12000,
+          "pays": 13128,
+          "covers_pct": 48,
+          "income_limit": 109280
+        }
+      ],
+      "income_gap": 42600,
+      "extra_cost": 12777,
+      "extra_cost_about": 12800,
+      "source": "Child Care Council of Westchester (cost of infant care at a center; Westchester Works Scholarship); New York State Office of Children and Family Services and Westchester County Department of Social Services (Child Care Assistance Program family share and income limits).",
+      "tables": "CUR-0024 (value: worked example, CCAP income limit, Westchester Works income band); CUR-0023 (wca_monthly_average)"
+    },
+    "s2_8_income_limits": {
+      "page": "2.8",
+      "title": "Income eligibility limits for child care programs in Westchester, 2026",
+      "unit": "$",
+      "year": 2026,
+      "effective": "June 1, 2026 to May 31, 2027",
+      "households": [
+        {
+          "size": 2,
+          "ccap_limit": 79214,
+          "works_limit": 86560,
+          "window": 7346
+        },
+        {
+          "size": 3,
+          "ccap_limit": 97853,
+          "works_limit": 109280,
+          "window": 11427
+        },
+        {
+          "size": 4,
+          "ccap_limit": 116492,
+          "works_limit": 132000,
+          "window": 15508
+        },
+        {
+          "size": 5,
+          "ccap_limit": 135131,
+          "works_limit": 154720,
+          "window": 19589
+        }
+      ],
+      "works_lowest": 86560,
+      "works_highest": 154720,
+      "source": "New York State Office of Children and Family Services and Westchester County Department of Social Services (Child Care Assistance Program limits, June 1, 2026 to May 31, 2027); U.S. Department of Health and Human Services (the federal poverty guideline the Westchester Works limit is four times).",
+      "tables": "CUR-0024 (value: CCAP income limit; Westchester Works income band; poverty guideline)"
+    },
+    "s2_11_third_grade": {
+      "page": "2.11",
+      "title": "Comparing third grade proficiency in two school districts, 2025",
+      "unit": "%",
+      "school_year": "2024-25",
+      "year": 2025,
+      "subjects": [
+        {
+          "key": "ela",
+          "label": "English Language Arts (ELA)"
+        },
+        {
+          "key": "math",
+          "label": "Math"
+        }
+      ],
+      "districts": [
+        {
+          "key": "low",
+          "name": "Yonkers",
+          "full_name": "Yonkers City School District",
+          "rates": [
+            48.6,
+            49.7
+          ],
+          "proficient": [
+            756,
+            785
+          ],
+          "tested": [
+            1556,
+            1581
+          ],
+          "both_pct": 49,
+          "income": {
+            "value": 96821,
+            "about": 97000,
+            "top_coded": false,
+            "margin": 4794
+          }
+        },
+        {
+          "key": "high",
+          "name": "Scarsdale",
+          "full_name": "Scarsdale Union Free School District",
+          "rates": [
+            93.6,
+            93.2
+          ],
+          "proficient": [
+            309,
+            315
+          ],
+          "tested": [
+            330,
+            338
+          ],
+          "both_pct": 93,
+          "income": {
+            "value": 250000,
+            "about": 250000,
+            "top_coded": true,
+            "margin": null
+          }
+        }
+      ],
+      "gaps": [
+        45,
+        44
+      ],
+      "income_period": "2020-2024",
+      "districts_with_an_income": 41,
+      "districts_at_the_ceiling": 12,
+      "source": "New York State Education Department, grades 3-8 English language arts and math results, 2024-25; U.S. Census Bureau, American Community Survey 5-year estimates, 2020-2024 (median family income by school district).",
+      "tables": "CUR-0049 (pct_proficient, students_proficient, students_tested_counted: Grade 3, All Students); CUR-0015 (median_family_income: unified school districts, 5-year)"
+    },
+    "s2_13_head_start": {
+      "page": "2.13",
+      "title": "Head Start enrollment in New York State, 2014 to 2025",
+      "unit": "count",
+      "years": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "missing_years": [
+        2020
+      ],
+      "series": [
+        {
+          "key": "hs",
+          "label": "Head Start",
+          "values": [
+            55298,
+            54806,
+            53893,
+            51425,
+            48103,
+            45476,
+            null,
+            31776,
+            29589,
+            28780,
+            28241,
+            27324
+          ],
+          "first": {
+            "year": 2014,
+            "value": 55298,
+            "about": 55300
+          },
+          "last": {
+            "year": 2025,
+            "value": 27324,
+            "about": 27300
+          },
+          "peak": {
+            "year": 2014,
+            "value": 55298
+          }
+        },
+        {
+          "key": "ehs",
+          "label": "Early Head Start",
+          "values": [
+            7864,
+            8575,
+            10236,
+            10622,
+            11667,
+            12141,
+            null,
+            11449,
+            11343,
+            10682,
+            11045,
+            11936
+          ],
+          "first": {
+            "year": 2014,
+            "value": 7864,
+            "about": 7900
+          },
+          "last": {
+            "year": 2025,
+            "value": 11936,
+            "about": 11900
+          },
+          "peak": {
+            "year": 2019,
+            "value": 12141
+          }
+        }
+      ],
+      "source": "U.S. Department of Health and Human Services, Office of Head Start, Program Information Report, New York State, 2014 to 2025.",
+      "tables": "CUR-0042 (cumulative_children_by_age_sum: state_total rows, HS and EHS)"
+    },
+    "s2_14_early_intervention_exits": {
+      "page": "2.14",
+      "title": "Early Intervention exits at age-typical levels in Westchester County, 2015 to 2024",
+      "unit": "%",
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "first_year": 2015,
+      "last_year": 2024,
+      "outcomes": [
+        {
+          "key": "social",
+          "label": "Positive Social-Emotional Skills",
+          "indicator": "3A2",
+          "values": [
+            50,
+            43.3,
+            45.5,
+            44.1,
+            46.1,
+            45.8,
+            50,
+            45.6,
+            49.2,
+            51.6
+          ]
+        },
+        {
+          "key": "knowledge",
+          "label": "Knowledge & Skills (incl. early language)",
+          "indicator": "3B2",
+          "values": [
+            45,
+            43.1,
+            42.2,
+            47.8,
+            41.9,
+            39.7,
+            46.9,
+            46.4,
+            47.1,
+            51.1
+          ]
+        },
+        {
+          "key": "behavior",
+          "label": "Appropriate Behaviors to Meet Needs",
+          "indicator": "3C2",
+          "values": [
+            42.4,
+            41,
+            38.6,
+            42.2,
+            47.5,
+            41.9,
+            41.4,
+            47.3,
+            48.3,
+            49.2
+          ]
+        }
+      ],
+      "source": "New York State Department of Health, Bureau of Early Intervention: Indicator 3, Westchester County, federal fiscal years 2015 to 2024.",
+      "tables": "CUR-0037 (value: indicators 3A2, 3B2, 3C2)"
+    },
+    "s2_15_therapists": {
+      "page": "2.15",
+      "title": "Early Intervention therapists in New York State, 2018 to 2025",
+      "unit": "count",
+      "years": [
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "values": [
+        14570,
+        14723,
+        12777,
+        12647,
+        13000,
+        13259,
+        13260,
+        12740
+      ],
+      "first": {
+        "year": 2018,
+        "value": 14570
+      },
+      "last": {
+        "year": 2025,
+        "value": 12740
+      },
+      "change_pct": -12.6,
+      "decline_pct_whole": 13,
+      "rate": {
+        "then": {
+          "year": 1994,
+          "value": 90,
+          "text": "$90.00"
+        },
+        "now": {
+          "year": 2026,
+          "value": 77.12,
+          "text": "$77.12"
+        }
+      },
+      "source": "The Children's Agenda, The State of Early Intervention in Westchester County (July 2026).",
+      "tables": "CUR-0037 (value: therapists_nys, the fact sheet's chart labels; basic_rate_hudson_valley, rate_actual)"
+    },
+    "s2_16_preschool_exits": {
+      "page": "2.16",
+      "title": "Age-typical levels for special education preschoolers leaving the program in New York State, 2019 to 2023",
+      "unit": "%",
+      "years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "first_year": 2019,
+      "last_year": 2023,
+      "outcomes": [
+        {
+          "key": "social",
+          "label": "Positive Social-Emotional Skills",
+          "indicator": "7A2",
+          "values": [
+            39.1,
+            40.5,
+            37.7,
+            37.3,
+            35.6
+          ]
+        },
+        {
+          "key": "knowledge",
+          "label": "Knowledge & Skills (incl. early language)",
+          "indicator": "7B2",
+          "values": [
+            40.0,
+            38.7,
+            37.3,
+            37.8,
+            37.8
+          ]
+        },
+        {
+          "key": "behavior",
+          "label": "Appropriate Behaviors to Meet Needs",
+          "indicator": "7C2",
+          "values": [
+            42.4,
+            44.3,
+            40.2,
+            40.2,
+            40.6
+          ]
+        }
+      ],
+      "first_spread": {
+        "year": 2019,
+        "low": 39,
+        "high": 42
+      },
+      "last_spread": {
+        "year": 2023,
+        "low": 36,
+        "high": 41
+      },
+      "evaluated_on_time": {
+        "year": 2023,
+        "pct": 88.33,
+        "whole": 88
+      },
+      "source": "New York State Education Department, State Performance Plan / Annual Performance Report for preschool special education: Indicators 7 and 11, federal fiscal years 2019 to 2023.",
+      "tables": "CUR-0038 (percent: indicators 7A2, 7B2, 7C2 and 11)"
+    },
+    "s2_17_universal_pre_k": {
+      "page": "2.17",
+      "title": "Universal Pre-K in Westchester County, 2020-21 to 2024-25",
+      "unit": "count",
+      "school_years": [
+        "2020-21",
+        "2021-22",
+        "2022-23",
+        "2023-24",
+        "2024-25"
+      ],
+      "districts": 40,
+      "years": [
+        {
+          "school_year": "2020-21",
+          "school_year_in_full": "2020-2021",
+          "eligible_four_year_olds": 9057,
+          "four_year_olds_served": 3666,
+          "served_pct": 40.5,
+          "served_whole": 41,
+          "not_served_whole": 59,
+          "served_in_words": "about 4 in 10",
+          "children_served": 3851,
+          "districts_offering": 13,
+          "districts_without": 27
+        },
+        {
+          "school_year": "2021-22",
+          "school_year_in_full": "2021-2022",
+          "eligible_four_year_olds": 8465,
+          "four_year_olds_served": 4023,
+          "served_pct": 47.5,
+          "served_whole": 48,
+          "not_served_whole": 52,
+          "served_in_words": "about half",
+          "children_served": 4272,
+          "districts_offering": 16,
+          "districts_without": 24
+        },
+        {
+          "school_year": "2022-23",
+          "school_year_in_full": "2022-2023",
+          "eligible_four_year_olds": 8469,
+          "four_year_olds_served": 4068,
+          "served_pct": 48.0,
+          "served_whole": 48,
+          "not_served_whole": 52,
+          "served_in_words": "about half",
+          "children_served": 4373,
+          "districts_offering": 18,
+          "districts_without": 22
+        },
+        {
+          "school_year": "2023-24",
+          "school_year_in_full": "2023-2024",
+          "eligible_four_year_olds": 8464,
+          "four_year_olds_served": 4059,
+          "served_pct": 48.0,
+          "served_whole": 48,
+          "not_served_whole": 52,
+          "served_in_words": "about half",
+          "children_served": 4317,
+          "districts_offering": 21,
+          "districts_without": 19
+        },
+        {
+          "school_year": "2024-25",
+          "school_year_in_full": "2024-2025",
+          "eligible_four_year_olds": 8255,
+          "four_year_olds_served": 4179,
+          "served_pct": 50.6,
+          "served_whole": 51,
+          "not_served_whole": 49,
+          "served_in_words": "about half",
+          "children_served": 4366,
+          "districts_offering": 25,
+          "districts_without": 15
+        }
+      ],
+      "latest": {
+        "school_year": "2024-25",
+        "school_year_in_full": "2024-2025",
+        "eligible_four_year_olds": 8255,
+        "four_year_olds_served": 4179,
+        "served_pct": 50.6,
+        "served_whole": 51,
+        "not_served_whole": 49,
+        "served_in_words": "about half",
+        "children_served": 4366,
+        "districts_offering": 25,
+        "districts_without": 15
+      },
+      "first": {
+        "school_year": "2020-21",
+        "children_served": 3851
+      },
+      "last": {
+        "school_year": "2024-25",
+        "children_served": 4366
+      },
+      "change_pct": 13.4,
+      "span_years": 5,
+      "source": "New York State Education Department, Office of Early Learning, Prekindergarten Students Served, 2020-21 to 2024-25, 40 Westchester public school districts.",
+      "tables": "CUR-0033 (value: children_served_3s_and_4s, four_year_olds_served, eligible_four_year_olds_nysed_proxy, districts_with_any_children_served; nysed_prek_served, the 40 public districts combined)"
+    },
+    "s3_3_four_communities": {
+      "page": "3.3",
+      "title": "Four communities and school-aged children in poverty, 2020-2024",
+      "unit": "count",
+      "year": 2024,
+      "period": "2020-2024",
+      "county": {
+        "children": 157497,
+        "in_poverty": 16836,
+        "rate": 10.7
+      },
+      "communities": [
+        {
+          "key": "yonkers",
+          "name": "Yonkers",
+          "cousub": "3611984000",
+          "children": 28794,
+          "in_poverty": 5890,
+          "rate": 20.5,
+          "rate_moe": 2.8,
+          "unreliable": false
+        },
+        {
+          "key": "mount_vernon",
+          "name": "Mount Vernon",
+          "cousub": "3611949121",
+          "children": 11068,
+          "in_poverty": 2171,
+          "rate": 19.6,
+          "rate_moe": 3.9,
+          "unreliable": false
+        },
+        {
+          "key": "new_rochelle",
+          "name": "New Rochelle",
+          "cousub": "3611950617",
+          "children": 12265,
+          "in_poverty": 1578,
+          "rate": 12.9,
+          "rate_moe": 3.2,
+          "unreliable": false
+        },
+        {
+          "key": "white_plains",
+          "name": "White Plains",
+          "cousub": "3611981677",
+          "children": 7937,
+          "in_poverty": 1427,
+          "rate": 18,
+          "rate_moe": 5.8,
+          "unreliable": false
+        }
+      ],
+      "count_in_words": "four",
+      "in_four": 11066,
+      "share_in_four": 65.7,
+      "source": "U.S. Census Bureau, 2020 to 2024 American Community Survey five-year estimates, table B17001; county map: Westchester County GIS municipal boundaries.",
+      "tables": "CUR-0014 (below_poverty, poverty_universe, poverty_rate_pct: ages 5 to 17, 5-year); STG-0050 (outlines)"
+    },
+    "s3_4_homeless_rate": {
+      "page": "3.4",
+      "title": "Homeless students per 1,000 enrolled in Westchester schools, 2016 to 2025",
+      "unit": "per 1,000 enrolled",
+      "years": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "school_years": [
+        "2015-16",
+        "2016-17",
+        "2017-18",
+        "2018-19",
+        "2019-20",
+        "2020-21",
+        "2021-22",
+        "2022-23",
+        "2023-24",
+        "2024-25"
+      ],
+      "rates": [
+        18.7,
+        18.5,
+        19.3,
+        18.9,
+        16.5,
+        14.0,
+        15.7,
+        15.4,
+        18.8,
+        19.1
+      ],
+      "counts": [
+        2732,
+        2697,
+        2799,
+        2716,
+        2357,
+        1959,
+        2147,
+        2106,
+        2569,
+        2607
+      ],
+      "enrollment": [
+        146228,
+        145772,
+        145230,
+        143980,
+        143064,
+        139503,
+        136848,
+        136593,
+        136514,
+        136186
+      ],
+      "before": {
+        "year": 2017,
+        "school_year": "2016-17",
+        "rate": 18.5,
+        "rate_text": "18.5",
+        "count": 2697
+      },
+      "low": {
+        "year": 2021,
+        "school_year": "2020-21",
+        "rate": 14.0,
+        "rate_text": "14.0",
+        "count": 1959
+      },
+      "last": {
+        "year": 2025,
+        "school_year": "2024-25",
+        "rate": 19.1,
+        "rate_text": "19.1",
+        "count": 2607
+      },
+      "first_year": 2016,
+      "source": "New York State Education Department homeless student counts and K-12 enrollment, Westchester County, 2016 to 2025. Rate is students identified as homeless per 1,000 enrolled. 2015 is not shown because the source repeats the 2016 enrollment figure for that year.",
+      "tables": "CUR-0028 (county_by_year: homeless_students, enrollment_students, homeless_per_1000_enrolled)"
+    },
+    "s3_5_living_situations": {
+      "page": "3.5",
+      "title": "Homeless Westchester students by type of living situation, 2020 to 2024",
+      "unit": "count",
+      "years": [
+        2020,
+        2024
+      ],
+      "school_years": [
+        "2019-20",
+        "2023-24"
+      ],
+      "situations": [
+        {
+          "key": "doubled_up",
+          "label": "Doubled up",
+          "first": 1370,
+          "last": 1709,
+          "change": 339,
+          "change_pct": 24.7,
+          "rising": true
+        },
+        {
+          "key": "hotels",
+          "label": "Hotels/Motels",
+          "first": 28,
+          "last": 111,
+          "change": 83,
+          "change_pct": 296.4,
+          "rising": true
+        },
+        {
+          "key": "unsheltered",
+          "label": "Unsheltered",
+          "first": 2,
+          "last": 3,
+          "change": 1,
+          "change_pct": 50.0,
+          "rising": true
+        },
+        {
+          "key": "shelters",
+          "label": "In Shelters",
+          "first": 457,
+          "last": 367,
+          "change": -90,
+          "change_pct": -19.7,
+          "rising": false
+        },
+        {
+          "key": "transitional",
+          "label": "Transitional Housing",
+          "first": 337,
+          "last": 233,
+          "change": -104,
+          "change_pct": -30.9,
+          "rising": false
+        }
+      ],
+      "totals": {
+        "first": 2194,
+        "last": 2423
+      },
+      "doubled_up": {
+        "key": "doubled_up",
+        "label": "Doubled up",
+        "first": 1370,
+        "last": 1709,
+        "change": 339,
+        "change_pct": 24.7,
+        "rising": true
+      },
+      "source": "New York State Education Department primary nighttime residence, Westchester districts summed, 2020 and 2024, under Freedom of Information Law request FL-EM-25/637. Doubled up means sharing housing with another household for economic reasons. Counts cover the 2,194 students in 2020 and 2,423 in 2024 whose arrangement was known. New York's eviction moratorium ended on January 15, 2022.",
+      "tables": "CUR-0028 (districts_combined_slide_method, All students: residence_* columns)"
+    },
+    "s3_6_homeless_by_race": {
+      "page": "3.6",
+      "title": "Homeless students per 1,000 enrolled by race and ethnicity, 2020 vs 2024",
+      "unit": "per 1,000 enrolled",
+      "years": [
+        2020,
+        2024
+      ],
+      "groups": [
+        {
+          "key": "asian",
+          "label": "Asian",
+          "first": 0.6,
+          "last": 2.3,
+          "change": 1.6,
+          "counts": [
+            6,
+            21
+          ],
+          "small": true
+        },
+        {
+          "key": "black",
+          "label": "Black or African American",
+          "first": 66.7,
+          "last": 77.0,
+          "change": 10.3,
+          "counts": [
+            1118,
+            1102
+          ],
+          "small": false
+        },
+        {
+          "key": "hispanic",
+          "label": "Hispanic",
+          "first": 20.1,
+          "last": 23.7,
+          "change": 3.6,
+          "counts": [
+            1005,
+            1223
+          ],
+          "small": false
+        },
+        {
+          "key": "multiracial",
+          "label": "Multiracial",
+          "first": 5.3,
+          "last": 6.6,
+          "change": 1.3,
+          "counts": [
+            24,
+            38
+          ],
+          "small": false
+        },
+        {
+          "key": "white",
+          "label": "White",
+          "first": 1.6,
+          "last": 1.4,
+          "change": -0.1,
+          "counts": [
+            96,
+            79
+          ],
+          "small": false
+        }
+      ],
+      "times_black_to_white": 54,
+      "black_whole": 77,
+      "white_whole": 1,
+      "source": "New York State Education Department, Westchester districts summed, 2020 and 2024, obtained by Westchester Children's Association under Freedom of Information Law request FL-EM-25/637. Rates are homeless students per 1,000 enrolled in each group. Asian includes Native Hawaiian and Other Pacific Islander. American Indian or Alaska Native counts were suppressed in both years and are not shown.",
+      "tables": "CUR-0028 (districts_combined_slide_method: homeless_per_1000_enrolled by student_group)"
+    },
+    "s3_7_graduation_and_cities": {
+      "page": "3.7",
+      "title": "Graduation for students experiencing homelessness, and where those students live",
+      "graduation": {
+        "school_year": "2024-25",
+        "class_year": 2025,
+        "entered_grade_9": 2021,
+        "all": 91,
+        "all_whole": 91,
+        "homeless": 69,
+        "homeless_whole": 69,
+        "cohorts": {
+          "all": 11438,
+          "homeless": 203
+        }
+      },
+      "cities_year": 2024,
+      "cities_school_year": "2023-24",
+      "cities": [
+        {
+          "key": "yonkers",
+          "name": "Yonkers",
+          "cousub": "3611984000",
+          "count": 603,
+          "lower_bound": true
+        },
+        {
+          "key": "mount_vernon",
+          "name": "Mount Vernon",
+          "cousub": "3611949121",
+          "count": 1050,
+          "lower_bound": true
+        },
+        {
+          "key": "new_rochelle",
+          "name": "New Rochelle",
+          "cousub": "3611950617",
+          "count": 138,
+          "lower_bound": true
+        },
+        {
+          "key": "white_plains",
+          "name": "White Plains",
+          "cousub": "3611981677",
+          "count": 140,
+          "lower_bound": true
+        }
+      ],
+      "four_total": 1931,
+      "county_total": 2463,
+      "four_share": 78.4,
+      "source": "Homeless students by school district, New York State Education Department 2024. Graduation from New York State Education Department outcome files, 2025 four-year August cohort, the students who entered grade 9 in 2021. School district boundaries are not municipal boundaries.",
+      "tables": "CUR-0028 (graduation; city_with_charters; four_cities_share)"
+    },
+    "s3_9_abuse_findings": {
+      "page": "3.9",
+      "title": "Percentage of child abuse reports substantiated, Westchester, 2005 to 2025",
+      "unit": "%",
+      "years": [
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "rates": [
+        33.7,
+        31.1,
+        32.4,
+        29.6,
+        30.3,
+        23.6,
+        21.0,
+        21.1,
+        20.8,
+        19.8,
+        19.1,
+        16.4,
+        17.9,
+        17.7,
+        17.2,
+        16.0,
+        13.5,
+        12.6,
+        15.3,
+        14.7,
+        16.7
+      ],
+      "first": {
+        "year": 2005,
+        "rate": 33.7,
+        "rate_whole": 34
+      },
+      "standard": {
+        "year": 2022,
+        "rate": 12.6,
+        "indicated": 583
+      },
+      "peak": {
+        "year": 2009,
+        "indicated": 1854
+      },
+      "last": {
+        "year": 2025,
+        "rate": 16.7,
+        "indicated": 762
+      },
+      "rise_pct_whole": 32,
+      "years_above_low": 3,
+      "years_above_low_in_words": "three",
+      "source": "New York State Office of Children and Family Services county profiles, 1995 to 2025. New York Social Services Law sections 412 and 427-A.",
+      "tables": "CUR-0036 (cps_reports_received, cps_reports_indicated, indicated_series_break: Westchester County)"
+    },
+    "s3_10_domestic_violence": {
+      "page": "3.10",
+      "title": "Domestic violence reports by relationship, Westchester County, 2012 to 2024",
+      "unit": "count",
+      "years": [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "partner": [
+        1694,
+        1586,
+        1682,
+        1538,
+        1401,
+        1380,
+        1296,
+        1251,
+        1236,
+        1295,
+        1243,
+        1599,
+        1807
+      ],
+      "family": [
+        745,
+        637,
+        641,
+        646,
+        510,
+        556,
+        529,
+        443,
+        488,
+        519,
+        485,
+        691,
+        834
+      ],
+      "all": [
+        2439,
+        2223,
+        2323,
+        2184,
+        1911,
+        1936,
+        1825,
+        1694,
+        1724,
+        1814,
+        1728,
+        2290,
+        2641
+      ],
+      "from_year": 2022,
+      "rise_pct_whole": 53,
+      "partner_change": 564,
+      "family_change": 349,
+      "last": {
+        "year": 2024,
+        "partner": 1807,
+        "family": 834
+      },
+      "source": "New York State Division of Criminal Justice Services domestic-violence data and definitions, Westchester County totals, 2012 to 2024. NOTE: Counts are victims reported to police. The State Police changed how they count domestic violence victims in 2024, and DCJS advises against comparing their 2024 counts with earlier years.",
+      "tables": "CUR-0039 (intimate_partner_victims, other_family_victims, all_victims: County total, All offenses)"
+    },
+    "s3_11_foster_care": {
+      "page": "3.11",
+      "title": "Share of foster care days by placement setting, Westchester County, 2018, 2021 and 2025",
+      "unit": "%",
+      "years": [
+        2018,
+        2021,
+        2025
+      ],
+      "settings": [
+        {
+          "key": "relative",
+          "days": [
+            18012,
+            35556,
+            46401
+          ],
+          "shares": [
+            11,
+            27.5,
+            41.8
+          ]
+        },
+        {
+          "key": "foster",
+          "days": [
+            94293,
+            63681,
+            43520
+          ],
+          "shares": [
+            57.3,
+            49.2,
+            39.2
+          ]
+        },
+        {
+          "key": "congregate",
+          "days": [
+            52134,
+            30100,
+            21076
+          ],
+          "shares": [
+            31.7,
+            23.3,
+            19
+          ]
+        }
+      ],
+      "relative_times": 2.6,
+      "congregate_drop_pct_whole": 60,
+      "source": "New York State Office of Children and Family Services care-day and placement-setting profiles; New York State Family First implementation materials.",
+      "tables": "CUR-0036 (days_* and share_* columns: Westchester County)"
+    },
+    "s3_12_self_harm": {
+      "page": "3.12",
+      "title": "Emergency department visits for self-harm by age, Westchester County, 2022",
+      "unit": "count",
+      "year": 2022,
+      "groups": [
+        {
+          "label": "0-9",
+          "visits": 11
+        },
+        {
+          "label": "10-19",
+          "visits": 208
+        },
+        {
+          "label": "20-24",
+          "visits": 54
+        },
+        {
+          "label": "25-34",
+          "visits": 85
+        },
+        {
+          "label": "35-44",
+          "visits": 57
+        },
+        {
+          "label": "45-54",
+          "visits": 50
+        },
+        {
+          "label": "55-64",
+          "visits": 22
+        },
+        {
+          "label": "65-74",
+          "visits": 5
+        },
+        {
+          "label": "75-84",
+          "visits": 1
+        },
+        {
+          "label": "85+",
+          "visits": 1
+        }
+      ],
+      "total": 494,
+      "focus": {
+        "label": "10-19",
+        "visits": 208,
+        "share_whole": 42
+      },
+      "typed": true,
+      "source": "New York State Department of Health Suicide and Self-Harm Dashboard, Statewide Planning and Research Cooperative System emergency-visit records, 2022.",
+      "tables": "none: the Bulletin's numbers, typed in build_data.py Settings (SELF_HARM_VISITS)"
+    },
+    "s3_13_weight_and_disadvantage": {
+      "page": "3.13",
+      "title": "Students classified as overweight or obese, by school district, Westchester County, 2024-2025",
+      "unit": "%",
+      "window": "2024-2025",
+      "school_year": "2024-25",
+      "districts": [
+        {
+          "code": "660303030000",
+          "name": "Bronxville",
+          "econ": 4.4,
+          "weight": 14.9
+        },
+        {
+          "code": "660404030000",
+          "name": "Hastings-on-Hudson",
+          "econ": 4.7,
+          "weight": 19.1
+        },
+        {
+          "code": "661201060000",
+          "name": "Byram Hills",
+          "econ": 4.8,
+          "weight": 19.7
+        },
+        {
+          "code": "660402020000",
+          "name": "Irvington",
+          "econ": 10.4,
+          "weight": 18
+        },
+        {
+          "code": "661601030000",
+          "name": "Pelham",
+          "econ": 13.4,
+          "weight": 18.6
+        },
+        {
+          "code": "660801060000",
+          "name": "Mount Pleasant",
+          "econ": 13.8,
+          "weight": 26.5
+        },
+        {
+          "code": "660405030000",
+          "name": "Ardsley",
+          "econ": 14,
+          "weight": 23.4
+        },
+        {
+          "code": "662101060000",
+          "name": "Somers",
+          "econ": 15,
+          "weight": 23.9
+        },
+        {
+          "code": "660809030000",
+          "name": "Pleasantville",
+          "econ": 16.2,
+          "weight": 22.4
+        },
+        {
+          "code": "660202030000",
+          "name": "Croton-Harmon",
+          "econ": 16.3,
+          "weight": 22.7
+        },
+        {
+          "code": "661901030000",
+          "name": "Rye Neck",
+          "econ": 18.8,
+          "weight": 19.1
+        },
+        {
+          "code": "660403030000",
+          "name": "Dobbs Ferry",
+          "econ": 19.6,
+          "weight": 22.1
+        },
+        {
+          "code": "661301040000",
+          "name": "North Salem",
+          "econ": 19.6,
+          "weight": 25.7
+        },
+        {
+          "code": "660501060000",
+          "name": "Harrison",
+          "econ": 21,
+          "weight": 22.6
+        },
+        {
+          "code": "660805030000",
+          "name": "Valhalla",
+          "econ": 25.7,
+          "weight": 29.5
+        },
+        {
+          "code": "660102060000",
+          "name": "Bedford",
+          "econ": 32.7,
+          "weight": 30.9
+        },
+        {
+          "code": "660203060000",
+          "name": "Hendrick Hudson",
+          "econ": 36.6,
+          "weight": 36.1
+        },
+        {
+          "code": "660407060000",
+          "name": "Greenburgh",
+          "econ": 47.7,
+          "weight": 36
+        },
+        {
+          "code": "661100010000",
+          "name": "New Rochelle",
+          "econ": 60.9,
+          "weight": 36.8
+        }
+      ],
+      "count": 19,
+      "lowest": {
+        "code": "660303030000",
+        "name": "Bronxville",
+        "weight": 14.9
+      },
+      "highest": {
+        "code": "661100010000",
+        "name": "New Rochelle",
+        "weight": 36.8
+      },
+      "fit": {
+        "slope": 0.3992,
+        "intercept": 16.319
+      },
+      "left_out": [
+        "Scarsdale"
+      ],
+      "source": "New York State Department of Health student weight-status data, 2024-25; New York State Education Department enrollment data.",
+      "tables": "CUR-0034 (student weight status: value, pct_economically_disadvantaged)"
+    },
+    "s3_15_scores_by_district": {
+      "page": "3.15",
+      "title": "English and AP scores against economic status in Westchester school districts",
+      "unit": "%",
+      "econ_school_year": "2024-25",
+      "ela_school_year": "2024-25",
+      "ap_school_year": "2023-24",
+      "districts": [
+        {
+          "code": "660900010000",
+          "name": "Mount Vernon",
+          "econ": 76.4,
+          "econ_whole": 76,
+          "ela": 44.7,
+          "ap": 34.1,
+          "label": "Mount Vernon"
+        },
+        {
+          "code": "660401030000",
+          "name": "Tarrytowns",
+          "econ": 54.7,
+          "econ_whole": 55,
+          "ela": 49.5,
+          "ap": 67.3,
+          "label": "Tarrytown"
+        },
+        {
+          "code": "660203060000",
+          "name": "Hendrick Hudson",
+          "econ": 36.6,
+          "econ_whole": 37,
+          "ela": 53.2,
+          "ap": 80.3,
+          "label": "Hendrick Hudson"
+        },
+        {
+          "code": "661901030000",
+          "name": "Rye Neck",
+          "econ": 18.8,
+          "econ_whole": 19,
+          "ela": 76.0,
+          "ap": 86.9,
+          "label": "Rye Neck"
+        },
+        {
+          "code": "660406030000",
+          "name": "Edgemont",
+          "econ": 0.4,
+          "econ_whole": 0,
+          "ela": 84.3,
+          "ap": 87.3,
+          "label": "Edgemont"
+        }
+      ],
+      "all": [
+        {
+          "code": "660405030000",
+          "name": "Ardsley",
+          "econ": 14.0,
+          "econ_whole": 14,
+          "ela": 79.2,
+          "ap": 87.9
+        },
+        {
+          "code": "660102060000",
+          "name": "Bedford",
+          "econ": 32.7,
+          "econ_whole": 33,
+          "ela": 61.5,
+          "ap": 86.6
+        },
+        {
+          "code": "660303030000",
+          "name": "Bronxville",
+          "econ": 4.4,
+          "econ_whole": 4,
+          "ela": 88.4,
+          "ap": 91.3
+        },
+        {
+          "code": "661201060000",
+          "name": "Byram Hills",
+          "econ": 4.8,
+          "econ_whole": 5,
+          "ela": 86.1,
+          "ap": 83.2
+        },
+        {
+          "code": "661004060000",
+          "name": "Chappaqua",
+          "econ": 6.2,
+          "econ_whole": 6,
+          "ela": 88.6,
+          "ap": 81.6
+        },
+        {
+          "code": "660202030000",
+          "name": "Croton-Harmon",
+          "econ": 16.3,
+          "econ_whole": 16,
+          "ela": 75.9,
+          "ap": 70.4
+        },
+        {
+          "code": "660403030000",
+          "name": "Dobbs Ferry",
+          "econ": 19.6,
+          "econ_whole": 20,
+          "ela": 78.2,
+          "ap": 81.4
+        },
+        {
+          "code": "660301030000",
+          "name": "Eastchester",
+          "econ": 2.3,
+          "econ_whole": 2,
+          "ela": 77.6,
+          "ap": 88.1
+        },
+        {
+          "code": "660406030000",
+          "name": "Edgemont",
+          "econ": 0.4,
+          "econ_whole": 0,
+          "ela": 84.3,
+          "ap": 87.3
+        },
+        {
+          "code": "660409020000",
+          "name": "Elmsford",
+          "econ": 50.2,
+          "econ_whole": 50,
+          "ela": 59.9,
+          "ap": 59.8
+        },
+        {
+          "code": "660407060000",
+          "name": "Greenburgh",
+          "econ": 47.7,
+          "econ_whole": 48,
+          "ela": 59.0,
+          "ap": 51.2
+        },
+        {
+          "code": "660501060000",
+          "name": "Harrison",
+          "econ": 21.0,
+          "econ_whole": 21,
+          "ela": 67.9,
+          "ap": 70.8
+        },
+        {
+          "code": "660404030000",
+          "name": "Hastings-on-Hudson",
+          "econ": 4.7,
+          "econ_whole": 5,
+          "ela": 85.0,
+          "ap": 77.9
+        },
+        {
+          "code": "660203060000",
+          "name": "Hendrick Hudson",
+          "econ": 36.6,
+          "econ_whole": 37,
+          "ela": 53.2,
+          "ap": 80.3
+        },
+        {
+          "code": "660402020000",
+          "name": "Irvington",
+          "econ": 10.4,
+          "econ_whole": 10,
+          "ela": 83.2,
+          "ap": 81.4
+        },
+        {
+          "code": "660101030000",
+          "name": "Katonah-Lewisboro",
+          "econ": 10.4,
+          "econ_whole": 10,
+          "ela": 80.0,
+          "ap": 74.9
+        },
+        {
+          "code": "662401060000",
+          "name": "Lakeland",
+          "econ": 31.6,
+          "econ_whole": 32,
+          "ela": 59.3,
+          "ap": 77.0
+        },
+        {
+          "code": "660701030000",
+          "name": "Mamaroneck",
+          "econ": 20.7,
+          "econ_whole": 21,
+          "ela": 77.3,
+          "ap": 83.2
+        },
+        {
+          "code": "660801060000",
+          "name": "Mount Pleasant",
+          "econ": 13.8,
+          "econ_whole": 14,
+          "ela": 65.8,
+          "ap": 71.3
+        },
+        {
+          "code": "660900010000",
+          "name": "Mount Vernon",
+          "econ": 76.4,
+          "econ_whole": 76,
+          "ela": 44.7,
+          "ap": 34.1
+        },
+        {
+          "code": "661100010000",
+          "name": "New Rochelle",
+          "econ": 60.9,
+          "econ_whole": 61,
+          "ela": 51.9,
+          "ap": 70.9
+        },
+        {
+          "code": "661301040000",
+          "name": "North Salem",
+          "econ": 19.6,
+          "econ_whole": 20,
+          "ela": 68.0,
+          "ap": 74.4
+        },
+        {
+          "code": "661401030000",
+          "name": "Ossining",
+          "econ": 47.5,
+          "econ_whole": 48,
+          "ela": 38.2,
+          "ap": 62.0
+        },
+        {
+          "code": "661500010000",
+          "name": "Peekskill",
+          "econ": 63.7,
+          "econ_whole": 64,
+          "ela": 29.3,
+          "ap": 58.2
+        },
+        {
+          "code": "661601030000",
+          "name": "Pelham",
+          "econ": 13.4,
+          "econ_whole": 13,
+          "ela": 84.1,
+          "ap": 78.4
+        },
+        {
+          "code": "660809030000",
+          "name": "Pleasantville",
+          "econ": 16.2,
+          "econ_whole": 16,
+          "ela": 76.9,
+          "ap": 85.9
+        },
+        {
+          "code": "661904030000",
+          "name": "Port Chester-Rye",
+          "econ": 75.6,
+          "econ_whole": 76,
+          "ela": 37.0,
+          "ap": 58.7
+        },
+        {
+          "code": "661800010000",
+          "name": "Rye",
+          "econ": 2.3,
+          "econ_whole": 2,
+          "ela": 85.7,
+          "ap": 84.4
+        },
+        {
+          "code": "661901030000",
+          "name": "Rye Neck",
+          "econ": 18.8,
+          "econ_whole": 19,
+          "ela": 76.0,
+          "ap": 86.9
+        },
+        {
+          "code": "662101060000",
+          "name": "Somers",
+          "econ": 15.0,
+          "econ_whole": 15,
+          "ela": 59.5,
+          "ap": 70.7
+        },
+        {
+          "code": "660401030000",
+          "name": "Tarrytowns",
+          "econ": 54.7,
+          "econ_whole": 55,
+          "ela": 49.5,
+          "ap": 67.3
+        },
+        {
+          "code": "660302030000",
+          "name": "Tuckahoe",
+          "econ": 25.7,
+          "econ_whole": 26,
+          "ela": 73.9,
+          "ap": 81.4
+        },
+        {
+          "code": "660805030000",
+          "name": "Valhalla",
+          "econ": 25.7,
+          "econ_whole": 26,
+          "ela": 66.9,
+          "ap": 73.4
+        },
+        {
+          "code": "662200010000",
+          "name": "White Plains",
+          "econ": 52.5,
+          "econ_whole": 53,
+          "ela": 49.2,
+          "ap": 73.3
+        },
+        {
+          "code": "662300010000",
+          "name": "Yonkers",
+          "econ": 73.8,
+          "econ_whole": 74,
+          "ela": 46.9,
+          "ap": 51.2
+        },
+        {
+          "code": "662402060000",
+          "name": "Yorktown",
+          "econ": 15.1,
+          "econ_whole": 15,
+          "ela": 68.8,
+          "ap": 88.8
+        }
+      ],
+      "district_count": 36,
+      "r_ela": -0.9,
+      "r_ap": -0.81,
+      "scale_steps": [
+        0,
+        19,
+        38,
+        57,
+        76
+      ],
+      "scale_steps_text": "0, 19, 38, 57, 76",
+      "also_named": {
+        "code": "661904030000",
+        "name": "Port Chester-Rye",
+        "econ": 75.6,
+        "econ_whole": 76,
+        "ela": 37.0,
+        "ap": 58.7
+      },
+      "r_ela_text": "-0.90",
+      "r_ap_text": "-0.81",
+      "source": "New York State Education Department; economic disadvantage and Grades 3 to 8 English proficiency 2024-25, Advanced Placement scores of 3 or higher 2023-24. Five of 36 districts, each closest to an even five-step scale across the range of economic disadvantage (0, 19, 38, 57, 76), ties alphabetical; Port Chester-Rye is also at 76%, with 37.0% English proficient and 58.7% scoring 3 or higher. Across all 36, economic disadvantage tracks English proficiency at r = -0.90 and Advanced Placement at r = -0.81. AP results NYSED does not publish (fewer than five students tested) are left out, not counted as zero. District level and unweighted, not evidence of individual-level cause.",
+      "tables": "CUR-0047 (Economically Disadvantaged: students / enrollment_k12); CUR-0006 (ELA, All Students: students_proficient / students_tested_counted); CUR-0007 (AP, All Students: exams_proficient / exams_with_scores)"
+    },
+    "s3_16_test_gap": {
+      "page": "3.16",
+      "title": "Grades 3-8 math, Regents and AP exams, Westchester school districts, 2025",
+      "unit": "%",
+      "measures": [
+        {
+          "school_year": "2024-25",
+          "secure": 76.7,
+          "disadvantaged": 41.3,
+          "gap": 35.4,
+          "gap_text": "35.4",
+          "key": "math",
+          "period": "2025"
+        },
+        {
+          "school_year": "2024-25",
+          "secure": 85.3,
+          "disadvantaged": 58.6,
+          "gap": 26.7,
+          "gap_text": "26.7",
+          "key": "regents",
+          "period": "2025"
+        },
+        {
+          "school_year": "2023-24",
+          "secure": 81.2,
+          "disadvantaged": 60.1,
+          "gap": 21.1,
+          "gap_text": "21.1",
+          "key": "ap",
+          "period": "2023-2024"
+        }
+      ],
+      "graduation": {
+        "school_year": "2024-25",
+        "secure": 94.3,
+        "disadvantaged": 86.6,
+        "gap": 7.7,
+        "gap_text": "7.7",
+        "class_year": 2025
+      },
+      "source": "New York State Education Department, Westchester districts. Grades 3 to 8 math and Regents exams 2025, Advanced Placement exams 2023-24, four year August graduation cohort 2025. Suppressed cells are dropped from the denominator throughout, never counted as zero.",
+      "tables": "CUR-0006 (Math, districts combined); CUR-0048 (All Regents exams, districts combined); CUR-0007 (AP, county row); CUR-0005 (graduation, county row): economically disadvantaged and not"
+    },
+    "s3_17_chronic_absence": {
+      "page": "3.17",
+      "title": "Chronic absenteeism by student group and by race and ethnicity, Westchester County, 2024-2025",
+      "unit": "%",
+      "school_years": [
+        "2020-21",
+        "2021-22",
+        "2022-23",
+        "2023-24",
+        "2024-25"
+      ],
+      "years": [
+        {
+          "school_year": "2020-21",
+          "all": 12.3,
+          "status": [
+            {
+              "key": "econ",
+              "label": "Economically disadvantaged",
+              "rate": 23.1
+            },
+            {
+              "key": "ell",
+              "label": "English language learners",
+              "rate": 21.1
+            },
+            {
+              "key": "disability",
+              "label": "Students with disabilities",
+              "rate": 19.5
+            }
+          ],
+          "race": [
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 27.3
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic or Latino",
+              "rate": 18.6
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 7.8
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 4.6
+            },
+            {
+              "key": "asian",
+              "label": "Asian or Pacific Islander",
+              "rate": 4.2
+            }
+          ],
+          "left_out_enrolled": 202
+        },
+        {
+          "school_year": "2021-22",
+          "all": 22.7,
+          "status": [
+            {
+              "key": "econ",
+              "label": "Economically disadvantaged",
+              "rate": 38.9
+            },
+            {
+              "key": "disability",
+              "label": "Students with disabilities",
+              "rate": 31.0
+            },
+            {
+              "key": "ell",
+              "label": "English language learners",
+              "rate": 28.7
+            }
+          ],
+          "race": [
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 50.7
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic or Latino",
+              "rate": 31.1
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 15.2
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 11.3
+            },
+            {
+              "key": "asian",
+              "label": "Asian or Pacific Islander",
+              "rate": 10.9
+            }
+          ],
+          "left_out_enrolled": 207
+        },
+        {
+          "school_year": "2022-23",
+          "all": 19.8,
+          "status": [
+            {
+              "key": "econ",
+              "label": "Economically disadvantaged",
+              "rate": 32.5
+            },
+            {
+              "key": "disability",
+              "label": "Students with disabilities",
+              "rate": 27.3
+            },
+            {
+              "key": "ell",
+              "label": "English language learners",
+              "rate": 25.9
+            }
+          ],
+          "race": [
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 31.1
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic or Latino",
+              "rate": 28.3
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 14.5
+            },
+            {
+              "key": "asian",
+              "label": "Asian or Pacific Islander",
+              "rate": 11.6
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 10.9
+            }
+          ],
+          "left_out_enrolled": 200
+        },
+        {
+          "school_year": "2023-24",
+          "all": 18.3,
+          "status": [
+            {
+              "key": "econ",
+              "label": "Economically disadvantaged",
+              "rate": 30.1
+            },
+            {
+              "key": "disability",
+              "label": "Students with disabilities",
+              "rate": 25.5
+            },
+            {
+              "key": "ell",
+              "label": "English language learners",
+              "rate": 24.2
+            }
+          ],
+          "race": [
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 29.5
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic or Latino",
+              "rate": 25.8
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 13.9
+            },
+            {
+              "key": "asian",
+              "label": "Asian or Pacific Islander",
+              "rate": 11.2
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 9.7
+            }
+          ],
+          "left_out_enrolled": 209
+        },
+        {
+          "school_year": "2024-25",
+          "all": 18.2,
+          "status": [
+            {
+              "key": "econ",
+              "label": "Economically disadvantaged",
+              "rate": 30.1
+            },
+            {
+              "key": "disability",
+              "label": "Students with disabilities",
+              "rate": 25.1
+            },
+            {
+              "key": "ell",
+              "label": "English language learners",
+              "rate": 24.4
+            }
+          ],
+          "race": [
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 28.2
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic or Latino",
+              "rate": 25.7
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 13.5
+            },
+            {
+              "key": "asian",
+              "label": "Asian or Pacific Islander",
+              "rate": 10.6
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 9.9
+            }
+          ],
+          "left_out_enrolled": 224
+        }
+      ],
+      "latest": {
+        "school_year": "2024-25",
+        "all": 18.2,
+        "status": [
+          {
+            "key": "econ",
+            "label": "Economically disadvantaged",
+            "rate": 30.1
+          },
+          {
+            "key": "disability",
+            "label": "Students with disabilities",
+            "rate": 25.1
+          },
+          {
+            "key": "ell",
+            "label": "English language learners",
+            "rate": 24.4
+          }
+        ],
+        "race": [
+          {
+            "key": "black",
+            "label": "Black or African American",
+            "rate": 28.2
+          },
+          {
+            "key": "hispanic",
+            "label": "Hispanic or Latino",
+            "rate": 25.7
+          },
+          {
+            "key": "multiracial",
+            "label": "Multiracial",
+            "rate": 13.5
+          },
+          {
+            "key": "asian",
+            "label": "Asian or Pacific Islander",
+            "rate": 10.6
+          },
+          {
+            "key": "white",
+            "label": "White",
+            "rate": 9.9
+          }
+        ],
+        "left_out_enrolled": 224,
+        "school_year_in_long": "2024-2025"
+      },
+      "source": "New York State Education Department (NYSED), School Report Card data, chronic absenteeism, 2020-21 to 2024-25, students in grades 1-12. Westchester's public school districts combined (44 in 2024-25), including four special act school districts. Groups overlap and cannot be added together. District groups too small for NYSED to report (fewer than 20 students) are left out, not counted as zero. American Indian or Alaska Native students are not shown: 224 enrolled countywide in 2024-25 is too small a base to publish. https://data.nysed.gov",
+      "tables": "CUR-0004 (students_chronically_absent / students_enrolled_counted: districts combined, grades 1-12)"
+    },
+    "s3_18_suspensions": {
+      "page": "3.18",
+      "title": "Student suspensions by race and ethnicity, and the districts with the highest rates",
+      "unit": "%",
+      "race": {
+        "school_years": [
+          "2018-19",
+          "2019-20",
+          "2020-21",
+          "2021-22",
+          "2022-23",
+          "2023-24",
+          "2024-25"
+        ],
+        "years": [
+          {
+            "school_year": "2018-19",
+            "all": 3.6,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 1.3,
+                "suspended": 128,
+                "enrolled": 10092
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 8.8,
+                "suspended": 1804,
+                "enrolled": 20387
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 3.9,
+                "suspended": 2063,
+                "enrolled": 53300
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 2.5,
+                "suspended": 112,
+                "enrolled": 4395
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 2.1,
+                "suspended": 1329,
+                "enrolled": 64804
+              }
+            ],
+            "left_out": {
+              "suspended": 7,
+              "enrolled": 239
+            }
+          },
+          {
+            "school_year": "2019-20",
+            "all": 2.2,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 0.7,
+                "suspended": 72,
+                "enrolled": 10103
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 6.0,
+                "suspended": 1173,
+                "enrolled": 19504
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 2.2,
+                "suspended": 1214,
+                "enrolled": 54066
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 1.7,
+                "suspended": 80,
+                "enrolled": 4735
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 1.3,
+                "suspended": 820,
+                "enrolled": 63384
+              }
+            ],
+            "left_out": {
+              "suspended": 5,
+              "enrolled": 256
+            }
+          },
+          {
+            "school_year": "2020-21",
+            "all": 0.5,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 0.2,
+                "suspended": 17,
+                "enrolled": 9905
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 0.6,
+                "suspended": 106,
+                "enrolled": 18158
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 0.5,
+                "suspended": 244,
+                "enrolled": 53473
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 0.5,
+                "suspended": 27,
+                "enrolled": 5054
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 0.5,
+                "suspended": 304,
+                "enrolled": 61136
+              }
+            ],
+            "left_out": {
+              "suspended": 1,
+              "enrolled": 252
+            }
+          },
+          {
+            "school_year": "2021-22",
+            "all": 3.0,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 1.0,
+                "suspended": 100,
+                "enrolled": 9787
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 6.1,
+                "suspended": 1053,
+                "enrolled": 17398
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 3.6,
+                "suspended": 1959,
+                "enrolled": 54581
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 2.6,
+                "suspended": 140,
+                "enrolled": 5379
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 2.0,
+                "suspended": 1181,
+                "enrolled": 59085
+              }
+            ],
+            "left_out": {
+              "suspended": 5,
+              "enrolled": 241
+            }
+          },
+          {
+            "school_year": "2022-23",
+            "all": 3.5,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 1.3,
+                "suspended": 125,
+                "enrolled": 9853
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 7.9,
+                "suspended": 1354,
+                "enrolled": 17210
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 4.1,
+                "suspended": 2266,
+                "enrolled": 55735
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 2.7,
+                "suspended": 151,
+                "enrolled": 5686
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 2.1,
+                "suspended": 1227,
+                "enrolled": 57683
+              }
+            ],
+            "left_out": {
+              "suspended": 6,
+              "enrolled": 237
+            }
+          },
+          {
+            "school_year": "2023-24",
+            "all": 3.3,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 1.6,
+                "suspended": 153,
+                "enrolled": 9797
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 8.3,
+                "suspended": 1393,
+                "enrolled": 16862
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 3.6,
+                "suspended": 2072,
+                "enrolled": 57057
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 2.6,
+                "suspended": 157,
+                "enrolled": 6026
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 1.9,
+                "suspended": 1096,
+                "enrolled": 56566
+              }
+            ],
+            "left_out": {
+              "suspended": 10,
+              "enrolled": 247
+            }
+          },
+          {
+            "school_year": "2024-25",
+            "all": 3.1,
+            "groups": [
+              {
+                "key": "asian",
+                "label": "Asian",
+                "rate": 1.1,
+                "suspended": 111,
+                "enrolled": 9850
+              },
+              {
+                "key": "black",
+                "label": "Black or African American",
+                "rate": 7.3,
+                "suspended": 1205,
+                "enrolled": 16500
+              },
+              {
+                "key": "hispanic",
+                "label": "Hispanic",
+                "rate": 3.4,
+                "suspended": 1924,
+                "enrolled": 57072
+              },
+              {
+                "key": "multiracial",
+                "label": "Multiracial",
+                "rate": 2.4,
+                "suspended": 150,
+                "enrolled": 6251
+              },
+              {
+                "key": "white",
+                "label": "White",
+                "rate": 1.9,
+                "suspended": 1065,
+                "enrolled": 55329
+              }
+            ],
+            "left_out": {
+              "suspended": 8,
+              "enrolled": 261
+            }
+          }
+        ],
+        "latest": {
+          "school_year": "2024-25",
+          "all": 3.1,
+          "groups": [
+            {
+              "key": "asian",
+              "label": "Asian",
+              "rate": 1.1,
+              "suspended": 111,
+              "enrolled": 9850
+            },
+            {
+              "key": "black",
+              "label": "Black or African American",
+              "rate": 7.3,
+              "suspended": 1205,
+              "enrolled": 16500
+            },
+            {
+              "key": "hispanic",
+              "label": "Hispanic",
+              "rate": 3.4,
+              "suspended": 1924,
+              "enrolled": 57072
+            },
+            {
+              "key": "multiracial",
+              "label": "Multiracial",
+              "rate": 2.4,
+              "suspended": 150,
+              "enrolled": 6251
+            },
+            {
+              "key": "white",
+              "label": "White",
+              "rate": 1.9,
+              "suspended": 1065,
+              "enrolled": 55329
+            }
+          ],
+          "left_out": {
+            "suspended": 8,
+            "enrolled": 261
+          },
+          "school_year_dash": "2024–25"
+        }
+      },
+      "districts": {
+        "school_year": "2023-24",
+        "school_year_in_long": "2023-2024",
+        "rows": [
+          {
+            "code": "660900010000",
+            "label": "Mount Vernon City",
+            "gray": false,
+            "rate": 7.9
+          },
+          {
+            "code": "661500010000",
+            "label": "Peekskill City",
+            "gray": false,
+            "rate": 5.7
+          },
+          {
+            "code": "660409020000",
+            "label": "Elmsford Union Free",
+            "gray": true,
+            "rate": 4.5
+          },
+          {
+            "code": "662300010000",
+            "label": "Yonkers City",
+            "gray": false,
+            "rate": 4.3
+          },
+          {
+            "code": "660407060000",
+            "label": "Greenburgh Central",
+            "gray": true,
+            "rate": 3.6
+          }
+        ],
+        "left_out": [
+          {
+            "name": "Pocantico Hills",
+            "rate": 4.7,
+            "enrolled": 299
+          }
+        ]
+      },
+      "source": "Left: New York State Education Department suspension counts, Westchester County, 2018-19 to 2024-25, obtained by Westchester Children's Association under Freedom of Information Law request FL-EM-25/1398; rate is students suspended at least once, in or out of school, over annual enrollment. Asian includes Native Hawaiian and Other Pacific Islander; American Indian or Alaska Native (8 of 261 in 2024-25) is not shown, too few for a stable rate. Right: New York State Education Department district rates, 2023-24, out-of-school suspensions only.",
+      "tables": "CUR-0012 (students_suspended_any / enrollment_annual: WESTCHESTER, race/ethnicity); CUR-0008 (suspension_rate_pct: districts)"
+    },
+    "s4_3_youth_unemployment": {
+      "page": "4.3",
+      "title": "Westchester County youth unemployment rate, ages 20 to 24, 2024",
+      "unit": "%",
+      "year": 2024,
+      "youth": {
+        "rate": 12.0,
+        "unemployed": 5222,
+        "labor_force": 43520
+      },
+      "state": {
+        "rate": 10.1,
+        "unemployed": 90381,
+        "labor_force": 897833
+      },
+      "older": {
+        "rate": 3.8,
+        "unemployed": 18383,
+        "labor_force": 479883
+      },
+      "times_older": 3.2,
+      "source": "U.S. Census Bureau, American Community Survey, 2024 one-year estimates, table B23001, Westchester County and New York State. Note: The survey publishes employment for ages 16 to 19, 20 to 21 and 22 to 24, so 18- and 19-year-olds cannot be separated from 16- and 17-year-olds. The rate for ages 25 and over is calculated from the table's age groups.",
+      "tables": "CUR-0017 (unemployment, 1-year: count, base, rate_pct)"
+    },
+    "s4_4_unemployment_by_gender": {
+      "page": "4.4",
+      "title": "Youth unemployment by gender, ages 20 to 24, 2015-2019 vs 2020-2024",
+      "unit": "%",
+      "periods": [
+        "2015-2019",
+        "2020-2024"
+      ],
+      "groups": [
+        {
+          "key": "men",
+          "label": "Men",
+          "rates": [
+            12.6,
+            19.6
+          ],
+          "rates_text": [
+            "12.6",
+            "19.6"
+          ],
+          "unemployed": [
+            2679,
+            4191
+          ],
+          "labor_force": [
+            21211,
+            21354
+          ],
+          "change": 7.0
+        },
+        {
+          "key": "women",
+          "label": "Women",
+          "rates": [
+            11.0,
+            12.0
+          ],
+          "rates_text": [
+            "11.0",
+            "12.0"
+          ],
+          "unemployed": [
+            2447,
+            2461
+          ],
+          "labor_force": [
+            22223,
+            20567
+          ],
+          "change": 1.0
+        },
+        {
+          "key": "all",
+          "label": "All",
+          "rates": [
+            11.8,
+            15.9
+          ],
+          "rates_text": [
+            "11.8",
+            "15.9"
+          ],
+          "unemployed": [
+            5126,
+            6652
+          ],
+          "labor_force": [
+            43434,
+            41921
+          ],
+          "change": 4.1
+        }
+      ],
+      "ages": "Ages 20 to 24",
+      "text": {
+        "all_earlier": "11.8",
+        "all_latest": 15.9,
+        "men_earlier": "12.6",
+        "men_latest": 19.6,
+        "women_latest_whole": 12
+      },
+      "one_year": {
+        "year": 2024,
+        "rate": 12.0
+      },
+      "source": "U.S. Census Bureau, American Community Survey, 2015-2019 and 2020-2024 five-year estimates, table B23001 (ages 20 to 24), Westchester County.",
+      "tables": "CUR-0017 (unemployment, 5-year: count, base, rate_pct; and the 1-year rate in the note)"
+    },
+    "s4_5_minimum_wage_and_rent": {
+      "page": "4.5",
+      "title": "Can a minimum wage worker afford rent in Westchester County?",
+      "unit": "$",
+      "wage": {
+        "hourly": 17,
+        "hourly_text": "$17.00",
+        "effective": "January 1, 2026",
+        "hours": 2080,
+        "annual_pay": 35360,
+        "affordable_rent": 884,
+        "affordable_share_pct": 30
+      },
+      "extremely_low_income": 35650,
+      "rents": {
+        "fiscal_year": "2026",
+        "studio": 2529,
+        "one_bedroom": 2655
+      },
+      "earnings": {
+        "year": 2024,
+        "groups": [
+          {
+            "key": "14-18",
+            "label": "Ages 14 to 18",
+            "monthly": 1159,
+            "jobs": 5344,
+            "bulletin": false,
+            "young": false
+          },
+          {
+            "key": "19-21",
+            "label": "Ages 19 to 21",
+            "monthly": 1923,
+            "jobs": 11687,
+            "bulletin": true,
+            "young": true
+          },
+          {
+            "key": "22-24",
+            "label": "Ages 22 to 24",
+            "monthly": 3635,
+            "jobs": 16820,
+            "bulletin": true,
+            "young": true
+          },
+          {
+            "key": "25-34",
+            "label": "Ages 25 to 34",
+            "monthly": 6426,
+            "jobs": 70059,
+            "bulletin": false,
+            "young": false
+          },
+          {
+            "key": "35-44",
+            "label": "Ages 35 to 44",
+            "monthly": 8680,
+            "jobs": 76220,
+            "bulletin": true,
+            "young": false
+          },
+          {
+            "key": "45-54",
+            "label": "Ages 45 to 54",
+            "monthly": 9776,
+            "jobs": 77015,
+            "bulletin": false,
+            "young": false
+          },
+          {
+            "key": "55-64",
+            "label": "Ages 55 to 64",
+            "monthly": 9347,
+            "jobs": 72355,
+            "bulletin": false,
+            "young": false
+          },
+          {
+            "key": "65-99",
+            "label": "Ages 65 and over",
+            "monthly": 7457,
+            "jobs": 34922,
+            "bulletin": false,
+            "young": false
+          }
+        ]
+      },
+      "source": "New York State Department of Labor, minimum wage schedule (Westchester, $17.00 per hour effective January 1, 2026); U.S. Department of Housing and Urban Development, Fair Market Rents, Fiscal Year 2026; Westchester County Department of Planning, 2026 Income and Rent Program Guidelines; U.S. Census Bureau, Quarterly Workforce Indicators, 2024 (average monthly earnings of jobs held for a full quarter, all employers, the four quarters averaged). Note: Affordable rent is 30% of gross income for a full-time worker at 2,080 hours.",
+      "tables": "CUR-0025 (minimum wage, minimum-wage pay, fair market rent, county income limit); CUR-0027 (avg_monthly_earnings_stable_jobs, four-quarter mean)"
+    },
+    "s4_7_educational_attainment": {
+      "page": "4.7",
+      "title": "Educational achievement of Westchester County youth, 2020-2024",
+      "unit": "%",
+      "period": "2020-2024",
+      "diploma": {
+        "ages": "18 to 22",
+        "people": 62106,
+        "with": 54622,
+        "with_whole": 88,
+        "without_whole": 12,
+        "margin": 1.52
+      },
+      "degrees": {
+        "ages": "22 to 24",
+        "people": 35635,
+        "bachelors": {
+          "share": 50.7,
+          "people": 18078,
+          "margin": 3.07
+        },
+        "none": {
+          "share": 42.5,
+          "in_ten": 4,
+          "typed": true
+        },
+        "associate": {
+          "share": 6.8,
+          "typed": true
+        },
+        "state_bachelors": 40.6,
+        "state_bachelors_whole": 41
+      },
+      "typed": {
+        "diploma_ages_18_20_whole": 84
+      },
+      "graduation": {
+        "school_year": "2024-25",
+        "rate": 91
+      },
+      "source": "U.S. Census Bureau, American Community Survey, 2020-2024 five-year estimates, Public Use Microdata Sample, Westchester County and New York State. Graduation rate: New York State Education Department, 2024-25.",
+      "tables": "CUR-0043 (Educational attainment: people_with_outcome, people_in_group); CUR-0028 (graduation, All students); typed in Settings: DIPLOMA_AGES_18_20_PCT, NO_COLLEGE_DEGREE_PCT"
+    },
+    "s4_8_community_college": {
+      "page": "4.8",
+      "title": "Fall enrollment, Westchester Community College, 2015 to 2024",
+      "unit": "count",
+      "years": [
+        2015,
+        2017,
+        2019,
+        2020,
+        2022,
+        2023,
+        2024
+      ],
+      "values": [
+        12966,
+        12571,
+        11121,
+        10072,
+        8807,
+        9031,
+        9359
+      ],
+      "every_year": {
+        "years": [
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "values": [
+          13893,
+          13610,
+          13997,
+          13781,
+          13916,
+          12966,
+          12842,
+          12571,
+          11535,
+          11121,
+          10072,
+          9121,
+          8807,
+          9031,
+          9359
+        ]
+      },
+      "first": {
+        "year": 2015,
+        "value": 12966
+      },
+      "last": {
+        "year": 2024,
+        "value": 9359
+      },
+      "lost": 3607,
+      "decline_pct": 27.8,
+      "source": "New York State Education Department, Higher Education Enrollment Data, SUNY Westchester Community College. Completion rate: National Center for Education Statistics, Integrated Postsecondary Education Data System. Note: Fall degree-credit headcount, all ages; excludes noncredit and continuing education. Years shown are the years with data; the axis is scaled to time.",
+      "tables": "CUR-0045 (Westchester Community College, All students: total)"
+    },
+    "s4_9_young_adults_and_justice": {
+      "page": "4.9",
+      "title": "Young adults ages 18 to 24: share of adults, of adult arrests, and of young people in state custody",
+      "unit": "%",
+      "adults": {
+        "year": 2024,
+        "young": 86775,
+        "adults": 797734,
+        "share": 10.9
+      },
+      "arrests": {
+        "year": 2025,
+        "young": 1925,
+        "adults": 12624,
+        "share": 15.2,
+        "typed": true
+      },
+      "young_people": {
+        "period": "2020-2024",
+        "period_end": 2024,
+        "people": 85286,
+        "black_or_hispanic": 39345,
+        "share": 46.1,
+        "share_whole": 46,
+        "counted": "Black alone or in combination, or Hispanic",
+        "margin": 0.73
+      },
+      "custody": {
+        "year": 2026,
+        "people": 63,
+        "black_or_hispanic": 62,
+        "share_whole": 98
+      },
+      "source": "New York State Division of Criminal Justice Services, NYS Arrests by County dashboard, Westchester, 2025 (arrests of 18- to 24-year-olds), and Adult Arrests 18 and Older by County, 2025 (all adult arrests). New York State Department of Corrections and Community Supervision, Incarcerated Individuals Under Custody, March 31, 2026, by county of indictment. U.S. Census Bureau, American Community Survey, 2024 one-year estimates, table B01001, and 2020-2024 five-year Public Use Microdata Sample. Note: Adult arrests are arrests of people 18 and older. Black or Hispanic counts each person once.",
+      "tables": "CUR-0041 (Census and DOCCS rows); CUR-0046 (total adult arrests); CUR-0043 (Race and ethnicity, Ages 18-24); typed in Settings: ARRESTS_AGES_18_24"
+    },
+    "s4_10_disconnected_youth": {
+      "page": "4.10",
+      "title": "Westchester youth ages 16 to 24 who are disconnected, by race and ethnicity, 2015-2019 vs 2020-2024",
+      "unit": "%",
+      "periods": [
+        "2015-2019",
+        "2020-2024"
+      ],
+      "groups": [
+        {
+          "key": "all",
+          "label": "All",
+          "rates": [
+            10.1,
+            11.9
+          ],
+          "people": [
+            11288,
+            13239
+          ],
+          "of": [
+            111922,
+            111318
+          ],
+          "margins": [
+            0.89,
+            1.3
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "asian",
+          "label": "Asian",
+          "rates": [
+            7.9,
+            11.9
+          ],
+          "people": [
+            439,
+            691
+          ],
+          "of": [
+            5542,
+            5826
+          ],
+          "margins": [
+            3.77,
+            4.74
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "black",
+          "label": "Black",
+          "rates": [
+            15.5,
+            14.7
+          ],
+          "people": [
+            2916,
+            2345
+          ],
+          "of": [
+            18823,
+            15925
+          ],
+          "margins": [
+            2.94,
+            3.81
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "hispanic",
+          "label": "Hispanic",
+          "rates": [
+            11.5,
+            14.6
+          ],
+          "people": [
+            3653,
+            5151
+          ],
+          "of": [
+            31775,
+            35310
+          ],
+          "margins": [
+            1.84,
+            2.38
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "multiracial",
+          "label": "Multiracial",
+          "rates": [
+            12.9,
+            12.2
+          ],
+          "typed": true
+        },
+        {
+          "key": "white",
+          "label": "White Non-Hispanic",
+          "rates": [
+            7.8,
+            9.7
+          ],
+          "people": [
+            4261,
+            4870
+          ],
+          "of": [
+            54437,
+            50337
+          ],
+          "margins": [
+            1.31,
+            1.69
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        }
+      ],
+      "ages": [
+        {
+          "key": "all",
+          "label": "All",
+          "rates": [
+            10.1,
+            11.9
+          ],
+          "people": [
+            11288,
+            13239
+          ],
+          "of": [
+            111922,
+            111318
+          ],
+          "margins": [
+            0.89,
+            1.3
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "ages_16_19",
+          "label": "Ages 16 to 19",
+          "rates": [
+            4.7,
+            6.1
+          ],
+          "people": [
+            2426,
+            3183
+          ],
+          "of": [
+            52127,
+            52473
+          ],
+          "margins": [
+            0.91,
+            1.43
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        },
+        {
+          "key": "ages_20_24",
+          "label": "Ages 20 to 24",
+          "rates": [
+            14.8,
+            17.1
+          ],
+          "people": [
+            8862,
+            10056
+          ],
+          "of": [
+            59795,
+            58845
+          ],
+          "margins": [
+            1.42,
+            2.16
+          ],
+          "small_sample": [
+            false,
+            false
+          ]
+        }
+      ],
+      "latest": {
+        "people": 13239,
+        "of": 111318,
+        "rate": 11.9
+      },
+      "all_text": [
+        "10.1",
+        "11.9"
+      ],
+      "more_people": 1951,
+      "about_more_people": 2000,
+      "ages_16_19_whole": 6,
+      "ages_20_24_whole": 17,
+      "source": "U.S. Census Bureau, American Community Survey, 2015-2019 and 2020-2024 five-year estimates, calculated using the Public Use Microdata Sample, Westchester County PUMAs (2015-2019: 03102 to 03107; 2020-2024: 03102, 03103, 03110, 03111, 03112, 03113 and 03114). Race groups are \"alone\" categories and include people of Hispanic origin; Hispanic includes any race, so categories overlap. The Census Bureau changed how it codes race in 2020, so compare race groups across the two periods with caution. Only the increases for all youth and for Hispanic youth are statistically significant.",
+      "tables": "CUR-0043 (Disconnected youth: people_with_outcome, people_in_group, share_margin_of_error_90pct); typed in Settings: DISCONNECTED_MULTIRACIAL"
     }
   }
 }
