@@ -12,8 +12,9 @@
          headings, chart cards with their side panel, quote cards, (C9) the
          pieces the charts are built from, and (C10) how a chart fills the
          room beside the text box on a wide screen.
-     D.  Layer 2 (story cards) and E. Layer 3 (community map): added later,
-         in their own parts, so each layer's styling has one home.
+     D.  Layer 2 (story cards): added later, in its own part.
+     E.  Layer 3, the community map (the "Map" tab): its fields, "Explore more",
+         map, key, table and panel. Its colors are the --cmap- colors in part A2.
      Last: the rules for narrower windows (1100, 1000, 900, 700, 600 and 520
          pixels wide and less).
    ========================================================================== */
@@ -152,6 +153,20 @@
   --db-map-base:         #E8E8E8;   /* every other place */
   --db-map-highlight:    #007494;   /* places the story is about (3.3, 3.7) */
   --db-map-state:        #22609A;   /* US / NY outline art (2.5) */
+  /* The Community map tab. The five steps of its color scale, light to dark (the design kit's teal ramp, checked
+     with the dataviz validator on white), and the colors of its place card. */
+  --cmap-1:              #80BFCB;
+  --cmap-2:              #4FA1B2;
+  --cmap-3:              #21869C;
+  --cmap-4:              #006A85;
+  --cmap-5:              #004A5E;
+  --cmap-none:           var(--db-map-base);      /* a place with no number */
+  --cmap-pick:           var(--ink);              /* the outline of the chosen place */
+  --cmap-place:          #006A85;                 /* the chosen place: its number, bars and line */
+  --cmap-compare:        var(--wca-blue-700);     /* the place it is compared with (dashed outline and line) */
+  --cmap-county:         var(--db-callout);       /* Westchester: its bar, its dashed line */
+  --cmap-state:          #8A8A8A;                 /* New York State */
+  --cmap-move:           0.5s;                    /* how long the map's colors and the card's bars take to change */
 
   /* ---- Solid headline tiles (4.5) ---- */
   --db-tile-steel:       #2E5F7F;
@@ -1803,14 +1818,210 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
 
 /* --------------------------------------------------------------------------
    D. STORY CARDS  (Layer 2)  ·  added when the sticky-scroll stories are built
-   E. COMMUNITY MAP (Layer 3)  ·  the template's map part C comes in here
    -------------------------------------------------------------------------- */
 
-/* Until Layer 3: the map tab holds a short note in a panel */
-.map-placeholder {
-  margin-top: 20px; padding: 40px 24px; min-height: 320px; display: grid; place-items: center; text-align: center;
-  border: 1px dashed var(--wca-blue-100); border-radius: var(--radius); background: var(--wca-blue-tint); color: var(--muted);
+
+/* --------------------------------------------------------------------------
+   E. COMMUNITY MAP  ·  the "Map" tab (charts.js part 6 fills it)
+   --------------------------------------------------------------------------
+   Laid out like the suspensions dashboard's "Find your district" tab: the sentence in the chapter cover, a block of
+   labelled fields, the map (or its table) with its key on the left and the panel on the right, the * line and the
+   source line. "Explore more" opens a pale row with the years and the table and link buttons. The map's colors are
+   the --cmap- colors in part A2. */
+.cmap-intro .cmap-lead { max-width: none; margin: 0; font-size: 20px; line-height: 1.6; color: var(--ink); }
+.cmap-lead strong { font-size: 32px; font-weight: 700; line-height: 1.1; color: var(--db-title); white-space: nowrap; }
+.cmap { margin-top: 18px; }
+.cmap, .cmap * { box-sizing: border-box; }
+.cmap [hidden] { display: none !important; }      /* a part that is switched off stays off, whatever its layout */
+
+/* The fields, each with its label above it as on the suspensions dashboard: Show and For, then Map by, Find a place
+   and "Explore more" */
+.cmap-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.cmap-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 28px; }
+.cmap-field { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-width: 0; }
+.cmap-label { font-size: 14px; color: var(--fine); }
+.cmap-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cmap .view-button { min-height: 40px; padding: 3px 14px; }
+.cmap-select {
+  min-height: 40px; max-width: 100%; padding: 4px 34px 4px 12px; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink);
+  border: 1px solid var(--wca-blue-200); border-radius: 6px; background-color: var(--white); cursor: pointer;
 }
+.cmap-select.small { font-size: 14px; max-width: 250px; }
+#cmap-measure { width: 372px; }
+.cmap-select:focus-visible, .cmap-find input:focus-visible, .cmap-more:focus-visible, .cmap-tool:focus-visible, .cmap-play:focus-visible,
+.cmap-mini:focus-visible, .cmap-go:focus-visible, .cmap-table button:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: 2px; }
+
+/* Find a place: a box to type in, and the list of matches that drops under it */
+.cmap-find { position: relative; flex: 0 1 340px; align-items: stretch; }
+.cmap-find input {
+  width: 100%; min-height: 40px; padding: 6px 12px; font: inherit; font-size: 14px; color: var(--ink);
+  border: 1px solid var(--wca-blue-200); border-radius: 6px; background: var(--white);
+}
+.cmap-found {
+  position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px; list-style: none;
+  background: var(--white); border: 1px solid var(--wca-blue-200); border-radius: 6px; box-shadow: 0 6px 18px rgba(17, 17, 17, 0.14);
+}
+.cmap-found li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 7px 9px; border-radius: 4px; font-size: 14px; cursor: pointer; }
+.cmap-found li strong { color: var(--ink); font-weight: 600; }
+.cmap-found li span { color: var(--fine); font-size: 12.5px; text-align: right; }
+.cmap-found li.at, .cmap-found li[data-i]:hover { background: var(--wca-blue-tint); }
+.cmap-found li.other strong { color: var(--fine); }
+.cmap-found li.none { color: var(--fine); cursor: default; }
+
+/* "Explore more": a button at the right end of the fields, and the pale row it opens */
+.cmap-more-field { margin-left: auto; }
+.cmap-more {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 4px 18px; font: inherit; font-size: 14px; font-weight: 600;
+  color: var(--db-title); cursor: pointer; background: var(--white); border: 1px solid var(--wca-blue-100); border-radius: 999px;
+}
+.cmap-more::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.cmap-more:hover { border-color: var(--db-title); }
+.cmap-more[aria-expanded="true"] { background: var(--wca-blue-tint); border-color: var(--wca-blue); box-shadow: inset 0 0 0 1.5px var(--wca-blue); }
+.cmap-more[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+.cmap-explore { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; margin-top: 14px; padding: 10px 16px 6px; background: var(--db-panel); border-radius: var(--radius); }
+.cmap-years { display: flex; align-items: center; gap: 10px; flex: 1 1 520px; min-width: 0; }
+.cmap-years .cmap-label { font-weight: 600; color: var(--ink); }
+.cmap-tools { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 4px; }
+.cmap-tool {
+  min-height: 36px; padding: 4px 13px; font: inherit; font-size: 14px; font-weight: 600; color: var(--db-title); cursor: pointer;
+  background: var(--white); border: 1px solid var(--wca-blue-100); border-radius: 6px;
+}
+.cmap-tool:hover { border-color: var(--db-title); }
+.cmap-tool[aria-pressed="true"] { background: var(--wca-blue-tint); border-color: var(--wca-blue); box-shadow: inset 0 0 0 1.5px var(--wca-blue); }
+
+/* The years: a round play button, the slider with a small mark for every year, and the chosen year in words */
+.cmap-play {
+  flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--db-title); display: grid; place-items: center;
+}
+.cmap-play::before { content: ""; margin-left: 3px; border: 7px solid transparent; border-right-width: 0; border-left: 11px solid var(--white); }
+.cmap-play.playing::before { margin: 0; width: 4px; height: 13px; border: 0; border-left: 4px solid var(--white); border-right: 4px solid var(--white); }
+.cmap-slider { position: relative; flex: 1 1 320px; min-width: 200px; height: 44px; margin: 0 8px 0 4px; }
+.cmap-slider input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: -9px; right: -9px; top: 4px; width: calc(100% + 18px); height: 18px; margin: 0;
+  background: transparent; cursor: pointer; z-index: 1;
+}
+.cmap-slider input::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--db-title) var(--done, 100%), var(--db-track) var(--done, 100%)); }
+.cmap-slider input::-moz-range-track { height: 4px; border-radius: 2px; background: var(--db-track); }
+.cmap-slider input::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--db-title); }
+.cmap-slider input::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; background: var(--white); border: 3px solid var(--db-title); }
+.cmap-slider input::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--white); border: 3px solid var(--db-title); }
+.cmap-slider input:focus-visible { outline: 2px solid var(--wca-blue); outline-offset: 4px; border-radius: 4px; }
+.cmap-ticks { position: absolute; left: 0; right: 0; top: 8px; height: 10px; }
+.cmap-ticks i { position: absolute; top: 0; width: 2px; height: 10px; margin-left: -1px; background: var(--wca-blue-100); }
+.cmap-ticks span { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11.5px; color: var(--fine); white-space: nowrap; }
+.cmap-ticks i:first-child span { left: 0; transform: none; }
+.cmap-ticks i:last-child span { left: auto; right: 0; transform: none; }
+.cmap-year-now { min-width: 110px; font-size: 18px; font-weight: 700; color: var(--db-title); text-align: right; white-space: nowrap; }
+.cmap-said { margin: 12px 0 0; font-size: 14px; color: var(--db-callout-text); font-weight: 600; }
+
+/* The map on the left, the panel on the right (the suspensions dashboard's split) */
+.cmap-main { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; align-items: start; margin-top: 18px; }
+.cmap-map svg { display: block; width: 100%; height: auto; }
+.cmap-ground { fill: var(--cmap-none); }
+.cmap-shape { fill: var(--cmap-none); stroke: var(--white); stroke-width: 0.8; cursor: pointer; transition: fill var(--cmap-move) ease; }
+.cmap-shape:not([data-place]) { cursor: default; }
+.cmap-shape[data-place]:hover { stroke: var(--ink); stroke-width: 1.6; }
+.cmap-map.picking .cmap-shape[data-place] { cursor: crosshair; }
+.cmap-outline { fill: none; stroke: var(--cmap-pick); stroke-width: 2.6; stroke-linejoin: round; pointer-events: none; }
+.cmap-outline.compare { stroke: var(--cmap-compare); stroke-dasharray: 7 3; }
+.cmap-outline.edge { stroke-width: 5.2; }       /* the county's line, shown inside the chosen place only: half of it is cut away */
+.cmap-outline.compare.edge { stroke-dasharray: none; }
+.cmap-name { font-size: 13.5px; font-weight: 700; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; paint-order: stroke; stroke: var(--white); stroke-width: 3.5px; stroke-linejoin: round; pointer-events: none; }
+
+/* The key under the map: what it shows, the colors, and "No number" */
+.cmap-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 13px; color: var(--body); }
+.cmap-legend-title { flex: 0 0 100%; margin: 0; font-weight: 700; color: var(--ink); }
+.cmap-key { display: inline-flex; align-items: center; gap: 6px; }
+.cmap-key i { flex: none; width: 16px; height: 14px; border-radius: 2px; }
+.cmap-key i.none { background: var(--cmap-none); }
+
+/* The table view (in the map's place, under "Explore more") */
+.cmap-table { max-height: 760px; overflow: auto; border: 1px solid var(--rule); border-radius: 6px; }
+.cmap-table table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.cmap-table thead th { position: sticky; top: 0; z-index: 1; background: var(--db-panel); color: var(--db-title); text-align: left; padding: 7px 8px; font-weight: 700; white-space: nowrap; }
+.cmap-table thead button { font: inherit; font-weight: 700; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.cmap-table td, .cmap-table tbody th { border-top: 1px solid var(--rule); padding: 5px 8px; text-align: left; font-weight: 400; }
+.cmap-table tbody th button { font: inherit; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.cmap-table tbody th button:hover { text-decoration: underline; }
+.cmap-table .n { text-align: right; font-variant-numeric: tabular-nums; }
+.cmap-table .note { color: var(--fine); font-size: 12.5px; white-space: nowrap; }
+.cmap-table tbody tr { cursor: pointer; }
+.cmap-table tbody tr:hover { background: var(--wca-blue-tint); }
+.cmap-table tr.picked { box-shadow: inset 4px 0 0 var(--cmap-place); background: var(--db-panel); }
+.cmap-table tr.compared { box-shadow: inset 4px 0 0 var(--cmap-compare); background: var(--wca-blue-tint); }
+
+/* The panel: the name, one line on what the place is, the big number, the bars, the trend */
+.cmap-card { background: var(--db-panel); border-radius: var(--radius); padding: 20px 22px; --names: 150px; }
+.cmap-card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 6px 10px; }
+.cmap-card h3 { margin: 0; font-size: 22px; line-height: 1.2; color: var(--db-title); }
+.cmap-card.comparing h3 { font-size: 18px; color: var(--cmap-place); }
+.cmap-card h3 .vs { color: var(--fine); font-weight: 400; }
+.cmap-card h3 .second { color: var(--cmap-compare); }
+.cmap-card-acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.cmap-mini {
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--db-title); background: var(--white); cursor: pointer;
+  border: 1px solid var(--wca-blue-100); border-radius: 999px; padding: 4px 10px; white-space: nowrap;
+}
+.cmap-mini:hover { border-color: var(--db-title); }
+.cmap-card-sub { margin: 4px 0 14px; font-size: 14px; line-height: 1.5; color: var(--fine); }
+.cmap-links { display: block; margin-top: 2px; font-size: 13px; }
+.cmap-go { font: inherit; font-weight: 600; color: var(--wca-green); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-align: left; }
+.cmap-big { display: grid; gap: 10px; align-content: start; margin-bottom: 14px; }
+.cmap-card.comparing .cmap-big { grid-template-columns: 1fr 1fr; }
+.cmap-big-one { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; align-items: center; }
+.cmap-card.comparing .cmap-big-one { grid-template-columns: minmax(0, 1fr); align-content: start; }
+.cmap-big-one b { font-size: 40px; line-height: 1; font-weight: 700; color: var(--cmap-place); white-space: nowrap; }
+.cmap-big-one.compare b { color: var(--cmap-compare); }
+.cmap-big-one b.none { font-size: 24px; color: var(--fine); }
+.cmap-card.comparing .cmap-big-one b { font-size: 28px; margin-bottom: 4px; }
+.cmap-big-one .least { grid-column: 1 / -1; font-size: 12.5px; font-weight: 600; color: var(--fine); }
+.cmap-big-one p { margin: 0; font-size: 15px; line-height: 1.4; color: var(--ink); }
+.cmap-big-one p.alone { grid-column: 1 / -1; color: var(--fine); }
+.cmap-big-one p small { display: block; margin-top: 3px; font-size: 13px; color: var(--fine); }
+.cmap-keep { white-space: nowrap; }                /* a year label never breaks at its dash, a place's name stays on one line */
+.cmap-card h4 { margin: 16px 0 6px; font-size: 14px; color: var(--ink); }
+.cmap-breakdown h4 { margin-bottom: 22px; }
+.cmap-hint { margin: 14px 0 0; font-size: 15px; line-height: 1.45; color: var(--fine); }
+
+/* The panel's bars: a name, then a white track with the bar in it and its value */
+.cmap-bars { position: relative; display: grid; gap: 5px; }
+.cmap-bar { display: grid; grid-template-columns: var(--names) minmax(0, 1fr); align-items: center; gap: 6px; font-size: 13.5px; }
+.cmap-bar-name { color: var(--ink); line-height: 1.2; overflow-wrap: anywhere; }
+.cmap-bar.on .cmap-bar-name { font-weight: 700; }
+.cmap-tracks { display: grid; gap: 2px; }
+.cmap-track { position: relative; height: 22px; background: var(--white); border-radius: 3px; }
+.cmap-tracks .cmap-track + .cmap-track { height: 16px; }
+.cmap-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; transition: width var(--cmap-move) ease; }
+.cmap-val {
+  position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); padding: 0 3px; border-radius: 2px; background: var(--white);
+  font-size: 12.5px; font-weight: 700; color: var(--ink); white-space: nowrap;      /* its own background, so Westchester's line passes behind the number */
+}
+.cmap-val.none { font-weight: 400; color: var(--fine); font-style: italic; }
+.cmap-refline { position: absolute; z-index: 1; top: -5px; bottom: -5px; width: 0; border-left: 2px dashed var(--cmap-county); pointer-events: none; transition: left var(--cmap-move) ease; }
+.cmap-refline span { position: absolute; top: -16px; left: 4px; font-size: 11.5px; font-weight: 700; color: var(--db-callout-text); white-space: nowrap; }
+.cmap-refline.flip span { left: auto; right: 4px; }
+
+/* Under "Explore more": the two facts and the measure's notes. And the trend */
+.cmap-facts { display: grid; gap: 8px; margin-top: 14px; }
+.cmap-facts:empty { display: none; }
+.cmap-card.comparing .cmap-facts { grid-template-columns: 1fr 1fr; align-items: start; }
+.cmap-facts-set { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cmap-card.comparing .cmap-facts-set { grid-template-columns: 1fr; }
+.cmap-fact { background: var(--white); border-radius: 6px; padding: 8px 10px; font-size: 12.5px; line-height: 1.4; color: var(--fine); }
+.cmap-fact b { display: block; font-size: 20px; line-height: 1.2; color: var(--ink); }
+.cmap-fact .who { display: block; font-weight: 700; color: var(--cmap-place); }
+.cmap-fact .who.compare { color: var(--cmap-compare); }
+.cmap-trend-key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 6px; font-size: 12.5px; color: var(--ink); }
+.cmap-trend-key span { display: inline-flex; align-items: center; gap: 6px; }
+.cmap-trend-key i { width: 22px; height: 0; }
+.cmap-trend-box { position: relative; height: 170px; background: var(--white); border-radius: 6px; padding: 6px 6px 2px; }
+.cmap-card-note { margin: 14px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--fine); }
+.cmap > .note { margin: 14px 0 0; }
+.cmap > .source { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+.cmap > .note[hidden] + .source { margin-top: 14px; }
+
+@media (prefers-reduced-motion: reduce) { .cmap-shape, .cmap-fill, .cmap-refline { transition: none; } }
 
 
 /* --------------------------------------------------------------------------
@@ -2126,4 +2337,26 @@ a.page-tag:hover, a.page-tag:focus { color: var(--wca-blue); border-color: var(-
   .hbars.shares .hb-track { height: 44px; max-height: none; }
   .hbars.shares .hb-value { font-size: 18px; }
   .pie-fit { height: 280px; }                                                  /* 4.7: a pie alone in its row can be larger */
+}
+
+/* The Community map tab on a tablet or a phone: the panel goes under the map, and the fields wrap */
+@media (max-width: 900px) {
+  .cmap-main { grid-template-columns: minmax(0, 1fr); }
+  .cmap-map { max-width: 560px; margin: 0 auto; }
+  .cmap-show { flex: 1 1 100%; }
+  #cmap-measure { width: 100%; }
+  .cmap-more-field { margin-left: 0; }
+}
+@media (max-width: 560px) {
+  .cmap-intro .cmap-lead { font-size: 17px; }
+  .cmap-lead strong { font-size: 26px; }
+  .cmap-find { flex-basis: 100%; }
+  .cmap-years { flex-wrap: wrap; }
+  .cmap-slider { flex-basis: calc(100% - 110px); min-width: 0; margin: 0 12px 0 6px; }
+  .cmap-year-now { min-width: 0; flex-basis: 100%; text-align: left; }
+  .cmap-ticks i.named:not(:first-child):not(:last-child) span { display: none; }   /* only the first and last year are named */
+  .cmap-card { --names: 108px; padding: 14px 12px; }
+  .cmap-big-one b { font-size: 30px; }
+  .cmap-card.comparing .cmap-big, .cmap-card.comparing .cmap-facts { grid-template-columns: minmax(0, 1fr); }
+  .cmap-facts-set { grid-template-columns: minmax(0, 1fr); }
 }

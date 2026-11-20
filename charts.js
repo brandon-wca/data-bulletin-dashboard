@@ -9,8 +9,8 @@
      3. Draw the four headline tiles.
      4. Wire the chapter tabs: show the chapter named in the web address (#chapter-2, #map),
         or chapter 1; draw a chapter's charts the first time it is opened.
-     5. (Layer 2) the sticky-scroll stories, (Layer 3) the community map: added later,
-        in their own parts of this file.
+     5. The community map (Layer 3) is drawn the first time its tab opens, from data.json's "map" block
+        and data/Geography.json (part 6). The sticky-scroll stories (Layer 2) are added later.
 
    Nothing here defines a color; every color is read from styles.css (WCA.colors, WCA.db).
 
@@ -39,6 +39,7 @@
         (makeBars), coversLine, putNote, pointAt, yearButtons, and the add-ons yearBand, yearsUnderBars,
         changeMarks, valuesInParts and districtNames; for chapter 4, the HTML bars whose rows come and go
         (makeSlotBars), moveChart and the add-ons columnValues and footWords
+     6. Community map: the "Map" tab (drawCommunityMap and the cmap... functions)
    ========================================================================== */
 
 
@@ -583,7 +584,7 @@ var CHAPTER_CHARTS = {
                 drawScoresByDistrict, drawTestGap, drawChronicAbsence, drawSuspensions],
   "chapter-4": [drawYouthUnemployment, drawUnemploymentByGender, drawMinimumWageAndRent, drawEducationalAttainment,
                 drawCommunityCollege, drawYoungAdultsAndJustice, drawDisconnectedYouth],
-  "map": [],
+  "map": [drawCommunityMap],
 };
 
 /* Page 1.5: the Bulletin's line of children under 5 has three points and no more: the first year, the
@@ -757,6 +758,12 @@ var DISCONNECTED_VIEWS = [
   { name: "By age", title: "by age" },
 ];
 var DISCONNECTED_STEP = 5;
+/* The Community map tab (part 6). What it shows (the measures, the places, the color steps, the words) is all in
+   data.json's "map" block; only how it is drawn is set here. */
+var CMAP_WIDTH = 560;          /* the map's own width in its drawing units; its height follows the county's shape */
+var CMAP_PLAY_MS = 1100;       /* the play button: how long each year stays up (the colors take --cmap-move of it to change) */
+var CMAP_LINKS_SHOWN = 4;      /* the panel names this many towns or overlapping places, then "and 3 more" */
+
 /* Page 4.10 on a phone: six pairs of bars leave each name very little room, so these names are broken into lines
    here (a name not listed is broken at its spaces). */
 var DISCONNECTED_NARROW_NAMES = { "Multiracial": ["Multi-", "racial"], "White Non-Hispanic": ["White", "Non-", "Hispanic"] };
@@ -867,7 +874,7 @@ function showTab(id) {
 /* Open a tab from a click (scrolls so the tabs sit at the top, with the chapter below) */
 function openTab(id, fromClick) {
   showTab(id);
-  if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+  if (location.hash.split("?")[0] !== "#" + id) history.replaceState(null, "", id === "map" && cmap.link ? cmap.link : "#" + id);
   if (fromClick) {
     var nav = document.querySelector(".chapter-nav");
     var top = nav.getBoundingClientRect().top + window.scrollY;
@@ -877,7 +884,7 @@ function openTab(id, fromClick) {
 
 /* Open whatever the address bar asks for: a tab, or an element inside one */
 function revealHash() {
-  var id = decodeURIComponent(location.hash.replace("#", ""));
+  var id = decodeURIComponent(location.hash.replace("#", "")).split("?")[0];   /* "#map?measure=..." opens the map tab; part 6 reads the rest */
   if (!id) { showTab(DEFAULT_TAB); return; }
   if (TAB_IDS.indexOf(id) >= 0) { showTab(id); return; }
   var target = document.getElementById(id);
@@ -5473,3 +5480,970 @@ var footWords = {
     if (o.onFit && asked) o.onFit(fit);
   },
 };
+
+
+/* --------------------------------------------------------------------------
+   6. COMMUNITY MAP  ·  the "Map" tab
+   --------------------------------------------------------------------------
+   Laid out like the suspensions dashboard's "Find your district" tab (the user's choice of 2026-11-20): a sentence
+   naming the lowest and the highest place, the fields (Show, For, Map by, Find a place), the map with its key on the
+   left, a panel on the right (Westchester at first, then the place picked), the * line and the source line.
+   "Explore more" opens the year slider and play button, the table view, the link and the comparison of two places,
+   and adds the breakdown bars, two facts and the measure's notes to the panel. Closing it goes back to the simple
+   view: the latest year, the map, no comparison.
+   Everything it shows comes from two files: data.json's "map" block (the kinds of place, the places, and every
+   measure with its numbers, color steps and words) and data/Geography.json (the outlines). Only the kinds of place
+   and the measures marked "shown" are offered (build_data.py's Setting MAP_KINDS_SHOWN decides).
+   How it works:
+     a. `cmap` holds what the reader has chosen: the measure, the "For" choice (a variant), the kind of place (and
+        the kind the reader last clicked, kept for the next measure that has it), the year, a place, a second place
+        to compare it with, and whether "Explore more" is open.
+     b. Every control changes `cmap` and calls cmapShow(), which redraws what that change touches: the fields,
+        the sentence, the map (or the table), the key, the panel, the * line and the source line.
+     c. The same choices are kept in the web address (#map?measure=...&place=...), so a link opens the tab
+        exactly as it was (cmapWriteLink, cmapReadLink). Links made before 2026-11-20 still open.
+   A number on the map is an entry [value, flag, ...] as build_data.py writes it; CMAP_FLAGS says what each
+   flag means. A less reliable number is written with a * after it, an "at least" number with a +.
+   -------------------------------------------------------------------------- */
+
+var CMAP_FLAGS = { plain: 0, lessReliable: 1, tooFew: 2, atLeast: 3 };
+var cmap = { ready: false, measure: null, variant: null, kind: null, kindChoice: null, year: 0, place: null, compare: null,
+             picking: false, more: false, table: false, sort: { column: "value", down: true }, timer: null, drawnLayer: null, chart: null, trendFrom: 0 };
+
+function drawCommunityMap(data) {
+  if (!data.map) return;
+  loadGeography().then(function (outlines) {
+    cmap.map = data.map;
+    cmap.outlines = outlines;
+    cmap.colors = [1, 2, 3, 4, 5].map(function (i) { return WCA.cssVar("--cmap-" + i); });
+    cmap.hues = { place: WCA.cssVar("--cmap-place"), compare: WCA.cssVar("--cmap-compare"),
+                  county: WCA.cssVar("--cmap-county"), state: WCA.cssVar("--cmap-state") };
+    cmap.measures = {};
+    data.map.measures.forEach(function (m) { if (m.shown) cmap.measures[m.id] = m; });     /* the rest stay in data.json, off the menu */
+    cmap.kinds = {};
+    data.map.kinds.forEach(function (k) { cmap.kinds[k.id] = k; });
+    cmapProject();
+    cmapBuildControls();
+    cmapChoose(data.map.first.measure, {});
+    cmapReadLink();
+    cmap.ready = true;
+    cmapShow("all");
+    window.addEventListener("hashchange", function () {
+      if (location.hash.indexOf("#map?") === 0 && location.hash !== cmap.link) { cmapReadLink(); cmapShow("all"); }
+    });
+    whenLayoutChanges(function () { if (cmap.ready) cmapBars(); }, document.getElementById("cmap-card"));
+  });
+}
+
+/* ---- What is chosen ------------------------------------------------------------------------------ */
+
+function cmapVariant() { return cmap.measure.variants.filter(function (v) { return v.id === cmap.variant; })[0]; }
+function cmapPlaces(kind) { return cmap.map.places[kind || cmap.kind] || {}; }
+function cmapSeries(variantId, kind, place) {
+  var numbers = cmap.measure.numbers[variantId];
+  return numbers && numbers[kind] ? numbers[kind][place] || null : null;
+}
+/* A place's entry for the chosen year: "county" and "state" are Westchester's and New York's rows */
+function cmapEntry(place, variantId, year) {
+  variantId = variantId || cmap.variant;
+  var series = place === "county" || place === "state" ? cmap.measure[place][variantId] : cmapSeries(variantId, cmap.kind, place);
+  return series ? series[year === undefined ? cmap.year : year] || null : null;
+}
+function cmapValue(entry) { return entry && entry[0] !== null && entry[0] !== undefined ? entry[0] : null; }
+function cmapFlag(entry) { return entry ? entry[1] || 0 : 0; }
+function cmapField(entry, name) {
+  var i = cmap.measure.fields.indexOf(name);
+  return entry && i >= 0 && entry[i] !== undefined ? entry[i] : null;
+}
+/* The places of the chosen kind that are drawn in the chosen year (Census areas, off the map today, have two sets of lines) */
+function cmapShown(place) {
+  if (cmap.kind !== "pumas" || !cmap.measure.vintages) return true;
+  return place.indexOf(cmap.measure.vintages[cmap.year] + "-") === 0;
+}
+/* The kinds of place a measure can be drawn for on this page, in the order of their buttons */
+function cmapKindsOf(measure) {
+  return cmap.map.kinds.filter(function (k) { return k.shown && measure.kinds.indexOf(k.id) >= 0; }).map(function (k) { return k.id; });
+}
+
+/* Choose a measure, keeping what can be kept of the "For" choice, the kind of place, the year and the place. The map
+   picks the measure's first kind of place, unless the reader picked one and the measure has it too. */
+function cmapChoose(measureId, keep) {
+  keep = keep || {};
+  var measure = cmap.measures[measureId] || cmap.measures[cmap.map.first.measure];
+  var yearName = cmap.measure ? cmap.measure.years[cmap.year] : null;
+  cmap.measure = measure;
+  cmap.variant = measure.variants.some(function (v) { return v.id === keep.variant; }) ? keep.variant : measure.variants[0].id;
+  var kinds = cmapKindsOf(measure);
+  var kind = kinds.indexOf(keep.kind) >= 0 ? keep.kind : (kinds.indexOf(cmap.kindChoice) >= 0 ? cmap.kindChoice : kinds[0]);
+  if (kind !== cmap.kind) { cmap.place = null; cmap.compare = null; }
+  cmap.kind = kind;
+  var year = measure.years.indexOf(keep.year || (cmap.more ? yearName : null));        /* closed "Explore more": the latest year */
+  cmap.year = year >= 0 ? year : measure.years.length - 1;
+  cmapKeepYear();
+  cmapDropMissingPlaces();
+}
+function cmapKindList(measure) {
+  var names = cmapKindsOf(measure).map(function (k) { return cmap.kinds[k].many; });
+  return names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0];
+}
+/* The first and last year in which the chosen variant has a number for any place of the chosen kind */
+function cmapYearSpan() {
+  var places = (cmap.measure.numbers[cmap.variant] || {})[cmap.kind] || {}, first = Infinity, last = -1;
+  Object.keys(places).forEach(function (key) {
+    places[key].forEach(function (entry, i) { if (cmapValue(entry) !== null) { if (i < first) first = i; if (i > last) last = i; } });
+  });
+  return last < 0 ? [0, cmap.measure.years.length - 1] : [first, last];
+}
+/* Keep the chosen year inside the years that have numbers (by race and by group, a measure can start later) */
+function cmapKeepYear() {
+  var span = cmapYearSpan();
+  cmap.year = Math.max(span[0], Math.min(span[1], cmap.year));
+}
+/* With "Explore more" closed the map shows the latest year that has numbers */
+function cmapLatestYear() { if (!cmap.more) cmap.year = cmapYearSpan()[1]; }
+function cmapDropMissingPlaces() {
+  if (cmap.place && !cmapPlaces()[cmap.place]) cmap.place = null;
+  if (cmap.compare && (!cmapPlaces()[cmap.compare] || cmap.compare === cmap.place)) cmap.compare = null;
+  if (!cmap.place) { cmap.compare = null; cmap.picking = false; }
+}
+function cmapSay(text) { cmap.said = text; }
+
+/* Open or close "Explore more". Closing it goes back to the simple view: the latest year, the map, no comparison. */
+function cmapExplore(open) {
+  cmap.more = open;
+  if (!open) {
+    cmapStop();
+    cmap.table = false; cmap.compare = null; cmap.picking = false; cmap.said = "";
+    cmap.year = cmapYearSpan()[1];
+  }
+  cmapShow("all");
+}
+
+/* ---- The web address ------------------------------------------------------------------------------ */
+
+function cmapWriteLink() {
+  var parts = ["measure=" + cmap.measure.id, "for=" + cmap.variant, "places=" + cmap.kind, "year=" + cmap.measure.years[cmap.year]];
+  if (cmap.place) parts.push("place=" + encodeURIComponent(cmap.place));
+  if (cmap.compare) parts.push("with=" + encodeURIComponent(cmap.compare));
+  if (cmap.table) parts.push("view=table");
+  cmap.link = "#map?" + parts.join("&");
+  if (!document.getElementById("map").hidden && location.hash !== cmap.link) history.replaceState(null, "", cmap.link);
+}
+function cmapReadLink() {
+  var query = location.hash.split("?")[1];
+  if (location.hash.indexOf("#map") !== 0 || !query) return;
+  var asked = {};
+  query.split("&").forEach(function (pair) { var p = pair.split("="); asked[p[0]] = decodeURIComponent(p[1] || ""); });
+  var kind = asked.places, place = asked.place, other = asked["with"];
+  if (kind === "towns" || kind === "villages") {          /* a link made before 2026-11-20: both are municipalities now */
+    kind = "municipal"; place = cmapOldPlace(place); other = cmapOldPlace(other);
+  }
+  cmap.kind = null; cmap.said = "";
+  cmap.kindChoice = cmap.kinds[kind] && cmap.kinds[kind].shown ? kind : null;
+  cmap.more = true;                                        /* so that the year asked for is kept */
+  cmapChoose(asked.measure, { variant: asked["for"], kind: kind, year: asked.year });
+  cmap.place = place && cmapPlaces()[place] ? place : null;
+  cmap.compare = cmap.place && other && cmapPlaces()[other] && other !== cmap.place ? other : null;
+  cmap.table = asked.view === "table";
+  cmap.more = cmap.table || !!cmap.compare || cmap.year !== cmapYearSpan()[1];      /* open only when the link needs it */
+}
+/* A town's code in a link made before 2026-11-20. A city, or a town that is also a village, is known by its place code
+   now; a town with no villages keeps its code; a town with villages has no piece of its own, so no place is picked. */
+function cmapOldPlace(key) {
+  if (!key || cmapPlaces("municipal")[key]) return key || null;
+  var twin = cmap.outlines.features.filter(function (f) {
+    var p = f.properties;
+    return p.cousub_geoid === key && p.place_geoid && (p.municipality_type === "city" || p.municipality_type === "town/village");
+  })[0];
+  return twin ? twin.properties.place_geoid : null;
+}
+
+/* ---- Numbers as words ----------------------------------------------------------------------------- */
+
+function cmapNumber(value) {
+  var m = cmap.measure;
+  if (value === null || value === undefined) return "no number";
+  if (m.unit === "$") return "$" + Math.round(value).toLocaleString("en-US");
+  var text = Number(value).toLocaleString("en-US", { minimumFractionDigits: m.decimals, maximumFractionDigits: m.decimals });
+  return m.unit === "%" ? text + "%" : text;
+}
+/* An entry's value as it is written on a bar, in the table, in the hover box and in the sentence: "161.6+" when it is
+   "at least", "12.0%*" when it is less reliable */
+function cmapShort(entry) {
+  if (cmapValue(entry) === null) return cmapFlag(entry) === CMAP_FLAGS.tooFew ? "too few to show" : "no number";
+  return cmapNumber(entry[0]) + (cmapFlag(entry) === CMAP_FLAGS.atLeast ? "+" : "") + cmapStarOf(entry);
+}
+function cmapStarOf(entry) { return cmapValue(entry) !== null && cmapFlag(entry) === CMAP_FLAGS.lessReliable ? "*" : ""; }
+function cmapMargin(entry) {
+  var e = cmapField(entry, "e");
+  if (e === null) return "";
+  return "margin of error ±" + (cmap.measure.unit === "$" ? "$" + Math.round(e).toLocaleString("en-US") : e.toFixed(1) + " points");
+}
+/* A color step in the key: "6%", "2.5%", "$100,000" (no ".0" on a whole number) */
+function cmapStep(value) {
+  if (cmap.measure.unit === "$") return "$" + value.toLocaleString("en-US");
+  return value.toLocaleString("en-US") + (cmap.measure.unit === "%" ? "%" : "");
+}
+function cmapYearName(i) { return cmap.measure.year_labels[i === undefined ? cmap.year : i]; }
+/* "2020–2024" -> "20–24", "2024–25" -> "24–25", "January 2026" -> "Jan 2026": for the slider and the trend's axis */
+function cmapYearShort(i) {
+  var label = cmap.measure.year_labels[i];
+  var span = /^(\d{4})–(\d{4})$/.exec(label);
+  if (span) return span[1].slice(2) + "–" + span[2].slice(2);
+  var school = /^(\d{4})–(\d{2})$/.exec(label);
+  if (school) return school[1].slice(2) + "–" + school[2];
+  var month = /^([A-Z][a-z]+) (\d{4})$/.exec(label);
+  if (month) return month[1].slice(0, 3) + " " + month[2];
+  return label;
+}
+/* A year label that never breaks at its dash ("2020–2024", "2024–25"), and a name that stays on one line */
+function cmapWhen(i) { return cmapKeep(cmapYearName(i)); }
+function cmapKeep(text) { return '<span class="cmap-keep">' + plainText(text) + "</span>"; }
+function cmapUnitWords() { return cmap.measure.unit === "%" ? "points" : (cmap.measure.unit === "$" ? "" : (cmap.measure.per || "")); }
+/* A place's name in the sentence: a school district without "Union Free School District" and the like */
+function cmapShortName(key) {
+  var name = cmapPlaces()[key].name;
+  if (cmap.kind !== "districts") return name;
+  return name.replace(/^Union Free School District of (the )?/, "").replace(/ (Union Free|Central|City|Common)? ?School District$/, "");
+}
+/* What a municipality is, in a few words: "Village in the Town of Rye", "City", "Town" ("village in the Town of Rye"
+   with `small`, for the search list) */
+function cmapWhat(p, small) {
+  return (small ? p.type.toLowerCase() : p.type) + (p["in"] && p["in"].length ? " in the " + p["in"].join(" and the ") : "");
+}
+
+/* ---- The fields ------------------------------------------------------------------------------------ */
+
+function cmapBuildControls() {
+  var select = document.getElementById("cmap-measure"), html = "";
+  cmap.map.groups.forEach(function (group) {
+    var inGroup = cmap.map.measures.filter(function (m) { return m.group === group.id && cmap.measures[m.id]; });
+    if (!inGroup.length) return;                                  /* a section whose measures are all off the map */
+    html += '<optgroup label="' + plainText(group.name) + '">';
+    inGroup.forEach(function (m) { html += '<option value="' + m.id + '">' + plainText(m.name) + "</option>"; });
+    html += "</optgroup>";
+  });
+  select.innerHTML = html;
+  select.addEventListener("change", function () { cmapStop(); cmap.said = ""; cmapChoose(select.value, {}); cmapShow("all"); });
+
+  document.getElementById("cmap-for").addEventListener("click", function (e) {
+    var button = e.target.closest("button[data-control]");
+    if (button) cmapSetControl(Number(button.getAttribute("data-control")), Number(button.getAttribute("data-option")));
+  });
+  document.getElementById("cmap-for").addEventListener("change", function (e) {
+    if (e.target.matches("select[data-control]")) cmapSetControl(Number(e.target.getAttribute("data-control")), Number(e.target.value));
+  });
+  document.getElementById("cmap-kinds").addEventListener("click", function (e) {
+    var button = e.target.closest("button[data-kind]");
+    if (!button) return;
+    cmapStop(); cmap.said = ""; cmap.kindChoice = button.getAttribute("data-kind");
+    cmapChoose(cmap.measure.id, { variant: cmap.variant, kind: button.getAttribute("data-kind"), year: cmap.measure.years[cmap.year] });
+    cmapShow("all");
+  });
+  document.getElementById("cmap-more").addEventListener("click", function () { cmapExplore(!cmap.more); });
+  var slider = document.getElementById("cmap-year");
+  slider.addEventListener("input", function () { var year = Number(slider.value); cmapStop(); cmap.year = year; cmapKeepYear(); cmapShow("year"); });
+  document.getElementById("cmap-play").addEventListener("click", function () { if (cmap.timer) cmapStop(); else cmapPlay(); });
+  document.getElementById("cmap-table-button").addEventListener("click", function () { cmap.table = !cmap.table; cmapShow("all"); });
+  document.getElementById("cmap-link-button").addEventListener("click", cmapCopyLink);
+  cmapBuildSearch();
+  hoverTips(document.getElementById("cmap-map"));
+  hoverTips(document.getElementById("cmap-card"));
+  document.getElementById("cmap-map").addEventListener("click", function (e) {
+    var shape = e.target.closest("[data-place]");
+    if (shape) cmapPick(shape.getAttribute("data-place"));
+  });
+  document.getElementById("cmap-table").addEventListener("click", function (e) {
+    var head = e.target.closest("button[data-sort]"), row = e.target.closest("tr[data-place]");
+    if (head) {
+      var column = head.getAttribute("data-sort");
+      cmap.sort = { column: column, down: cmap.sort.column === column ? !cmap.sort.down : column !== "name" };
+      cmapTable();
+    } else if (row) cmapPick(row.getAttribute("data-place"));
+  });
+  document.getElementById("cmap-card").addEventListener("click", function (e) {
+    var link = e.target.closest("button[data-go-kind]"), act = e.target.closest("button[data-act]");
+    if (link) cmapGo(link.getAttribute("data-go-kind"), link.getAttribute("data-go-place"));
+    if (act && act.getAttribute("data-act") === "compare") { cmap.picking = true; cmapSay("Click a second place on the map, or find it by name."); cmapShow("pick"); }
+    if (act && act.getAttribute("data-act") === "stop") { cmap.compare = null; cmap.picking = false; cmap.said = ""; cmapShow("pick"); }
+    if (act && act.getAttribute("data-act") === "clear") { cmap.place = null; cmap.compare = null; cmap.picking = false; cmap.said = ""; cmapShow("pick"); }
+  });
+}
+
+/* One of the "For" controls was set: find the variant that sits there (or the nearest one that exists) */
+function cmapSetControl(control, option) {
+  var now = cmapVariant().at.slice(), variants = cmap.measure.variants;
+  now[control] = option;
+  var found = variants.filter(function (v) { return v.at.join() === now.join(); })[0] ||
+              variants.filter(function (v) { return v.at[control] === option && v.at.every(function (a, i) { return i === control || a === 0; }); })[0] ||
+              variants.filter(function (v) { return v.at[control] === option; })[0];
+  if (!found) return;
+  cmapStop(); cmap.said = "";
+  cmap.variant = found.id;
+  cmapLatestYear();
+  cmapKeepYear();
+  cmapShow("all");
+}
+
+function cmapControls() {
+  var m = cmap.measure, at = cmapVariant().at, html = "";
+  document.getElementById("cmap-measure").value = m.id;
+  m.controls.forEach(function (control, c) {
+    if (control.style === "buttons") {
+      control.options.forEach(function (option, i) {
+        html += '<button type="button" class="view-button" data-control="' + c + '" data-option="' + i + '" aria-pressed="' + (at[c] === i) + '">' + plainText(option.name) + "</button>";
+      });
+    } else {
+      var group = null;
+      html += '<select class="cmap-select small" data-control="' + c + '" aria-label="' + plainText(capitalize(control.by || "choice")) + '">';
+      control.options.forEach(function (option, i) {
+        if ((option.set || null) !== group) { if (group) html += "</optgroup>"; group = option.set || null; if (group) html += '<optgroup label="' + plainText(group) + '">'; }
+        html += '<option value="' + i + '"' + (at[c] === i ? " selected" : "") + ">" + plainText(option.name) + "</option>";
+      });
+      html += (group ? "</optgroup>" : "") + "</select>";
+    }
+  });
+  document.getElementById("cmap-for").innerHTML = html;
+  document.getElementById("cmap-for-set").hidden = !m.controls.length;
+
+  /* Only the kinds of place this measure has: with one, there is nothing to choose and the field goes */
+  var kinds = cmapKindsOf(m);
+  document.getElementById("cmap-kinds").innerHTML = kinds.map(function (id) {
+    return '<button type="button" class="view-button" data-kind="' + id + '" aria-pressed="' + (id === cmap.kind) + '">' + plainText(cmap.kinds[id].name) + "</button>";
+  }).join("");
+  document.getElementById("cmap-kinds-set").hidden = kinds.length < 2;
+
+  document.getElementById("cmap-more").setAttribute("aria-expanded", cmap.more);
+  document.getElementById("cmap-explore").hidden = !cmap.more;
+  var slider = document.getElementById("cmap-year"), last = m.years.length - 1, ticks = "";
+  document.getElementById("cmap-years-row").hidden = last < 1;
+  slider.max = Math.max(last, 1);
+  var every = Math.max(1, Math.ceil(last / 5));
+  for (var i = 0; i <= last; i++) {
+    var named = (last - i) % every === 0;
+    ticks += '<i style="left:' + (last ? i / last * 100 : 0) + '%"' + (named ? ' class="named"' : "") + ">" + (named ? "<span>" + cmapYearShort(i) + "</span>" : "") + "</i>";
+  }
+  document.getElementById("cmap-ticks").innerHTML = ticks;
+  cmapYearControl();
+  document.getElementById("cmap-table-button").setAttribute("aria-pressed", cmap.table);
+  document.getElementById("cmap-table-button").textContent = cmap.table ? "View as map" : "View as table";
+}
+function cmapYearControl() {
+  var slider = document.getElementById("cmap-year"), last = cmap.measure.years.length - 1;
+  slider.value = cmap.year;
+  slider.style.setProperty("--done", (last ? cmap.year / last * 100 : 100) + "%");
+  slider.setAttribute("aria-valuetext", cmapYearName());
+  document.getElementById("cmap-year-now").textContent = cmapYearName();
+  var play = document.getElementById("cmap-play");
+  play.classList.toggle("playing", !!cmap.timer);
+  play.setAttribute("aria-label", cmap.timer ? "Stop" : "Play the years");
+}
+function cmapPlay() {
+  var span = cmapYearSpan(), last = span[1];                 /* the years that have numbers for what is chosen */
+  if (last <= span[0]) return;
+  if (cmap.year >= last) { cmap.year = span[0]; cmapShow("year"); }
+  cmap.timer = setInterval(function () {
+    if (cmap.year >= last) { cmapStop(); return; }
+    cmap.year += 1;
+    cmapShow("year");
+    if (cmap.year >= last) cmapStop();
+  }, CMAP_PLAY_MS);
+  cmapYearControl();
+}
+function cmapStop() {
+  if (cmap.timer) clearInterval(cmap.timer);
+  cmap.timer = null;
+  if (cmap.ready) cmapYearControl();
+}
+function cmapCopyLink() {
+  var button = document.getElementById("cmap-link-button"), address = location.href.split("#")[0] + cmap.link;
+  function done(ok) {
+    button.textContent = ok ? "Link copied" : "Copy the address bar";
+    setTimeout(function () { button.textContent = "Copy link to this view"; }, 2200);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(address).then(function () { done(true); }, function () { done(false); });
+  else done(false);
+}
+
+/* A place was clicked (on the map, in the table or in the search list) */
+function cmapPick(place) {
+  if (!cmapPlaces()[place]) return;
+  if (cmap.picking && cmap.place && place !== cmap.place) { cmap.compare = place; cmap.picking = false; cmap.said = ""; }
+  else if (place === cmap.compare) { cmap.compare = null; }
+  else if (place === cmap.place && !cmap.picking) { cmap.place = cmap.compare; cmap.compare = null; }
+  else if (place !== cmap.place) { cmap.place = place; if (cmap.compare === place) cmap.compare = null; }
+  cmapDropMissingPlaces();
+  cmapShow("pick");
+}
+/* Go to a place of another kind (a link in the panel, or a search result). When the measure is not published for
+   that kind of place, go to a place of a kind it is published for that overlaps it, and say so. */
+function cmapGo(kind, place) {
+  cmapStop();
+  var target = cmap.map.places[kind][place], moved = false;
+  if (cmapKindsOf(cmap.measure).indexOf(kind) < 0) {
+    var links = target.links || {}, other = cmapKindsOf(cmap.measure).filter(function (k) { return links[k] && links[k].length; })[0];
+    if (!other) { cmapSay(target.name + " is a " + cmap.kinds[kind].one + ". " + cmap.measure.name + " is published for " + cmapKindList(cmap.measure) + " only."); cmapShow("pick"); return; }
+    var found = cmap.map.places[other][links[other][0]];
+    cmapSay(cmap.measure.name + " is published for " + cmapKindList(cmap.measure) + " only. Showing " + found.name +
+            (other === "districts" ? ", which serves " : ", served by ") + target.name + ".");
+    kind = other; place = links[other][0]; moved = true;
+  } else cmap.said = "";
+  var picking = cmap.picking && kind === cmap.kind;
+  if (kind !== cmap.kind) {
+    if (!moved) cmap.kindChoice = kind;                     /* the reader went to a place of that kind: keep it for the next measure */
+    cmapChoose(cmap.measure.id, { variant: cmap.variant, kind: kind, year: cmap.measure.years[cmap.year] });
+  }
+  if (picking) cmapPick(place);
+  else { cmap.place = place; cmap.compare = null; cmap.picking = false; cmapShow("all"); }
+}
+
+/* ---- Find a place by name ------------------------------------------------------------------------- */
+
+function cmapBuildSearch() {
+  var input = document.getElementById("cmap-search"), list = document.getElementById("cmap-found"), all = [];
+  cmap.map.kinds.forEach(function (kind) {
+    if (!kind.shown) return;
+    var places = cmap.map.places[kind.id] || {};
+    Object.keys(places).forEach(function (key) {
+      var p = places[key];
+      /* a village is also found by its town's name ("Greenburgh" lists Ardsley, Dobbs Ferry ...) */
+      all.push({ kind: kind.id, place: key, name: p.name, words: [p.name, p.full || "", (p["in"] || []).join(" "), key].join(" ").toLowerCase(),
+                 what: kind.id === "municipal" ? cmapWhat(p, true) : kind.one });
+    });
+  });
+  var shown = [], at = -1;
+  function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); at = -1; }
+  function mark() {
+    Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("at", i === at); li.setAttribute("aria-selected", i === at); });
+    input.setAttribute("aria-activedescendant", at >= 0 ? "cmap-found-" + at : "");
+  }
+  function search() {
+    var text = input.value.trim().toLowerCase();
+    if (text.length < 2) { close(); return; }
+    var kinds = cmapKindsOf(cmap.measure);
+    shown = all.filter(function (item) { return item.words.indexOf(text) >= 0; });
+    shown.sort(function (a, b) {
+      var rank = function (item) { return (kinds.indexOf(item.kind) >= 0 ? 0 : 10) + (item.kind === cmap.kind ? 0 : 1) + (item.name.toLowerCase().indexOf(text) === 0 ? 0 : 2); };
+      return rank(a) - rank(b) || a.name.localeCompare(b.name);
+    });
+    shown = shown.slice(0, 9);
+    list.innerHTML = shown.length ? shown.map(function (item, i) {
+      var has = kinds.indexOf(item.kind) >= 0;
+      return '<li role="option" id="cmap-found-' + i + '" data-i="' + i + '"' + (has ? "" : ' class="other"') + "><strong>" + plainText(item.name) + "</strong><span>" +
+             plainText(item.what) + "</span></li>";
+    }).join("") : '<li class="none">No place by that name.</li>';
+    list.hidden = false; input.setAttribute("aria-expanded", "true"); at = -1; mark();
+  }
+  function choose(i) {
+    var item = shown[i];
+    if (!item) return;
+    input.value = ""; close();
+    cmapGo(item.kind, item.place);
+  }
+  input.addEventListener("input", search);
+  input.addEventListener("focus", search);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { close(); return; }
+    if (list.hidden || !shown.length) return;
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); at = (at + (e.key === "ArrowDown" ? 1 : -1) + shown.length) % shown.length; mark(); }
+    if (e.key === "Enter") { e.preventDefault(); choose(at >= 0 ? at : 0); }
+  });
+  list.addEventListener("mousedown", function (e) { var li = e.target.closest("li[data-i]"); if (li) { e.preventDefault(); choose(Number(li.getAttribute("data-i"))); } });
+  input.addEventListener("blur", function () { setTimeout(close, 120); });
+}
+
+/* ---- Redraw --------------------------------------------------------------------------------------- */
+
+/* what: "all" (the measure, the "For" choice, the kind of place or the view changed), "year", or "pick" (a place) */
+function cmapShow(what) {
+  if (what === "all") cmapControls(); else cmapYearControl();
+  var said = document.getElementById("cmap-said");
+  said.textContent = cmap.said || "";
+  said.hidden = !cmap.said;
+  document.getElementById("cmap-map").hidden = cmap.table;
+  document.getElementById("cmap-table").hidden = !cmap.table;
+  cmapMap();
+  if (cmap.table) cmapTable();
+  cmapLegend();
+  cmapLead();
+  cmapCard(what);
+  cmapStar();
+  if (what === "all") cmapSource();
+  cmapWriteLink();
+}
+
+/* The sentence at the top: the lowest and the highest place for what the map shows. Every place with a number counts
+   (the user's choice of 2026-11-20); a less reliable end carries its *. Places tied at an end are named once. */
+function cmapLead() {
+  var rows = [];
+  Object.keys(cmapPlaces()).forEach(function (key) {
+    if (!cmapShown(key)) return;
+    var entry = cmapEntry(key);
+    if (cmapValue(entry) !== null) rows.push({ name: cmapShortName(key), entry: entry, value: entry[0] });
+  });
+  var lead = plainText(cmapVariant().title) + ", " + cmapWhen() + ": ";
+  if (rows.length < 2) {
+    lead += rows.length ? "<strong>" + cmapShort(rows[0].entry) + "</strong> (" + plainText(rows[0].name) + "), the only " + cmap.kinds[cmap.kind].one + " with a number."
+                        : "no " + cmap.kinds[cmap.kind].one + " has a number.";
+  } else {
+    var low = Math.min.apply(null, rows.map(function (r) { return r.value; })), high = Math.max.apply(null, rows.map(function (r) { return r.value; }));
+    var end = function (value) {
+      var tied = rows.filter(function (r) { return r.value === value; }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+      return "<strong>" + cmapShort(tied[0].entry) + "</strong> (" + cmapKeep(tied[0].name) +
+             (tied.length > 1 ? " and " + (tied.length - 1) + (tied.length > 2 ? " others" : " other") : "") + ")";
+    };
+    lead += "from " + end(low) + " to " + end(high) + " across " + rows.length + " " + cmap.kinds[cmap.kind].many + ".";
+  }
+  document.getElementById("cmap-lead").innerHTML = lead;
+}
+
+/* The * line under the map, shown while a number marked * can be on screen: what * means for this measure */
+function cmapStar() {
+  var any = ["county", "state"].concat(Object.keys(cmapPlaces())).some(function (key) { return cmapStarOf(cmapEntry(key)) !== ""; });
+  if (!any && cmap.more && cmapVariant().breakdown) {
+    any = cmapVariant().breakdown.bars.some(function (id) { return cmapStarOf(cmapEntry(cmap.place || "county", id)) !== ""; });
+  }
+  var line = document.getElementById("cmap-star");
+  line.hidden = !any;
+  line.textContent = any ? "* " + (cmap.measure.star || "Less reliable: read with care.") : "";
+}
+
+/* The source line: who published the numbers, and which years */
+function cmapSource() {
+  var span = cmapYearSpan(), years = span[0] === span[1] ? cmapWhen(span[1]) : cmapWhen(span[0]) + " to " + cmapWhen(span[1]);
+  document.getElementById("cmap-source").innerHTML = "Source: " + plainText(cmap.measure.source.replace(/\.$/, "")) + ", " + years + ". Map outlines: " +
+    plainText(cmap.kinds[cmap.kind].credit) + ".";
+}
+
+/* ---- The map --------------------------------------------------------------------------------------- */
+
+/* Longitude and latitude to the drawing's own units, the way drawCountyMap does it; the county fills the width */
+function cmapProject() {
+  var squeeze = Math.cos(41.13 * Math.PI / 180), minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  cmapEachPoint(cmap.outlines.features, function (c) {
+    var x = c[0] * squeeze, y = -c[1];
+    if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y;
+  });
+  var scale = CMAP_WIDTH / (maxX - minX);
+  cmap.height = (maxY - minY) * scale;
+  cmap.at = function (c) { return [(c[0] * squeeze - minX) * scale, (-c[1] - minY) * scale]; };
+}
+function cmapRings(geometry) { return geometry.type === "Polygon" ? [geometry.coordinates] : geometry.coordinates; }
+function cmapEachPoint(features, fn) {
+  features.forEach(function (f) { cmapRings(f.geometry).forEach(function (polygon) { polygon.forEach(function (ring) { ring.forEach(fn); }); }); });
+}
+function cmapPath(geometry) {
+  return cmapRings(geometry).map(function (polygon) {
+    return polygon.map(function (ring) {
+      return "M" + ring.map(function (c) { var p = cmap.at(c); return p[0].toFixed(1) + " " + p[1].toFixed(1); }).join("L") + "Z";
+    }).join("");
+  }).join("");
+}
+/* The middle of a place's largest piece, for its name */
+function cmapMiddle(geometries) {
+  var best = null, bestArea = 0;
+  geometries.forEach(function (geometry) {
+    cmapRings(geometry).forEach(function (polygon) {
+      var ring = polygon[0].map(cmap.at), area = 0, cx = 0, cy = 0;
+      for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        var cross = ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1];
+        area += cross; cx += (ring[j][0] + ring[i][0]) * cross; cy += (ring[j][1] + ring[i][1]) * cross;
+      }
+      if (Math.abs(area) > bestArea) { bestArea = Math.abs(area); best = [cx / (3 * area), cy / (3 * area)]; }
+    });
+  });
+  return best;
+}
+function cmapFeatures() {
+  var layer = cmap.kinds[cmap.kind].outlines;
+  return layer === "municipal" ? cmap.outlines.features : cmap.outlines.layers[layer].features;
+}
+/* The place an outline belongs to. On the municipal map a piece with no place code is a town's land: a town with no
+   villages is a place of its own (its town code); a town's land outside its villages is no place, and is drawn gray. */
+function cmapKeyOf(feature) {
+  var kind = cmap.kinds[cmap.kind], p = feature.properties;
+  if (kind.by_outline) return kind.by_outline[p[kind.key]] || "";
+  return p[kind.key] || (kind.or_key ? p[kind.or_key] : "") || "";
+}
+/* Which of the map's colors a value gets: steps [2, 4, 6, 14] make five colors; fewer steps use fewer of them */
+function cmapColor(value) {
+  var steps = cmapVariant().steps, step = 0;
+  while (step < steps.length && value >= steps[step]) step++;
+  return cmap.colors[cmapColorIndex(step, steps.length + 1)];
+}
+function cmapColorIndex(step, count) {
+  var last = cmap.colors.length - 1;
+  return count <= 1 ? Math.round(last / 2) : Math.round(step * last / (count - 1));
+}
+
+/* Draw the outlines of the chosen kind of place (only when they change), then color them for the chosen year.
+   Solid colors only: a less reliable number is marked with a * where it is written, not on the map. */
+function cmapMap() {
+  var box = document.getElementById("cmap-map");
+  var layer = cmap.kind + "|" + (cmap.kind === "pumas" && cmap.measure.vintages ? cmap.measure.vintages[cmap.year] : "");
+  if (cmap.drawnLayer !== layer) {
+    var W = CMAP_WIDTH, H = cmap.height, county = cmapPath(cmap.outlines.county), shapes = "";
+    var cut = cmap.kinds[cmap.kind].outlines === "zips" || cmap.kinds[cmap.kind].outlines === "pumas";   /* Census outlines reach past the county line */
+    cmap.shapes = {};
+    cmap.blanks = cmap.kind === "zips";                                  /* outlines with no place behind them (drawn gray); some ZIP code areas are left off */
+    cmapFeatures().forEach(function (f) {
+      if (f.properties.vintage && !cmapShown(f.properties.key)) return;
+      var key = cmapKeyOf(f), d = cmapPath(f.geometry);
+      if (!key || !cmapPlaces()[key]) {
+        /* a town's land outside its villages says so when pointed at (the user's choice of 2026-11-20) */
+        var town = cmap.kind === "municipal" && / \(outside villages\)$/.test(f.properties.municipality || "") ? f.properties.municipality.replace(" (outside villages)", " outside its villages") : "";
+        shapes += '<path class="cmap-shape none"' + (town ? ' data-leftover="' + plainText(town) + '"' : "") + ' d="' + d + '"></path>';
+        cmap.blanks = true;
+        return;
+      }
+      (cmap.shapes[key] = cmap.shapes[key] || { d: "", geometries: [] }).d += d;
+      cmap.shapes[key].geometries.push(f.geometry);
+    });
+    Object.keys(cmap.shapes).forEach(function (key) {
+      shapes += '<path class="cmap-shape" data-place="' + plainText(key) + '" d="' + cmap.shapes[key].d + '"></path>';
+    });
+    box.innerHTML = '<svg viewBox="-3 -3 ' + (W + 6) + " " + (H + 6).toFixed(1) + '" role="img" aria-label="Map of Westchester County by ' + cmap.kinds[cmap.kind].one + '. The same numbers are in the table view, under Explore more.">' +
+      '<defs><clipPath id="cmap-county"><path d="' + county + '"></path></clipPath></defs>' +
+      '<path class="cmap-ground" d="' + county + '"></path>' +
+      '<g clip-path="url(#cmap-county)">' + shapes + "</g>" +
+      /* The chosen place's outline. Where outlines are cut at the county line, the place's own line is cut there too,
+         and the county's line finishes it (drawn twice as thick, since only its inner half shows). */
+      (cut ? '<clipPath id="cmap-in-compare"><path d=""></path></clipPath><clipPath id="cmap-in-place"><path d=""></path></clipPath>' +
+             '<path class="cmap-outline compare edge" clip-path="url(#cmap-in-compare)" d="' + county + '"></path><path class="cmap-outline edge" clip-path="url(#cmap-in-place)" d="' + county + '"></path>' : "") +
+      "<g" + (cut ? ' clip-path="url(#cmap-county)"' : "") + ">" +
+      '<path class="cmap-outline compare" id="cmap-outline-compare" d=""></path><path class="cmap-outline" id="cmap-outline-place" d=""></path></g>' +
+      '<g id="cmap-names"></g></svg>';
+    Array.prototype.forEach.call(box.querySelectorAll("[data-leftover]"), function (shape) {
+      shape.tip = "<strong>" + shape.getAttribute("data-leftover") + "</strong><br>No separate number";
+    });
+    cmap.drawnLayer = layer;
+  }
+  if (cmap.table) return;
+  Array.prototype.forEach.call(box.querySelectorAll(".cmap-shape[data-place]"), function (shape) {
+    var key = shape.getAttribute("data-place"), entry = cmapEntry(key), value = cmapValue(entry);
+    shape.style.fill = value === null ? "" : cmapColor(value);
+    shape.classList.toggle("none", value === null);
+    shape.tip = "<strong>" + plainText(cmapPlaces()[key].name) + "</strong><br>" + cmapShort(entry) + (value !== null && cmap.measure.per ? " " + cmap.measure.per : "");
+  });
+  cmapOutline("cmap-outline-place", cmap.place);
+  cmapOutline("cmap-outline-compare", cmap.compare);
+  var names = "";
+  [cmap.compare, cmap.place].forEach(function (key) {
+    if (!key || !cmap.shapes[key]) return;
+    var c = cmapMiddle(cmap.shapes[key].geometries), name = cmapPlaces()[key].name;
+    var half = textWidth(name, "700 13.5px") / 2 + 4;                      /* keep the whole name inside the drawing */
+    var x = Math.max(half, Math.min(CMAP_WIDTH - half, c[0]));
+    names += '<text class="cmap-name" x="' + x.toFixed(1) + '" y="' + c[1].toFixed(1) + '">' + plainText(name) + "</text>";
+  });
+  document.getElementById("cmap-names").innerHTML = names;
+  box.classList.toggle("picking", cmap.picking);
+}
+function cmapOutline(id, key) {
+  var path = document.getElementById(id), d = key && cmap.shapes[key] ? cmap.shapes[key].d : "";
+  if (path) path.setAttribute("d", d);
+  var inside = document.querySelector("#" + id.replace("cmap-outline", "cmap-in") + " path");
+  if (inside) inside.setAttribute("d", d);
+}
+
+/* The key under the map: what it shows, the color steps, and gray when some place has no number */
+function cmapLegend() {
+  var v = cmapVariant(), steps = v.steps, html = "";
+  html += '<p class="cmap-legend-title">' + plainText(v.title) + ", " + cmapYearName() + "</p>";
+  for (var i = 0; i <= steps.length; i++) {
+    var label = !steps.length ? "Every place" : i === 0 ? "Under " + cmapStep(steps[0]) : i === steps.length ? cmapStep(steps[i - 1]) + " or more" : cmapStep(steps[i - 1]) + " to " + cmapStep(steps[i]);
+    html += '<span class="cmap-key"><i style="background:' + cmap.colors[cmapColorIndex(i, steps.length + 1)] + '"></i>' + label + "</span>";
+  }
+  var none = cmap.blanks || Object.keys(cmapPlaces()).some(function (key) { return cmapShown(key) && cmapValue(cmapEntry(key)) === null; });
+  if (none) html += '<span class="cmap-key"><i class="none"></i>No number</span>';
+  document.getElementById("cmap-legend").innerHTML = html;
+}
+
+/* ---- The table view (under "Explore more") ----------------------------------------------------------- */
+
+function cmapRanked() {
+  var rows = [];
+  Object.keys(cmapPlaces()).forEach(function (key) {
+    if (!cmapShown(key)) return;
+    var entry = cmapEntry(key);
+    rows.push({ key: key, name: cmapPlaces()[key].name, entry: entry, value: cmapValue(entry) });
+  });
+  var withValue = rows.filter(function (r) { return r.value !== null; }).sort(function (a, b) { return b.value - a.value; });
+  withValue.forEach(function (r, i) { r.rank = i > 0 && withValue[i - 1].value === r.value ? withValue[i - 1].rank : i + 1; });
+  return { rows: rows, count: withValue.length };
+}
+function cmapTable() {
+  var m = cmap.measure, ranked = cmapRanked(), rows = ranked.rows, sort = cmap.sort;
+  var hasMargin = m.fields.indexOf("e") >= 0, hasCounts = m.fields.indexOf("n") >= 0 && rows.some(function (r) { return cmapField(r.entry, "n") !== null; });
+  rows.sort(function (a, b) {
+    if (sort.column === "name") return (sort.down ? -1 : 1) * a.name.localeCompare(b.name, "en", { numeric: true });
+    if (a.value === null || b.value === null) return (a.value === null) - (b.value === null) || a.name.localeCompare(b.name);
+    return (sort.down ? b.value - a.value : a.value - b.value) || a.name.localeCompare(b.name);
+  });
+  function head(column, label, cls) {
+    var on = sort.column === column;
+    return '<th scope="col"' + (cls ? ' class="' + cls + '"' : "") + (on ? ' aria-sort="' + (sort.down ? "descending" : "ascending") + '"' : "") + '><button type="button" data-sort="' + column + '">' + label + (on ? (sort.down ? " ▾" : " ▴") : "") + "</button></th>";
+  }
+  var html = '<table><caption class="visually-hidden">' + plainText(cmapVariant().title) + ", " + cmapYearName() + ", by " + cmap.kinds[cmap.kind].one + '</caption><thead><tr><th scope="col">Rank</th>' +
+             head("name", capitalize(cmap.kinds[cmap.kind].one)) + head("value", m.unit === "rate" ? capitalize(m.per) : (m.unit === "$" ? "Dollars" : "Percent"), "n") +
+             (hasMargin ? '<th scope="col" class="n">Margin of error</th>' : "") + (hasCounts ? '<th scope="col" class="n">Count</th><th scope="col" class="n">Out of</th>' : "") + '<th scope="col">Note</th></tr></thead><tbody>';
+  rows.forEach(function (r) {
+    var flag = cmapFlag(r.entry), e = cmapField(r.entry, "e"), n = cmapField(r.entry, "n"), d = cmapField(r.entry, "d");
+    var note = r.value === null ? (flag === CMAP_FLAGS.tooFew ? "too few to show" : "no number") : flag === CMAP_FLAGS.atLeast ? "at least" : "";
+    html += '<tr data-place="' + plainText(r.key) + '" class="' + (r.key === cmap.place ? "picked" : r.key === cmap.compare ? "compared" : "") + '"><td>' + (r.rank || "") + '</td><th scope="row"><button type="button">' + plainText(r.name) + '</button></th><td class="n">' +
+            (r.value === null ? "—" : cmapShort(r.entry)) + "</td>" + (hasMargin ? '<td class="n">' + (e === null ? "" : "±" + (m.unit === "$" ? "$" + Math.round(e).toLocaleString("en-US") : e.toFixed(1))) + "</td>" : "") +
+            (hasCounts ? '<td class="n">' + (n === null ? "" : WCA.fmt.count(n)) + '</td><td class="n">' + (d === null ? "" : WCA.fmt.count(d)) + "</td>" : "") + '<td class="note">' + note + "</td></tr>";
+  });
+  document.getElementById("cmap-table").innerHTML = html + "</tbody></table>";
+}
+
+/* ---- The panel ------------------------------------------------------------------------------------- */
+
+/* As on the suspensions dashboard: the name, one line on what kind of place it is, the big number with its sentence
+   and its counts, bars for the place, Westchester and New York State, and a small trend of the place. With no place
+   chosen the panel is about Westchester. "Explore more" adds the comparison, the breakdown bars, two facts and the
+   measure's notes. The panel has fixed parts, each redrawn only when it has to be, so a change of year moves the
+   bars and the trend's mark and leaves the rest where it is. */
+function cmapCard(what) {
+  var card = document.getElementById("cmap-card"), subject = cmap.place || "county";
+  if (what !== "year" || !card.firstChild) {
+    card.innerHTML = '<div class="cmap-card-head"></div><p class="cmap-card-sub"></p><div class="cmap-big"></div><div class="cmap-bars" id="cmap-bars-main"></div>' +
+      '<div class="cmap-trend"></div><p class="cmap-hint"></p><div class="cmap-breakdown"></div><div class="cmap-facts"></div><p class="cmap-card-note"></p>';
+    if (cmap.chart) { cmap.chart.destroy(); cmap.chart = null; }
+  }
+  var m = cmap.measure, v = cmapVariant(), places = cmapPlaces(), place = cmap.place ? places[cmap.place] : null, other = cmap.compare ? places[cmap.compare] : null;
+  card.classList.toggle("comparing", !!other);
+
+  /* 1. the name; with "Explore more" open, the button that starts or ends a comparison */
+  var head = "<h3>" + (place ? plainText(place.name) : "Westchester County") + (other ? ' <span class="vs">and</span> <span class="second">' + plainText(other.name) + "</span>" : "") + "</h3>";
+  if (place) head += '<div class="cmap-card-acts">' + (cmap.more ? (other ? '<button type="button" class="cmap-mini" data-act="stop">× Stop comparing</button>'
+        : (cmap.picking ? '<button type="button" class="cmap-mini" data-act="stop">× Cancel</button>' : '<button type="button" class="cmap-mini" data-act="compare">+ Compare with another place</button>')) : "") +
+        '<button type="button" class="cmap-mini" data-act="clear" aria-label="Back to Westchester County">× Close</button></div>';
+  card.querySelector(".cmap-card-head").innerHTML = head;
+  card.querySelector(".cmap-card-sub").innerHTML = place ? (other ? "" : cmapAbout(place)) : "The whole county";
+
+  /* 2. the big number and its sentence (two side by side when comparing) */
+  function big(key, cls) {
+    var entry = cmapEntry(key), value = cmapValue(entry), flag = cmapFlag(entry), html = '<div class="cmap-big-one ' + cls + '">';
+    if (key === "county" && !m.county[v.id]) return html + '<p class="alone">The source has no countywide number for this measure.</p></div>';
+    if (value === null) {
+      return html + '<b class="none">' + (flag === CMAP_FLAGS.tooFew ? "Too few" : "No number") + "</b><p>" +
+        (flag === CMAP_FLAGS.tooFew ? "The source hides this number to protect people's privacy: it is small, not zero." : "The source has no number here for " + cmapYearName() + ".") + "</p></div>";
+    }
+    var n = cmapField(entry, "n"), d = cmapField(entry, "d"), fine = [];
+    if (v.counts && n !== null && d !== null) fine.push(v.counts.replace("{n}", WCA.fmt.count(n)).replace("{d}", WCA.fmt.count(d)));
+    if (cmap.more && cmapMargin(entry)) fine.push(cmapMargin(entry));
+    return html + (flag === CMAP_FLAGS.atLeast ? '<small class="least">at least</small>' : "") + "<b>" + cmapNumber(value) + cmapStarOf(entry) + "</b><p>" +
+           plainText(v.sentence) + ", " + cmapWhen() + (fine.length ? '<small>' + fine.join(" · ") + "</small>" : "") + "</p></div>";
+  }
+  card.querySelector(".cmap-big").innerHTML = other ? big(cmap.place, "place") + big(cmap.compare, "compare") : big(subject, "place");
+
+  /* 3. the bars: the place (and the second place), Westchester, New York State */
+  var rows = [];
+  if (place) rows.push({ id: "place", name: place.name, entry: cmapEntry(cmap.place), color: cmap.hues.place });
+  if (other) rows.push({ id: "compare", name: other.name, entry: cmapEntry(cmap.compare), color: cmap.hues.compare });
+  if (m.county[v.id]) rows.push({ id: "county", name: "Westchester", entry: cmapEntry("county"), color: cmap.hues.county });
+  if (m.state[v.id]) rows.push({ id: "state", name: m.state_name, entry: cmapEntry("state"), color: cmap.hues.state });
+  cmap.barRows = { main: rows, breakdown: [] };
+
+  /* 4. under "Explore more": the same number for each group, with Westchester's line */
+  var breakdown = card.querySelector(".cmap-breakdown");
+  if (cmap.more && v.breakdown) {
+    var options = {};
+    m.variants.forEach(function (variant) {
+      var name = "";
+      m.controls.forEach(function (control, c) { if (control.by && control.options[variant.at[c]] && !control.options[variant.at[c]].all) name = control.options[variant.at[c]].name; });
+      options[variant.id] = name || m.controls[m.controls.length - 1].options[variant.at[variant.at.length - 1]].name;
+    });
+    v.breakdown.bars.forEach(function (id) {
+      var entry = cmapEntry(subject, id);
+      cmap.barRows.breakdown.push({ id: "b-" + id, name: options[id], entry: entry, color: cmap.hues.place, on: id === v.id,
+                                   second: other ? cmapEntry(cmap.compare, id) : undefined });
+    });
+    if (!breakdown.firstChild) breakdown.innerHTML = "<h4>" + plainText(v.breakdown.title) + (other ? "" : place ? ", " + plainText(place.name) : ", Westchester") + '</h4><div class="cmap-bars" id="cmap-bars-breakdown"></div>';
+  } else breakdown.innerHTML = "";
+  cmapBars();
+
+  /* 5. under "Explore more": the rank among the places, and the change over time */
+  card.querySelector(".cmap-facts").innerHTML = !cmap.more ? "" : other ? cmapFacts(cmap.place, "place") + cmapFacts(cmap.compare, "compare") : cmapFacts(cmap.place, "place");
+
+  /* 6. the trend of the place (and of the second place), with the chosen year marked */
+  cmapTrend(card.querySelector(".cmap-trend"));
+  card.querySelector(".cmap-hint").textContent = place ? "" : "Click a place on the map, or find it by name, to see how it compares.";
+  card.querySelector(".cmap-hint").hidden = !!place;
+
+  /* 7. under "Explore more": how the numbers were made */
+  var notes = card.querySelector(".cmap-card-note");
+  notes.textContent = cmap.more ? [m.method, m.note].filter(Boolean).join(" ") : "";
+  notes.hidden = !notes.textContent;
+}
+
+/* One line on what a place is. A municipality: "Village in the Town of Rye"; a school district: the municipalities it
+   serves, most children first ("Serves Port Chester and Rye Brook", from data.json). With "Explore more" open, the
+   places of the other kind that overlap it follow, each a button that goes there. */
+function cmapAbout(place) {
+  var line = cmap.kind === "municipal" ? cmapWhat(place) : "";
+  if (cmap.kind === "districts") line = place.serves && place.serves.length ? "Serves " + cmapList(place.serves) : place.type;
+  var html = plainText(line);
+  if (cmap.more) {
+    var kind = cmap.kind === "municipal" ? "districts" : "municipal", keys = (place.links || {})[kind] || [];
+    if (keys.length && cmap.kinds[kind].shown) {
+      var shown = keys.slice(0, CMAP_LINKS_SHOWN), others = cmap.map.places[kind];
+      html += '<span class="cmap-links">' + (kind === "districts" ? "Served by " : "Municipalities: ") + shown.map(function (key) {
+        return '<button type="button" class="cmap-go" data-go-kind="' + kind + '" data-go-place="' + plainText(key) + '">' + plainText(others[key].name) + "</button>";
+      }).join(", ") + (keys.length > shown.length ? " and " + (keys.length - shown.length) + " more" : "") + "</span>";
+    }
+  }
+  return html;
+}
+/* "A, B and C"; more than CMAP_LINKS_SHOWN names end "and 2 more" */
+function cmapList(names) {
+  var shown = names.slice(0, CMAP_LINKS_SHOWN), rest = names.length - shown.length;
+  if (rest) return shown.join(", ") + " and " + rest + " more";
+  return shown.length > 1 ? shown.slice(0, -1).join(", ") + " and " + shown[shown.length - 1] : shown[0];
+}
+
+/* Draw (or move) the panel's sets of bars. A bar keeps its place in the page between years, so only its
+   length changes, and styles.css slides it there. The value is written inside the bar when it fits. */
+function cmapBars() {
+  if (!cmap.barRows) return;
+  var scale = cmapVariant().scale, county = cmapValue(cmapEntry("county"));
+  ["main", "breakdown"].forEach(function (set) {
+    var box = document.getElementById("cmap-bars-" + set), rows = cmap.barRows[set];
+    if (!box) return;
+    var ids = rows.map(function (r) { return r.id + (r.second !== undefined ? "2" : ""); }).join("|");
+    if (box.getAttribute("data-rows") !== ids) {
+      box.innerHTML = rows.map(function (r) {
+        var bar = '<div class="cmap-track"><div class="cmap-fill"></div><span class="cmap-val"></span></div>';
+        return '<div class="cmap-bar' + (r.on ? " on" : "") + '" data-row="' + r.id + '"><span class="cmap-bar-name">' + plainText(r.name) + '</span><div class="cmap-tracks">' + bar + (r.second !== undefined ? bar : "") + "</div></div>";
+      }).join("") + (set === "breakdown" ? '<div class="cmap-refline"><span></span></div>' : "");
+      box.setAttribute("data-rows", ids);
+    }
+    var width = (box.querySelector(".cmap-track") || box).getBoundingClientRect().width;
+    rows.forEach(function (r) {
+      var tracks = box.querySelectorAll('[data-row="' + r.id + '"] .cmap-track');
+      [r.entry].concat(r.second !== undefined ? [r.second] : []).forEach(function (entry, i) {
+        var track = tracks[i], fill = track.firstChild, val = track.lastChild, value = cmapValue(entry);
+        var color = i === 1 ? cmap.hues.compare : r.color, share = value === null ? 0 : Math.max(0, Math.min(1, value / scale));
+        var text = cmapShort(entry);
+        var inside = value !== null && share * width >= textWidth(text, "700 12.5px") + 14;
+        fill.style.width = (share * 100) + "%";
+        fill.style.backgroundColor = color;
+        val.textContent = text;
+        val.className = "cmap-val" + (inside ? " inside" : "") + (value === null ? " none" : "");
+        val.style.color = inside ? textOn(color) : "";
+        val.style.backgroundColor = inside ? color : "";
+        val.style.left = inside ? "" : "calc(" + (share * 100) + "% + 3px)";
+        val.style.right = inside ? "calc(" + ((1 - share) * 100) + "% + 4px)" : "";
+        track.tip = "<strong>" + plainText(r.name) + (i === 1 ? " · " + plainText(cmapPlaces()[cmap.compare].name) : "") + "</strong><br>" + text +
+                    (cmap.more && cmapMargin(entry) ? "<br>" + cmapMargin(entry) : "");
+      });
+    });
+    var line = box.querySelector(".cmap-refline");
+    if (line) {
+      line.hidden = county === null;
+      if (county !== null) {
+        var names = box.querySelector(".cmap-bar-name").getBoundingClientRect().width + 6;
+        line.style.left = "calc(" + names + "px + (100% - " + names + "px) * " + Math.min(1, county / scale) + ")";
+        line.firstChild.textContent = "Westchester " + cmapShort(cmapEntry("county"));
+        line.classList.toggle("flip", county / scale > 0.55);
+      }
+    }
+  });
+}
+
+/* Under "Explore more": the rank among the places drawn this year, and the change since an earlier year. For
+   Westchester only the change: its lowest and highest place are in the sentence at the top. */
+function cmapFacts(place, cls) {
+  var m = cmap.measure, html = "", kind = cmap.kinds[cmap.kind], ranked = cmapRanked();
+  var name = cmap.compare && place ? '<span class="who ' + cls + '">' + plainText(cmapPlaces()[place].name) + "</span>" : "";
+  if (place) {
+    var row = ranked.rows.filter(function (r) { return r.key === place; })[0];
+    if (row && row.rank && ranked.count > 1) {
+      html += '<div class="cmap-fact">' + name + "<b>" + cmapOrdinal(row.rank) + "</b>highest of " + ranked.count + " " + kind.many + " with a number" +
+              (cmapStarOf(row.entry) ? "; its number is marked *, so the rank is rough" : "") + "</div>";
+    }
+  }
+  var subject = place || "county", back = cmap.year - m.change_steps;
+  if (!m.exact_change && back < 0) back = 0;
+  var now = cmapEntry(subject), then = back >= 0 && back < cmap.year ? cmapEntry(subject, cmap.variant, back) : null;
+  if (cmapValue(now) !== null && cmapValue(then) !== null && cmapFlag(now) !== CMAP_FLAGS.atLeast && cmapFlag(then) !== CMAP_FLAGS.atLeast && !(cmap.kind === "pumas" && place)) {
+    var change = now[0] - then[0], sign = change > 0 ? "+" : (change < 0 ? "−" : ""), size = Math.abs(change);
+    var text = m.unit === "$" ? sign + "$" + Math.round(size).toLocaleString("en-US") : sign + size.toFixed(m.decimals === 0 ? 0 : 1);
+    html += '<div class="cmap-fact">' + name + "<b>" + text + "</b>" + (cmapUnitWords() ? cmapUnitWords() + " " : "") + "since " + cmapYearName(back) +
+            (m.exact_change ? ", the last period with no years in common" : "") +
+            (cmapStarOf(now) || cmapStarOf(then) ? "; may not be a real change" : "") + "</div>";
+  }
+  return html ? '<div class="cmap-facts-set">' + html + "</div>" : "";
+}
+function cmapOrdinal(n) {
+  var tens = n % 100, ones = n % 10;
+  return n + (tens >= 11 && tens <= 13 ? "th" : ones === 1 ? "st" : ones === 2 ? "nd" : ones === 3 ? "rd" : "th");
+}
+
+/* The trend: the place (Westchester when none is chosen), and the second place when comparing, year by year, with a
+   dotted line at the chosen year. Drawn once; a change of year only moves the dotted line. */
+var cmapYearMark = {
+  id: "cmapYearMark",
+  afterDatasetsDraw: function (chart) {
+    var at = cmap.year - cmap.trendFrom, area = chart.chartArea, ctx = chart.ctx;
+    if (at < 0 || at >= chart.data.labels.length) return;                 /* the chosen year is outside the trend's years */
+    var x = chart.scales.x.getPixelForValue(at);
+    ctx.save();
+    ctx.strokeStyle = WCA.colors.ink; ctx.lineWidth = 1.5; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(x, area.top); ctx.lineTo(x, area.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    chart.data.datasets.forEach(function (set) {
+      var value = set.data[at];
+      if (value === null || value === undefined) return;
+      ctx.fillStyle = set.borderColor; ctx.strokeStyle = SURFACE; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(x, chart.scales.y.getPixelForValue(value), 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    });
+    ctx.restore();
+  },
+};
+function cmapTrend(box) {
+  var m = cmap.measure, v = cmapVariant();
+  if (cmap.chart) { cmap.chart.update("none"); return; }
+  var lines = [];
+  function add(key, name, color, dash) {
+    var series = key === "county" || key === "state" ? m[key][v.id] : cmapSeries(v.id, cmap.kind, key);
+    if (!series) return;
+    var values = series.map(cmapValue);
+    if (values.filter(function (x) { return x !== null; }).length < 2) return;
+    lines.push({ label: name, data: values, borderColor: color, backgroundColor: color, borderDash: dash, borderWidth: 2.6, pointRadius: 0, pointHoverRadius: 4, tension: 0, spanGaps: false });
+  }
+  if (cmap.place) add(cmap.place, cmapPlaces()[cmap.place].name, cmap.hues.place, []);
+  else add("county", "Westchester", cmap.hues.place, []);
+  if (cmap.compare) add(cmap.compare, cmapPlaces()[cmap.compare].name, cmap.hues.compare, [7, 3]);
+  if (!lines.length || m.years.length < 2) { box.innerHTML = ""; return; }
+  /* only the years in which a line has a number, so the chart has no empty stretch at either end */
+  var from = Infinity, to = -1;
+  lines.forEach(function (line) { line.data.forEach(function (value, i) { if (value !== null) { from = Math.min(from, i); to = Math.max(to, i); } }); });
+  lines.forEach(function (line) { line.data = line.data.slice(from, to + 1); });
+  cmap.trendFrom = from;
+  var years = m.years.slice(from, to + 1).map(function (y, i) { return cmapYearShort(from + i); });
+  box.innerHTML = "<h4>" + plainText(v.title) + ", " + cmapWhen(from) + " to " + cmapWhen(to) + "</h4>" +
+    (lines.length > 1 ? '<div class="cmap-trend-key">' + lines.map(function (line) {
+      return '<span><i style="border-top:' + (line.borderDash.length ? "3px dashed " : "3px solid ") + line.borderColor + '"></i>' + plainText(line.label) + "</span>";
+    }).join("") + "</div>" : "") +
+    '<div class="cmap-trend-box"><canvas role="img" aria-label="Line chart: ' + plainText(v.title) + ' over time. The same numbers are in the table view, year by year."></canvas></div>';
+  var every = Math.max(1, Math.ceil((years.length - 1) / 4));
+  cmap.chart = new Chart(box.querySelector("canvas"), {
+    type: "line",
+    data: { labels: years, datasets: lines },
+    options: {
+      layout: { padding: { top: 8, right: 10 } },
+      interaction: { mode: "index", intersect: false },
+      scales: {
+        x: { grid: { display: false }, ticks: { autoSkip: false, maxRotation: 0, font: { size: 11 },
+             callback: function (value, index) { return (years.length - 1 - index) % every === 0 ? this.getLabelForValue(value) : null; } } },
+        y: { beginAtZero: true, ticks: { maxTicksLimit: 5, font: { size: 11 }, callback: function (value) { return m.unit === "$" ? compactDollars(value) : (m.unit === "%" ? value + "%" : value); } } },
+      },
+      plugins: { tooltip: { callbacks: {
+        title: function (items) { return cmapYearName(from + items[0].dataIndex); },
+        label: function (item) { return item.dataset.label + ": " + cmapNumber(item.parsed.y); },
+      } } },
+    },
+    plugins: [cmapYearMark],
+  });
+}

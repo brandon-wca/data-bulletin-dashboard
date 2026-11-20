@@ -41,7 +41,15 @@
       graphics, drawn with the habits those two chapters share. Like chapter 3 it is built for a computer screen
       first; on a phone or a tablet its pieces only stack or shrink so that everything fits and reads.
     Layer 2 (to come): sticky-scroll stories for the selected charts.
-    Layer 3 (to come): the community map (the "Map" tab).
+    Layer 3, the community map (the "Map" tab): built on 2026-11-20 and made simpler the same day at the
+      user's request, laid out like the suspensions dashboard's "Find your district" tab; waits for the
+      user's review. 19 measures, for municipalities and school districts. At first: one sentence naming
+      the lowest and the highest place, the fields (Show, For, Map by, Find a place), the map with its key,
+      and a panel on Westchester or on the place picked. "Explore more" opens the year slider, the table
+      view, the link and the comparison of two places, and adds more to the panel. Everything it shows (the
+      measures' names, sentences, notes, source lines, color steps and numbers) comes from data.json's "map"
+      block, written by build_data.py part 4b; this file holds only the tab's frame and the labels of its
+      controls. Built for a computer screen first; on a phone the panel goes under the map.
 
   FIXED FACTS TYPED ON PURPOSE (not from the tables, so they are allowed in the text):
     * The Bulletin's structure: four chapters, their parts, and each page's number (1.3, 2.11 ...)
@@ -235,6 +243,9 @@
       the state median income"; "four times the federal poverty guideline"; "starts at $70,000";
       "starts at 11,500".
     * Headline tiles are numbers only; nothing to re-check.
+    * The Community map tab has no typed claims: its sentences are built from the numbers. Its notes and
+      source lines are typed in build_data.py part 4b (what a measure means, what the source hides, which
+      years do not compare); read them again when a table behind the map is replaced.
 
   PAGE SECTIONS, top to bottom
     1. Banner (the PDF's blue-to-green header)
@@ -244,7 +255,8 @@
     5. Chapter 2 · Child Care & Early Education (pages 2.3 to 2.17)
     6. Chapter 3 · Child Well-Being & Opportunity (pages 3.3 to 3.18)
     7. Chapter 4 · Youth, Ages 18 to 24 (pages 4.3 to 4.10)
-    8. Community map (Layer 3)
+    8. Community map (Layer 3): the sentence, the fields, "Explore more", map or table, key, panel, the * line,
+       source line
     9. About the data
    10. Footer
 -->
@@ -2699,8 +2711,10 @@
 
   <!-- ===================================================================
        8. COMMUNITY MAP  (Layer 3)
-       Westchester's towns and villages, school districts and ZIP codes, with the
-       Bulletin's measures to pick from. The template's map section comes in here.
+       Westchester's municipalities and public school districts, with 19 measures to pick from. Laid out like the
+       suspensions dashboard's "Find your district" tab: one sentence with the result, the fields, the map with
+       its key on the left, the panel on the right, one source line. Drawn by charts.js part 6 from data.json's
+       "map" block and data/Geography.json.
        =================================================================== -->
   <section class="chapter" id="map" role="tabpanel" aria-labelledby="tab-map" hidden>
     <div class="chapter-cover">
@@ -2710,13 +2724,69 @@
           <h2>Westchester, community by community</h2>
         </div>
       </div>
-      <div class="cover-intro">
-        <p class="placeholder">[PLACEHOLDER] Pick a measure, then hover over or click a community: towns and villages, school districts or
-           ZIP codes, with Westchester as the comparison. Built for policymakers, partner organizations, grant writers and coalitions
-           to pull specific figures and see them in the county's geography.</p>
+      <div class="cover-intro cmap-intro">
+        <!-- The lowest and the highest place for what the map shows, worked out by charts.js (cmapLead) -->
+        <p class="cmap-lead" id="cmap-lead"></p>
       </div>
     </div>
-    <div class="map-placeholder"><div><strong>Layer 3</strong><br>The interactive map is built after the chapters' charts.</div></div>
+    <!-- charts.js part 6 (drawCommunityMap) fills every part below from data.json's "map" block and
+         data/Geography.json: nothing a reader sees here is typed, except the labels of the fields. -->
+    <div class="cmap" id="community-map">
+      <div class="cmap-fields">
+        <div class="cmap-row">
+          <div class="cmap-field cmap-show">
+            <label class="cmap-label" for="cmap-measure">Show</label>
+            <select class="cmap-select" id="cmap-measure"></select>
+          </div>
+          <div class="cmap-field" id="cmap-for-set" role="group" aria-labelledby="cmap-for-label">
+            <span class="cmap-label" id="cmap-for-label">For</span>
+            <div class="cmap-buttons" id="cmap-for"></div>
+          </div>
+        </div>
+        <div class="cmap-row">
+          <div class="cmap-field" id="cmap-kinds-set" role="group" aria-labelledby="cmap-kinds-label">
+            <span class="cmap-label" id="cmap-kinds-label">Map by</span>
+            <div class="cmap-buttons" id="cmap-kinds"></div>
+          </div>
+          <div class="cmap-field cmap-find">
+            <label class="cmap-label" for="cmap-search">Find a place</label>
+            <input type="search" id="cmap-search" placeholder="A city, town, village or school district" autocomplete="off"
+                   role="combobox" aria-expanded="false" aria-controls="cmap-found" aria-autocomplete="list">
+            <ul class="cmap-found" id="cmap-found" role="listbox" hidden></ul>
+          </div>
+          <div class="cmap-field cmap-more-field">
+            <button type="button" class="cmap-more" id="cmap-more" aria-expanded="false" aria-controls="cmap-explore">Explore more</button>
+          </div>
+        </div>
+      </div>
+      <!-- "Explore more": closed at first. Closing it goes back to the simple view (the latest year, the map, no comparison). -->
+      <div class="cmap-explore" id="cmap-explore" hidden>
+        <div class="cmap-years" id="cmap-years-row">
+          <label class="cmap-label" for="cmap-year">Year</label>
+          <button type="button" class="cmap-play" id="cmap-play" aria-label="Play the years"></button>
+          <div class="cmap-slider">
+            <input type="range" id="cmap-year" min="0" max="1" step="1" value="1">
+            <div class="cmap-ticks" id="cmap-ticks" aria-hidden="true"></div>
+          </div>
+          <output class="cmap-year-now" id="cmap-year-now" for="cmap-year"></output>
+        </div>
+        <div class="cmap-tools">
+          <button type="button" class="cmap-tool" id="cmap-table-button" aria-pressed="false">View as table</button>
+          <button type="button" class="cmap-tool" id="cmap-link-button">Copy link to this view</button>
+        </div>
+      </div>
+      <p class="cmap-said" id="cmap-said" role="status"></p>
+      <div class="cmap-main">
+        <div class="cmap-left">
+          <div class="cmap-map" id="cmap-map"></div>
+          <div class="cmap-table" id="cmap-table" hidden></div>
+          <div class="cmap-legend" id="cmap-legend"></div>
+        </div>
+        <aside class="cmap-card" id="cmap-card" aria-live="polite"></aside>
+      </div>
+      <p class="note" id="cmap-star" hidden></p>
+      <p class="source" id="cmap-source"></p>
+    </div>
   </section>
 
 
@@ -2825,6 +2895,21 @@
         less the four-year-olds in full-day special education preschool. The trend counts three- and four-year-olds,
         and its scale does not start at 0.</li>
     </ul>
+    <h3>The community map</h3>
+    <p class="placeholder">
+      [PLACEHOLDER] The map shows Westchester's municipalities or its public school districts, whichever a measure is
+      published for. Each municipality is one piece of the county's map: a city, a village, or a town that has no
+      villages. The part of a town outside its villages (in Cortlandt, Eastchester, Greenburgh, Mamaroneck, Mount
+      Pleasant and Ossining) is gray: the Census Bureau publishes a number for the whole town, its villages included,
+      but none for that part alone. School district numbers are for the public school districts that have an area of
+      their own. The sentence at the top names the lowest and the highest of every place with a number. The colors
+      split each measure's numbers into up to five steps, about a fifth of the places and years in each; the steps
+      stay the same in every year, so a place changes color only when its number crosses a step. A * marks a number
+      to read with care (the line under the map says why), a + a number that is "at least" that much, and gray a place
+      with no number. Census numbers are five-year estimates: each describes the whole period, and periods next to
+      each other share four years of answers. Each measure's source is named under the map; how its numbers were made
+      is under "Explore more", at the foot of the panel.
+    </p>
     <p class="muted">
       Data file built <span data-fill="meta.generated" data-format="raw"></span>.
     </p>
